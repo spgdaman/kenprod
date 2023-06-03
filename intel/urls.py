@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('price_app/', include('price_app.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
 
 from django.conf import settings
