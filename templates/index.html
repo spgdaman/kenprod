@@ -1,0 +1,172 @@
+{% load static %}
+{% load bootstrap4 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Shusha{% endblock %}</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+
+
+</head>
+
+<body>
+    <nav id="navigation" class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">
+                        <h2 id="brand-name">
+                            Shusha
+                        </h2>
+                    </a> 
+                </li>
+            </ul>
+
+            <!-- <div class="collapse navbar-collapse" id="navbarNav"> -->
+                <!-- <div class="d-flex justify-content-end" style="position:absolute;"> -->
+                    <ul class="nav">
+                        <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How it works</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/accounts/signup">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home'  %}">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#contact-us">Contact Us</a>
+                        </li>
+                    </ul>
+                <!-- </div> -->
+            <!-- </div>     -->
+
+        </div>       
+    </nav>
+
+    <!-- Hero Content goes here -->
+    <div id="intro">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4 brand-name">Welcome to Shusha!</h1>
+                <p class="lead">An e-commerce platform where consumers reap the benefits of economies of scale.</p>
+                <hr class="my-4">
+                <p class="lead">Shusha is a platform where the market enjoys the benefits of reduced prices achieved through economies of scale.</p>
+                <p class="lead">Unlike other platforms, our customers pay less than the market rate.</p>
+                <i class="lead"><strong>"Everyday is a Black Friday!"</strong></i>
+                <p class="lead"> - Shusha Customers</p>
+
+                <div class="row">
+                    <p class="lead py-2 hero-btn mx-2">
+                        <a class="btn btn-primary btn-lg" href="/accounts/signup/" role="button">Sign Up to shop with us!</a>
+                    </p>
+                    <p class="lead py-2 hero-btn mx-2">
+                        <a class="btn btn-success btn-lg" href="{% url 'home' %}" role="button">Start shopping
+                            <svg id="cart-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<!-- <img id="intro" class="img-fluid" src="https://res.cloudinary.com/dte7upwcr/image/upload/f_auto,w_1500/blog/blog/imagens-ecommerce.png"> -->
+
+    <!-- How it works -->
+    <div id="how-it-works" class="container col-xxl-8 px-4 py-5">
+
+        <h1 class="display-5 fw-bold lh-1 mb-3 mx-auto center">How it works</h1>
+
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <div class="col-10 col-sm-8 col-lg-6">
+                <img src="{% static 'images/ecom-mobile.jpg' %}" class="d-block mx-lg-auto img-fluid" alt="E-commerce mobile payment" width="700" height="500" loading="lazy">
+            </div>
+            
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold lh-1 mb-3">Come as many as you are</h1>
+                <p class="lead">Shusha leverages on the power of the mass market to negotiate prices at below market rates, saving the consumers money with a guarantee on quality products on sale.</p>
+                <p class="lead">Simply purchase a product on our website and wait for it to reach a minimum number of customers required before the product is sent to you.</p>
+                <p class="lead">It's that simple...refer your friend to reach that milestone faster 😉</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <a href="{% url 'home' %}" type="button" class="btn btn-success btn-lg px-4 me-md-2">
+                        Start shopping
+                        <svg id="cart-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-0">
+    <!-- Contact Us -->
+    <div class="spacer jumbotron">
+        <div id="contact-us" class="container col-xl-10 col-xxl-8 px-4 py-5">
+
+            <h1 class="display-5 fw-bold lh-1 mb-3 mx-auto center">Contact Us</h1>
+    
+            <div class="row align-items-center g-lg-5 py-5">
+              <div class="col-lg-7 text-center text-lg-start">
+                <h1 class="display-4 fw-bold lh-1 mb-3">We would love to hear from you!</h1>
+                <p class="col-lg-10 lead">Send us your feedback or suggestions, we would love to hear more from you.</p>
+              </div>
+              <div class="col-md-10 mx-auto col-lg-5">
+                <form class="p-4 p-md-5 border rounded-3 bg-light">
+                    <div class="form-floating mb-3">
+                        <input type="" class="form-control" id="floatingInput" placeholder="Name">
+                        <label for="floatingInput">Full name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Message" rows="3"></textarea>
+                        <label for="exampleFormControlTextarea1">Your message</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Footer -->
+    <div class="spacer bg-dark text-secondary px-4 py-5 text-center">
+        <div class="py-5">
+            <div class="col-lg-6 mx-auto">
+                <p class="fs-5 mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+                <a href="#intro"><img src="{% static 'images/facebook-50.svg' %}"></a>
+                <a href="#intro"><img src="{% static 'images/instagram-50.svg' %}"></a>
+                <a href="#intro"><img src="{% static 'images/twitter-50.svg' %}"></a>
+                <a href="#intro"><img src="{% static 'images/youtube-50.svg' %}"></a>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <p>&copy; 2021 Shusha</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

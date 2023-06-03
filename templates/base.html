@@ -1,0 +1,50 @@
+{% load static %}
+{% load bootstrap4 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>{% block title %}Shusha | May the market decide{% endblock %}</title>
+
+  <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto:wght@300&display=swap" rel="stylesheet"> 
+
+</head>
+{% block navbar %}
+  {% include  'navbar.html' %}
+{% endblock %}
+<body class="bg-light">
+  
+
+  <!-- {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert"></div>
+    {% endfor %}
+  {% endif %} -->
+
+  <div class="container">
+    <div class="col-xs-12 mt-1 w-50 mx-auto">
+      {% for message in messages %}
+          <div class="alert alert-dismissible alert-{{ message.tags }}">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              {{ message }}
+          </div>
+      {% endfor %}
+    </div>
+  </div>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
