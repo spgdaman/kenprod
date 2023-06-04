@@ -10,3 +10,4 @@ class MarketPrice(models.Model):
     competitor_name = models.CharField(max_length=100)
     competitor_product_name = models.CharField(max_length=100)
     competitor_price = models.IntegerField(blank=False, null=True)
+    created_at = models.DateTimeField(auto_now=True)
