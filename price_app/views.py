@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from .forms import MarketPriceForm
 from accounts.models import User
@@ -35,6 +36,8 @@ def get_market_price(request):
                 competitor_product_name = competitor_product_name,
                 competitor_price = competitor_price
             )
+
+            messages.success(request,'Data has been submitted')
             return redirect("price_capture.html")
     
     else:
