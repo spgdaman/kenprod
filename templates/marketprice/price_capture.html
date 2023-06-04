@@ -4,10 +4,48 @@
 
 <div class="container">
     <form method="POST">
-        <label for="customer_name">customer_name</label>
-        <input type="text"></input>
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="customer_name">Customer Name</label>
+            <input name="customer_name" type="text" class="form-control" placeholder="Customer Name">
+        </div>
+        
+        <div class="form-group">
+            <label for="customer_branch">Customer Branch</label>
+            <input name="customer_branch" type="text" class="form-control" placeholder="Customer Branch">
+        </div>
+        
+        <div class="form-group">
+            <label for="kenpoly_product_name">Kenpoly Product Name</label>
+            <input name="kenpoly_product_name" type="text" class="form-control" placeholder="Kenpoly Product Name">
+        </div>
 
-        <p>Hello</p>
+        <div class="form-group">
+            <label for="kenpoly_price">Kenpoly Price</label>
+            <input name="kenpoly_price" type="text" class="form-control" placeholder="Kenpoly Price">
+        </div>
+
+        <div class="form-group">
+            <label for="customer_name">Competitor Name</label>
+            <input name="competitor_name" type="text" class="form-control" placeholder="Competitor Name">
+        </div>
+
+        <div class="form-group">
+            <label for="competitor_product_name">Competitor Product Name</label>
+            <input name="competitor_product_name" type="text" class="form-control" placeholder="Competitor Product Name">
+        </div>
+
+        <div class="form-group">
+            <label for="competitor_price">Competitor Price</label>
+            <input name="competitor_price" type="text" class="form-control" placeholder="Competitor Price">
+        </div>
+
+        <button type="submit" class="w-100 btn btn-primary">Submit</button>
     </form>
 </div>
     
