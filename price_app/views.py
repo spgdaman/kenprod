@@ -10,10 +10,12 @@ def get_market_price(request):
         form = MarketPriceForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-
-            return redirect("index.html")
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
+            return redirect("price_capture.html")
     
     else:
         form = MarketPriceForm()
     
-    return render(request, "index.html", {"form":form})
+    return render(request, "marketprice/price_capture.html", {"form":form})
