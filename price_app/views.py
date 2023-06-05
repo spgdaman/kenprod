@@ -2,6 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+import pandas as pd
+
 from .forms import MarketPriceForm
 from accounts.models import User
 from .models import MarketPrice
@@ -17,6 +19,8 @@ def get_market_price(request):
             # data.save()
 
             # sales_person = User.objects.get()
+            info = request.POST
+            print(dict(info))
 
             customer_name = request.POST['customer_name']
             customer_branch = request.POST['customer_branch']

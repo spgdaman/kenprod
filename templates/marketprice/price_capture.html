@@ -6,44 +6,69 @@
     <form method="POST">
 
         {% csrf_token %}
-        <div class="form-group">
-            <label for="customer_name">Customer Name</label>
-            <input name="customer_name" type="text" class="form-control" placeholder="Customer Name">
+        <div class="form-group form-inline">
+            <label class="col-md-4 justify-content-start font-weight-bold" for="customer_name">Customer Name:</label>
+            <input name="customer_name" type="text" class="form-control col-md-4" placeholder="Customer Name">
         </div>
         
-        <div class="form-group">
-            <label for="customer_branch">Customer Branch</label>
-            <input name="customer_branch" type="text" class="form-control" placeholder="Customer Branch">
+        <div class="form-group form-inline">
+            <label class="col-md-4 justify-content-start font-weight-bold" for="customer_branch">Customer Branch:</label>
+            <input name="customer_branch" type="text" class="form-control col-md-4" placeholder="Customer Branch">
         </div>
         
-        <div class="form-group">
-            <label for="kenpoly_product_name">Kenpoly Product Name</label>
-            <input name="kenpoly_product_name" type="text" class="form-control" placeholder="Kenpoly Product Name">
+        <div class="form-group form-inline">
+            <label class="col-md-4 justify-content-start font-weight-bold" for="kenpoly_product_name">Kenpoly Product Name:</label>
+            <input name="kenpoly_product_name" type="text" class="form-control col-md-4" placeholder="Kenpoly Product Name">
         </div>
 
-        <div class="form-group">
-            <label for="kenpoly_price">Kenpoly Price</label>
-            <input name="kenpoly_price" type="text" class="form-control" placeholder="Kenpoly Price">
+        <div class="form-group form-inline">
+            <label class="col-md-4 justify-content-start font-weight-bold" for="kenpoly_price">Kenpoly Price:</label>
+            <input name="kenpoly_price" type="text" class="form-control col-md-4" placeholder="Kenpoly Price">
         </div>
 
-        <div class="form-group">
-            <label for="customer_name">Competitor Name</label>
-            <input name="competitor_name" type="text" class="form-control" placeholder="Competitor Name">
+        <div class="form-group form-inline">
+            <label class="col-md-4 justify-content-start font-weight-bold" for="customer_name">Competitor Name:</label>
+            <input name="competitor_name" type="text" class="form-control col-md-4" placeholder="Competitor Name">
         </div>
 
-        <div class="form-group">
-            <label for="competitor_product_name">Competitor Product Name</label>
-            <input name="competitor_product_name" type="text" class="form-control" placeholder="Competitor Product Name">
+        <div class="form-group form-inline">
+            <label class="col-md-4 justify-content-start font-weight-bold" for="competitor_product_name">Competitor Product Name:</label>
+            <input name="competitor_product_name" type="text" class="form-control col-md-4" placeholder="Competitor Product Name">
         </div>
 
-        <div class="form-group">
-            <label for="competitor_price">Competitor Price</label>
-            <input name="competitor_price" type="text" class="form-control" placeholder="Competitor Price">
+        <div class="form-group form-inline">
+            <label class="col-md-4 justify-content-start font-weight-bold" for="competitor_price">Competitor Price:</label>
+            <input name="competitor_price" type="text" class="form-control col-md-4" placeholder="Competitor Price">
+        </div>
+
+        <div class="form-group" id="newElementId"></div>
+
+        <div id="dynamicCheck" class='d-flex justify-content-end'>
+            <input type="button" class="btn btn-success mb-2" value="Add another Competitor" onclick="createNewElement();"/>
         </div>
 
         <button type="submit" class="w-100 btn btn-primary">Submit</button>
     </form>
 </div>
-    
+
+<script type="text/JavaScript">
+    function createNewElement() {
+        // First create a DIV element.
+        var txtCompetitorName = document.createElement('div');
+        var txtCompetitorProductName = document.createElement('div');
+        var txtCompetitorPrice = document.createElement('div');
+
+        // Then add the content (a new input box) of the element.
+        txtCompetitorName.innerHTML = "<div class='form-group form-inline'> <label class='col-md-4 justify-content-start font-weight-bold' for='customer_name'>Competitor Name:</label> <input name='competitor_name' type='text' id='newInputBox' class='form-control col-md-4' placeholder='Competitor Name'> </div>";
+        txtCompetitorProductName.innerHTML = "<div class='form-group form-inline'> <label class='col-md-4 justify-content-start font-weight-bold' for='competitor_product_name'>Competitor Product Name:</label> <input name='competitor_product_name' type='text' id='newInputBox2' class='form-control col-md-4' placeholder='Competitor Product Name'> </div>";
+        txtCompetitorPrice.innerHTML = "<div class='form-group form-inline'> <label class='col-md-4 justify-content-start font-weight-bold' for='competitor_price'>Competitor Price:</label> <input name='competitor_price' type='text' id='newInputBox3' class='form-control col-md-4' placeholder='Competitor Price'> </div>"
+
+        // Finally put it where it is supposed to appear.
+        document.getElementById("newElementId").appendChild(txtCompetitorName);
+        document.getElementById("newElementId").appendChild(txtCompetitorProductName);
+        document.getElementById("newElementId").appendChild(txtCompetitorPrice);
+        console.log("Hello")
+    }   
+</script>
 
 {% endblock content %}
