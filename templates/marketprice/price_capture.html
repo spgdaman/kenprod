@@ -4,11 +4,7 @@
 
 <div class="container">
     <form method="POST">
-        {% if messages %}
-            {% for msg in messages %}
-                <p>{{msg}}</p>
-            {% endfor %}
-        {% endif %}
+
         {% csrf_token %}
         <div class="form-group">
             <label for="customer_name">Customer Name</label>

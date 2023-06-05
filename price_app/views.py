@@ -12,8 +12,8 @@ def get_market_price(request):
         form = MarketPriceForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            data = form.save(commit=False)
-            data.user = request.user
+            # data = form.save(commit=False)
+            # data.user = request.user
             # data.save()
 
             # sales_person = User.objects.get()
@@ -38,7 +38,7 @@ def get_market_price(request):
             )
 
             messages.success(request,'Data has been submitted')
-            return redirect("price_capture.html")
+            return render(request, "marketprice/price_capture.html")
     
     else:
         form = MarketPriceForm()
