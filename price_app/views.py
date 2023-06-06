@@ -67,7 +67,7 @@ def get_market_price(request):
                 # print(counter)
                 # print("More than one competitor")
             
-                # print(info)
+                print(market_agg)
             
             else:
                 customer_name = request.POST['customer_name']
@@ -88,7 +88,7 @@ def get_market_price(request):
                     competitor_product_name = competitor_product_name,
                     competitor_price = competitor_price
                 )
-
+                print(request.POST['customer_branch'])
                 messages.success(request,'Data has been submitted')
                 return render(request, "marketprice/price_capture.html")
     

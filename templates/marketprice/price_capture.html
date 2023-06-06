@@ -209,31 +209,710 @@
         }
         typeSel.onchange();
     }
+
+    $('.select2').select2();
 </script>
 
 <div class="container">
-    <form method="POST">
+    <form class="needs-validation" method="POST">
 
         {% csrf_token %}
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="customer_name">Customer Name:</label>
             <!-- <input name="customer_name" type="text" class="form-control col-md-4" placeholder="Customer Name"> -->
-            <select class="form-control" name="optone" id="typeSel" size="1">
-                <option value="" selected="selected">Select type</option>
+            <select class="form-control" name="customer_name" id="typeSel" size="1">
+                <option selected="selected">Select type</option>
             </select>
         </div>
         
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="customer_branch">Customer Branch:</label>
             <!-- <input name="customer_branch" type="text" class="form-control col-md-4" placeholder="Customer Branch"> -->
-            <select class="form-control" name="opttwo" id="fieldSel" size="1">
-                <option value="" selected="selected">Select field</option>
+            <select class="form-control" name="customer_branch" id="fieldSel" size="1">
+                <option selected="selected">Select field</option>
             </select> 
         </div>
         
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="kenpoly_product_name">Kenpoly Product Name:</label>
-            <input name="kenpoly_product_name" type="text" class="form-control col-md-4" placeholder="Kenpoly Product Name">
+            <!-- <input name="kenpoly_product_name" type="text" class="form-control col-md-4" placeholder="Kenpoly Product Name"> -->
+            <select class="form-control select2" name="kenpoly_product_name" id="product_name">
+                <option selected="selected">Select field</option>
+                <option>SALAD BOWL</option>
+                <option>STRIPE BUCKET NO.1 WITH LID</option>
+                <option>STRIPE BUCKET NO.10 WITH LID</option>
+                <option>FROSTY BUCKET NO.10 WITH LID</option>
+                <option>STRIPE BUCKET NO.15 WITH LID</option>
+                <option>BUCKET NO.16 WITHOUT LID</option>
+                <option>FROSTY BUCKET NO.20 WITH LID</option>
+                <option>SPARKLE BUCKET NO.20 WITH LID</option>
+                <option>STRIPE BUCKET NO.20 WITH LID</option>
+                <option>FOOTBALL BUCKET NO.25 WITH LID</option>
+                <option>FOOTBALL BUCKET NO.30 WITH LID</option>
+                <option>STRIPE BUCKET NO.30 WITH LID METAL HANDLE</option>
+                <option>FROSTY BUCKET NO.5 WITH LID</option>
+                <option>BABY CHAIR NO.5001</option>
+                <option>BABY CHAIR NO.5006</option>
+                <option>BABY CHAIR NO.5009</option>
+                <option>JUNIOR CHAIR</option>
+                <option>LUXURY BABY BATH</option>
+                <option>MINI BABY BATH</option>
+                <option>BABY POTTY NO.3 PLAIN</option>
+                <option>BABY POTTY NO.3 DECO</option>
+                <option>SIMBA BABY BATH</option>
+                <option>SUPER BABY BATH</option>
+                <option>BASIN NO.190</option>
+                <option>BASIN NO.45 NDEGE</option>
+                <option>BASIN NO.777</option>
+                <option>CENTURY BASIN</option>
+                <option>CRYSTAL BASIN</option>
+                <option>DOLPHIN BASIN MEDIUM</option>
+                <option>DOLPHIN BASIN SMALL</option>
+                <option>DREAM BASIN NO.32</option>
+                <option>DYNAMIC BASIN</option>
+                <option>FRUIT BASIN FROSTED</option>
+                <option>BASIN NO.30 FRUITY</option>
+                <option>JUMBO BASIN FOOTBALL</option>
+                <option>KASUMU BASIN</option>
+                <option>LION BASIN NO.1</option>
+                <option>LION BASIN NO.2</option>
+                <option>LION BASIN NO.3</option>
+                <option>LION BASIN NO.5</option>
+                <option>LION BASIN NO.6</option>
+                <option>MAXI BASIN NO.2</option>
+                <option>MAXI BASIN NO.3 DECO</option>
+                <option>MAXI BASIN NO.4 DECO</option>
+                <option>MAXI BASIN NO.5</option>
+                <option>MAXI BASIN NO.6</option>
+                <option>RHINO BASIN</option>
+                <option>WAVE BASIN NO.32</option>
+                <option>WAVE BASIN NO.35</option>
+                <option>WAVE BASIN NO.38</option>
+                <option>BIG RIO BASKET WITH LID</option>
+                <option>CORAL BASKET</option>
+                <option>FRUIT BASKET NO.1</option>
+                <option>OPEN LAUNDRY BASKET NO.3</option>
+                <option>OVAL BASKET</option>
+                <option>ROCKY BASKET WITH LID</option>
+                <option>SQUARE BASKET NO.1</option>
+                <option>SUPERMARKET BASKET</option>
+                <option>SUPERMARKET TROLLEY</option>
+                <option>TALL LAUNDRY BASKET  NO.1</option>
+                <option>TALL LAUNDRY BASKET  NO.2</option>
+                <option>VEGETABLE BASKET</option>
+                <option>WASTE PAPER BASKET NO.1</option>
+                <option>WASTE PAPER BASKET NO.2</option>
+                <option>YOYO BASKET NO.2</option>
+                <option>YOYO BASKET NO.5</option>
+                <option>YOYO BASKET NO.6</option>
+                <option>YOYO BASKET NO.8</option>
+                <option>TRASH BIN 100 LTRS</option>
+                <option>FLIP BIN 50 LTRS</option>
+                <option>PEDAL BIN NO.1</option>
+                <option>PEDAL BIN NO.2</option>
+                <option>PEDAL BIN NO.3</option>
+                <option>KENCHAIR 2027 METAL LEGS</option>
+                <option>KENCHAIR 2028</option>
+                <option>KENCHAIR 2029</option>
+                <option>KENCHAIR 2030</option>
+                <option>KENCHAIR 2031 ARMLESS</option>
+                <option>KENCHAIR 2032 ARMLESS</option>
+                <option>KENCHAIR 2034 ARMLESS</option>
+                <option>KENCHAIR 2034 ARMLESS DECO</option>
+                <option>KENCHAIR 2035</option>
+                <option>KENCHAIR 2036</option>
+                <option>KENCHAIR 2037</option>
+                <option>KENCHAIR 2039 HIGH BACK</option>
+                <option>STACK CHAIR SHELL ONLY</option>
+                <option>HIGH CHAIR WITH METAL STAND</option>
+                <option>STACKABLE CHAIR WITH METAL STAND</option>
+                <option>CHICK DRINKER</option>
+                <option>CHICKEN DRINKER NO.3</option>
+                <option>CHICKEN DRINKER NO.4</option>
+                <option>STAND ONLY FOR CHICKEN DRINKER</option>
+                <option>CHICK FEEDER</option>
+                <option>CHICKEN FEEDER NO.2</option>
+                <option>CHICKEN FEEDER WITH ROD</option>
+                <option>STRIPE BUCKET NO.1 WITH LID CLEAR</option>
+                <option>STRIPE BUCKET NO.10 WITH LID CLEAR</option>
+                <option>STRIPE BUCKET NO.15 WITH LID CLEAR</option>
+                <option>STRIPE BUCKET NO.20 WITH LID CLEAR</option>
+                <option>STRIPE BUCKET NO.3 WITH LID CLEAR</option>
+                <option>STRIPE BUCKET NO.30 WITH LID CLEAR</option>
+                <option>STRIPE BUCKET NO.5 WITH LID CLEAR</option>
+                <option>STRIPE BUCKET NO.8 WITH LID CLEAR</option>
+                <option>DAIRY CRATE 150 ML X 24 CUPS</option>
+                <option>DAIRY CRATE 250 ML X 24 CUPS</option>
+                <option>DAIRY CRATE 500 ML X 15 CUPS</option>
+                <option>GOLF TEES PACKED IN 530</option>
+                <option>DRUM NO.60 WITH LID</option>
+                <option>DRUM NO.80 WITH LID</option>
+                <option>DUSTPAN NO.1</option>
+                <option>DUSTPAN NO.2</option>
+                <option>DUSTPAN NO.3 WITH LONG HANDLE</option>
+                <option>FLOWER BUCKET NO.20</option>
+                <option>FLOWER BUCKET NO.21 - RING</option>
+                <option>FLOWER BUCKET NO.22</option>
+                <option>FLOWER BUCKET NO.25</option>
+                <option>FLOWER BUCKET NO.30</option>
+                <option>FLOWER BUCKET NO.50</option>
+                <option>COFFEE TABLE NO. 3007 WOODFINISH</option>
+                <option>ROUND CONTAINER 1 LTR</option>
+                <option>ROUND CONTAINER 2 LTR</option>
+                <option>ROUND FOODMATE 250 ML</option>
+                <option>EVERFRESH NO.1 - SET OF 3</option>
+                <option>EVERFRESH NO.2 DECO</option>
+                <option>EVERFRESH NO.4 - SET OF 4</option>
+                <option>EASY HANGER - PACK OF 3</option>
+                <option>KIDS HANGER - PACK OF 3</option>
+                <option>SMART HOOK</option>
+                <option>STYL HANGER - PACK OF 3</option>
+                <option>STYL HANGER LOOSE PACK EMBOSSED</option>
+                <option>SWIVEL HANGER - PACK OF 3</option>
+                <option>STRAINER</option>
+                <option>SAFETY HELMET</option>
+                <option>HELMET FIXTURE WITH STRAP</option>
+                <option>INDUSTRIAL BUCKET 20 LTR WITH LID</option>
+                <option>INDUSTRIAL BUCKET 20 LTR WITH NO.16 LID</option>
+                <option>INDUSTRIAL BUCKET 4 LTR WITH LID</option>
+                <option>INDUSTRIAL BUCKET 5 LTR WITH LID</option>
+                <option>EVERFRESH NO.5 - SET OF 4</option>
+                <option>RECTANGLE FOODMATE 0.5 LTR</option>
+                <option>RECTANGLE FOODMATE NO.1</option>
+                <option>RECTANGLE CONTAINER 1 LTR</option>
+                <option>RECTANGLE FOODMATE NO.2</option>
+                <option>RECTANGLE CONTAINER 2 LTR</option>
+                <option>RECTANGLE CONTAINER 4 LTR</option>
+                <option>ROUND FOODMATE  0.5 LTR</option>
+                <option>ROUND CONTAINER 0.5 LTR</option>
+                <option>ROUND FOODMATE 1 LTR</option>
+                <option>ROUND FOODMATE NO.4</option>
+                <option>HOMEFRESH 1 - 150 ML</option>
+                <option>HOMEFRESH 2 - 300 ML</option>
+                <option>HOMEFRESH 3 - 500 ML</option>
+                <option>FUNNEL NO.4</option>
+                <option>DAIRY CRATE 500 ML X 24 BOTTLES</option>
+                <option>COCA COLA CRATE 300 ML</option>
+                <option>CRATES FOR 300ML SMALL WINDOW</option>
+                <option>EURO CRATE 330 ML</option>
+                <option>MINI CRATE</option>
+                <option>POLYPOUCH CRATE EMBOSSED</option>
+                <option>POLYVEG CRATE NESTABLE</option>
+                <option>POLYAIR CRATE 120 EMBOSSED</option>
+                <option>POLYAIR CRATE 120</option>
+                <option>POLYAIR CRATE 140</option>
+                <option>POLYAIR CRATE 220 EMBOSSED</option>
+                <option>POLYAIR CRATE 240</option>
+                <option>POLYAIR CRATE 300</option>
+                <option>POLYAIR CRATE 360</option>
+                <option>POLYAIR CRATE 360 EMBOSSED</option>
+                <option>POLYFRESH CRATE 120</option>
+                <option>POLYFRESH CRATE 360</option>
+                <option>POLYMESH CRATE 120</option>
+                <option>POLYMESH CRATE 360</option>
+                <option>POLYSTACK CRATE 120</option>
+                <option>POLYSTACK CRATE 150 WITH LID</option>
+                <option>POLYSTACK CRATE 240 EMBOSSED</option>
+                <option>POLYSTACK CRATE 250 WITH LID</option>
+                <option>POLYSTACK CRATE 300</option>
+                <option>POLYSTACK CRATE 500-24 WITH LID</option>
+                <option>SMART CRATE</option>
+                <option>CRATE 300 ML BIG WINDOW EMBOSSED</option>
+                <option>DISH RACK NO.1</option>
+                <option>DISH RACK NO.2</option>
+                <option>DOUBLE DECKER DISH RACK NO.1</option>
+                <option>DOUBLE DECKER DISH RACK NO.2</option>
+                <option>FORK BIG PACK</option>
+                <option>FORK SMALL - PACK OF 25</option>
+                <option>KNIFE BIG PACK</option>
+                <option>TABLE SPOON SMALL - PACK OF 25</option>
+                <option>TEA SPOON BIG PACK</option>
+                <option>STRIPE BUCKET NO.5 WITH LID</option>
+                <option>STRIPE BUCKET NO.8 WITH LID</option>
+                <option>BOOM BUCKET DECO WITH LID</option>
+                <option>BUMBA BUCKET</option>
+                <option>DOMESTIC BUCKET NO.20 WITH LID</option>
+                <option>EASY POUR BUCKET</option>
+                <option>MOP BUCKET NO.1</option>
+                <option>MOP BUCKET NO.2</option>
+                <option>MOP BUCKET NO.3 WITH WHEELS</option>
+                <option>MOP BUCKET NO.4</option>
+                <option>SMILEY BUCKET NO.20</option>
+                <option>SMILEY BUCKET NO.5</option>
+                <option>KENCHAIR 2005 ARMLESS</option>
+                <option>KENCHAIR 2014</option>
+                <option>KENCHAIR 2016 HIGH BACK</option>
+                <option>KENCHAIR 2019</option>
+                <option>KENCHAIR 2021</option>
+                <option>KENSTOOL NO.4007</option>
+                <option>STEP STOOL NO.4008</option>
+                <option>BAMBOO KENSTOOL NO.4009</option>
+                <option>NURSERY TABLE 3001 DECO</option>
+                <option>PLAIN TABLE 3001</option>
+                <option>KIDDY DESK</option>
+                <option>KLIPLOCK NO.601 - 1000 ML</option>
+                <option>KLIPLOCK NO.601 WITH COMPARTMENT</option>
+                <option>KLIPLOCK NO.602 - 2300 ML</option>
+                <option>KLIPLOCK NO.602 WITH COMPARTMENT</option>
+                <option>KLIPLOCK NO.604 - 6300 ML</option>
+                <option>KLIPLOCK NO.606 - 250 ML</option>
+                <option>KLIPLOCK NO.607 - 500 ML</option>
+                <option>KLIPLOCK NO.608 - 1000 ML</option>
+                <option>KLIPLOCK NO.609 - 1500 ML</option>
+                <option>KLIPLOCK NO.611 - 700 ML</option>
+                <option>KLIPLOCK NO.612 - 1400 ML</option>
+                <option>KLIPLOCK NO.613 - 2500 ML</option>
+                <option>90 MM EMBOSSED - 1/2 KG</option>
+                <option>SQUARE PLANTER NO.5</option>
+                <option>PLANTER NO.6 WITH DISH</option>
+                <option>SQUARE PLANTER NO.6</option>
+                <option>SQUARE PLANTER NO.7</option>
+                <option>RECTANGLE PLANTER NO.8</option>
+                <option>EGG TRAY</option>
+                <option>SAFE BOX NO.2</option>
+                <option>DOUBLE SHOE RACK 4 STACK</option>
+                <option>DOUBLE SHOE RACK 6 STACK</option>
+                <option>SINGLE SHOE RACK 6 STACK</option>
+                <option>SINGLE SHOE RACK 8 STACK</option>
+                <option>GRAND RECTANGLE TABLE</option>
+                <option>BAMBOO TRAY</option>
+                <option>CUTLERY TRAY</option>
+                <option>DOCUMENT TRAY</option>
+                <option>SERVING TRAY NO.2 DECO</option>
+                <option>UTILITY TRAY</option>
+                <option>EZEE TROLLEY 3 STACK</option>
+                <option>EZEE TROLLEY 4 STACK</option>
+                <option>RECTANGLE TROLLEY 3 STACK</option>
+                <option>ROUND TROLLEY 3 STACK</option>
+                <option>ROUND TROLLEY 4 STACK</option>
+                <option>GRIP N GULP BOTTLE 500 ML</option>
+                <option>POLO BOTTLE NO.5</option>
+                <option>JUG NO.409</option>
+                <option>SOAP DISH NO.11</option>
+                <option>SOAP DISH NO.12</option>
+                <option>SPACE SAVER 4 STACK</option>
+                <option>STORAGE BOX NO.2 - 35 LTR</option>
+                <option>STORAGE BOX NO.3 - 60 LTR</option>
+                <option>ROUND TABLE NO. 3002</option>
+                <option>RECTANGLE TABLE NO. 3005</option>
+                <option>MEGA ROUND TABLE NO. 3006</option>
+                <option>COFFEE TABLE NO. 3007</option>
+                <option>COFFEE TABLE NO. 3007 DECO</option>
+                <option>TABLE NO. 3008</option>
+                <option>GRAND RECTANGLE TABLE WOODFINISH</option>
+                <option>LID ONLY MOP BUCKET NO.1</option>
+                <option>CLASSIC LUNCH BOX</option>
+                <option>MUNCH BOX</option>
+                <option>MEASURING JUG 1 LTR</option>
+                <option>MEASURING JUG 1.5 LTR</option>
+                <option>LARGE MULTISTORE 3 STACK</option>
+                <option>LARGE MULTISTORE 4 STACK</option>
+                <option>SMALL MULTISTORE 3 STACK</option>
+                <option>SMALL MULTISTORE 4 STACK</option>
+                <option>SMALL DRAWER ONLY</option>
+                <option>STORAGE RACK NO.1</option>
+                <option>STORAGE RACK NO.2</option>
+                <option>STORAGE RACK NO.3</option>
+                <option>STORAGE RACK NO.4</option>
+                <option>EXTENSION FOR SQUARE PLANTER NO.8</option>
+                <option>SQUARE PLANTER NO.1</option>
+                <option>PLANTER NO.2 WITH DISH</option>
+                <option>SQUARE PLANTER NO.2</option>
+                <option>PLANTER NO.3 WITH DISH</option>
+                <option>SQUARE PLANTER NO.3</option>
+                <option>SQUARE PLANTER NO.4</option>
+                <option>PLANTER NO.5 WITH DISH</option>
+                <option>INSECT TRAP</option>
+                <option>INSECT TRAP CAPS</option>
+                <option>PAINT BUCKET 20 LTR - 17 KG WITH LID</option>
+                <option>JOHNNY BASIN NO.28</option>
+                <option>JOHNNY BASIN NO.45</option>
+                <option>JOHNNY BASIN NO.52</option>
+                <option>JOHNNY BASIN GIANT BLACK</option>
+                <option>JOHNNY BASIN JUMBO DULL</option>
+                <option>JOHNNY BASIN JUMBO BLACK</option>
+                <option>JOHNNY BASIN DEEP BLACK</option>
+                <option>JOHNNY BASIN DYNAMO</option>
+                <option>KENSTOOL NO.4001</option>
+                <option>MARVEL GLASS NO. G8</option>
+                <option>MARVEL JUMPY MUG</option>
+                <option>SQUARE FOODMATE NO.1</option>
+                <option>SQUARE FOODMATE NO.2</option>
+                <option>SQUARE FOODMATE NO.3</option>
+                <option>SQUARE FOODMATE NO.4</option>
+                <option>SQUARE FOODMATE NO.5</option>
+                <option>HEAVY DUTY PEDAL 100 LIT TRASH BIN</option>
+                <option>YOYO BASKET NO.1</option>
+                <option>CHICKEN DRINKER NO.2 LOCKABLE</option>
+                <option>GIANT BASIN</option>
+                <option>SWING BIN NO.2</option>
+                <option>CHICKEN DRINKER NO.1</option>
+                <option>CHOPPING BOARD NO.2</option>
+                <option>RECTANGLE FOODMATE NO.3 - 4 LTR</option>
+                <option>POLYAIR CRATE 240 EMBOSSED</option>
+                <option>SMILEY BUCKET NO.10</option>
+                <option>KLIPLOCK NO.600 - 500 ML</option>
+                <option>SAFE BOX NO.1</option>
+                <option>SERVING TRAY NO.3 DECO</option>
+                <option>SOAP DISH NO.4 WITH HANDLE</option>
+                <option>PLANTER NO.1 WITH DISH</option>
+                <option>KENSTOOL NO.4003 SUMO</option>
+                <option>JUG NO.432 - SQUARE</option>
+                <option>BABY CHAIR NO.5003</option>
+                <option>KUBWA BASIN</option>
+                <option>BAMBOO WASTE PAPER BASKET</option>
+                <option>CHICKEN DRINKER NO.4 WITH STAND</option>
+                <option>SMALL MULTISTORE 5 STACK</option>
+                <option>KENSTOOL NO.4004</option>
+                <option>JUG NO.418</option>
+                <option>DREAM BASIN NO.27</option>
+                <option>SWING BIN NO.1</option>
+                <option>TEA SPOON SMALL - PACK OF 25</option>
+                <option>EASY HANGER LOOSE PACK</option>
+                <option>POLYMESH CRATE 240</option>
+                <option>POLYSTACK CRATE 140</option>
+                <option>KENCHAIR 2008</option>
+                <option>KLIPLOCK NO.605 - 11200 ML</option>
+                <option>STORAGE BOX NO.1 - 18 LTR</option>
+                <option>MARVEL PLATE NO. 708</option>
+                <option>DISNEY MUG NO. 327</option>
+                <option>STRIPE BUCKET NO.3 WITH LID</option>
+                <option>BASIN NO.45  FOOTBALL STRIPE</option>
+                <option>YOYO BASKET NO.7</option>
+                <option>KENCHAIR 2040 HIGH BACK</option>
+                <option>CHOPPING BOARD NO.1</option>
+                <option>SQUARE PLANTER NO.8</option>
+                <option>FLOWER VASE</option>
+                <option>DRUM NO.120 WITH LID</option>
+                <option>CLASSIC HANGER - PACK OF 3</option>
+                <option>ROUND FOODMATE 2 LTR</option>
+                <option>POLYFRESH CRATE 240</option>
+                <option>POLYSTACK CRATE 150</option>
+                <option>KENCHAIR 2006 ARMLESS</option>
+                <option>KLIPLOCK NO.603 - 4500 ML</option>
+                <option>DOUBLE SHOE RACK 8 STACK</option>
+                <option>RECTANGLE TROLLEY 4 STACK</option>
+                <option>PLANTER NO.4</option>
+                <option>LION BASIN NO.4</option>
+                <option>RIO BASKET WITH LID</option>
+                <option>FLOWER BUCKET NO.10</option>
+                <option>CLOTH PEG PKT</option>
+                <option>CRATE FOR 300 ML DOUBLE WALL</option>
+                <option>KENCHAIR 2026 WOODFINISH</option>
+                <option>KLIPLOCK NO.610 - 2000 ML</option>
+                <option>GRIP N GULP BOTTLE 750 ML</option>
+                <option>SQUARE TABLE NO. 3003</option>
+                <option>LIDS ONLY FOR BUCKET NO.16 S/M</option>
+                <option>PAINT BUCKET 20 LTR (17 KG) NO LID & NO HANDLE</option>
+                <option>BUCKET NO.16 WITH LID</option>
+                <option>BASIN NO.200</option>
+                <option>WASTE PAPER BASKET NO.3</option>
+                <option>KENCHAIR 2038 DECO</option>
+                <option>CHICKEN FEEDER NO.3</option>
+                <option>EURO CRATE 500 ML</option>
+                <option>RECTANGLE PLANTER NO.7</option>
+                <option>JUG NO.416</option>
+                <option>JUG NO.420</option>
+                <option>JUG NO.423 DECO</option>
+                <option>JUG NO.425 DECO</option>
+                <option>JUG NO.426</option>
+                <option>JUG NO.427 DECO</option>
+                <option>JUG NO.428</option>
+                <option>JUG NO.429 DECO</option>
+                <option>FROSTY JUG NO.430</option>
+                <option>JUG NO.431</option>
+                <option>JUG NO.427 DECO WITH 4PCS GLASS</option>
+                <option>DISNEY PLATE NO. 708</option>
+                <option>DISNEY SNACK BOX</option>
+                <option>TAP BUCKET 25</option>
+                <option>NDOGO TROLLEY 3 STACK</option>
+                <option>NDOGO TROLLEY 4 STACK</option>
+                <option>JUG NO.416 CLEAR</option>
+                <option>JUG NO.426 CLEAR</option>
+                <option>JUG NO.427 CLEAR DECO</option>
+                <option>SQUARE FOODMATE NO.8</option>
+                <option>POLYPOUCH CRATE</option>
+                <option>BABY POTI CHAIR</option>
+                <option>KENCHAIR 2023</option>
+                <option>POLYNEST CRATE 400 NESTABLE</option>
+                <option>POLYSTACK CRATE 240</option>
+                <option>POLYSTACK CRATE 360</option>
+                <option>DAIRY CRATE 250 ML X 15 CUPS</option>
+                <option>TAP DRUM 60</option>
+                <option>FLOWER BUCKET NO.12</option>
+                <option>SQUARE FOODMATE NO.6</option>
+                <option>SQUARE FOODMATE NO.7</option>
+                <option>INDUSTRIAL BUCKET 20 LTR NO LID & NO HANDLE</option>
+                <option>MARVEL WATER BOTTLE NO.2</option>
+                <option>PENCIL BOX DISNEY / MARVEL</option>
+                <option>TAP BUCKET 20 HEAVY DUTY</option>
+                <option>RECTANGLE CONTAINER 1 LTR LID(SF)</option>
+                <option>KUKU BASIN</option>
+                <option>MAXI BASIN NO.1 DECO</option>
+                <option>BOTTLE CRATE 750ML</option>
+                <option>ASSORTED CHAIRS - FACTORY SECONDS</option>
+                <option>120 CRATE - FACTORY SECONDS</option>
+                <option>240 CRATE - FACTORY SECONDS</option>
+                <option>360 CRATE - FACTORY SECONDS</option>
+                <option>BABY CHAIR - FACTORY SECONDS</option>
+                <option>BASIN NO.45 WHOLESALE</option>
+                <option>SAFE BOX NO.1 - 2 LOCK</option>
+                <option>ICE CREAM SPOON</option>
+                <option>FROSTY BUCKET NO.20 WITH LID - WHITE</option>
+                <option>ALL ROUNDER TABLE</option>
+                <option>POLO BOTTLE NO.2</option>
+                <option>RECTANGLE TROLLEY BODY ONLY</option>
+                <option>BASIN NO.25</option>
+                <option>JUMBO BASIN WHOLESALE</option>
+                <option>SMILEY BUCKET NO.10 CLEAR</option>
+                <option>HOMEFRESH 4 - 600 ML</option>
+                <option>HOMEFRESH 5 - 1400 ML</option>
+                <option>HOMEFRESH 6 - 2200 ML</option>
+                <option>HOMEFRESH 7 - 6500 ML</option>
+                <option>LIDS FOR PET 113 - WITHOUT HANDLE</option>
+                <option>BASINS - FACTORY SECONDS</option>
+                <option>TRASH BIN FLAT LID</option>
+                <option>POLO BOTTLE NO.3</option>
+                <option>KENCHAIR 2020</option>
+                <option>SMILEY BUCKET NO.10 P/H</option>
+                <option>JUG NO.433</option>
+                <option>TINY TOTS CONTAINERS 200ML - 4 PACK</option>
+                <option>TINY TOTS CONTAINERS 300ML - 4 PACK</option>
+                <option>TINY TOTS CONTAINERS 500ML - 4 PACK</option>
+                <option>STOOLS - FACTORY SECONDS</option>
+                <option>TABLE - FACTORY SECONDS</option>
+                <option>POLYAIR CRATE 150 EMBOSSED</option>
+                <option>JOHNNY BASIN NO.50 BLACK</option>
+                <option>STORAGE BOX NO.1- 2 - 3 CLIPS ONLY</option>
+                <option>CLARO BOWL DECO</option>
+                <option>BABY BATH - FACTORY SECONDS</option>
+                <option>RECTANGLE FOODMATE NO.1 LID ONLY</option>
+                <option>HOMEWARE MUG NO.1</option>
+                <option>HOMEWARE CONTAINER 600ML</option>
+                <option>HOMEWARE CONTAINER 1200ML</option>
+                <option>HOMEWARE JUG NO.1</option>
+                <option>HOMEWARE SIDE PLATE</option>
+                <option>HOMEWARE FULL PLATE</option>
+                <option>HOMEWARE BOWL NO.1</option>
+                <option>HOMEWARE BOWL NO.2</option>
+                <option>METAL TAP</option>
+                <option>PLASTIC TAP</option>
+                <option>LID ONLY MOP BUCKET NO.2</option>
+                <option>STORAGE BOX NO.1 LID ONLY</option>
+                <option>PEDAL BIN 30 LTRS</option>
+                <option>LID ONLY FOR SWING BIN NO.1</option>
+                <option>POLO BOTTLE NO.1</option>
+                <option>POLYSTACK CRATE 500</option>
+                <option>POLYAIR CRATE 130</option>
+                <option>POLYAIR CRATE 150</option>
+                <option>POLYAIR CRATE 160</option>
+                <option>POLYAIR CRATE 160 EMBOSSED</option>
+                <option>POLYAIR CRATE 280</option>
+                <option>DRUMS - FACTORY SECONDS</option>
+                <option>GLASS HOLDER</option>
+                <option>LAUNDRY BASKET NO.4</option>
+                <option>100 MM LID EMBOSSED - 1 KG</option>
+                <option>KIDS MEGA TABLE</option>
+                <option>SAFA BASIN</option>
+                <option>AUTO CHICKEN DRINKER BIG</option>
+                <option>AUTO CHICKEN DRINKER SMALL</option>
+                <option>CHICK FEEDING TRAY</option>
+                <option>CHICK BOX</option>
+                <option>PARENT FEEDER MALE</option>
+                <option>PARENT FEEDER FEMALE</option>
+                <option>POPPY BASKET BIG</option>
+                <option>MOP BUCKET NO.4 WITHOUT LID</option>
+                <option>BABY SIPPER</option>
+                <option>KIDDY CUP NO.1</option>
+                <option>KIDDY CUP NO.2</option>
+                <option>BOWL NO.527 WITH LID</option>
+                <option>BOWL NO.528 WITH LID</option>
+                <option>BOWL NO.530 PLAIN</option>
+                <option>LUNCH BOX NO.535</option>
+                <option>BOWL NO.811</option>
+                <option>BOWL NO.828</option>
+                <option>BOWL NO.829</option>
+                <option>BOWL NO.832</option>
+                <option>BOWL NO.833</option>
+                <option>BOWL NO.834</option>
+                <option>BOWL NO.835</option>
+                <option>BOWL NO.836</option>
+                <option>FLORA BOWL</option>
+                <option>CLARO MUG CUP DECO</option>
+                <option>FUNNEL NO.1</option>
+                <option>FUNNEL NO.2</option>
+                <option>FUNNEL NO.3</option>
+                <option>FUNNEL TOTO</option>
+                <option>GLASS NO.G5</option>
+                <option>GLASS NO.G6</option>
+                <option>GLASS NO.G8</option>
+                <option>GLASS NO.G9</option>
+                <option>CLOTH PEG</option>
+                <option>JOHNNY MUG CUP 9 CM</option>
+                <option>KIJIKO LUNCH BOX</option>
+                <option>LUNCH BOX</option>
+                <option>YUMMY LUNCH BOX</option>
+                <option>MUG CUP NO.304</option>
+                <option>MUG CUP NO.308</option>
+                <option>MUG CUP NO.309</option>
+                <option>MUG CUP NO.313</option>
+                <option>MUG CUP NO.314</option>
+                <option>MUG CUP NO.321</option>
+                <option>MUG CUP NO.323</option>
+                <option>MUG CUP NO.324 DECO</option>
+                <option>BEER MUG NO.326</option>
+                <option>MUG CUP NO. 327</option>
+                <option>MUG CUP NO.327 DECO</option>
+                <option>MUG CUP NO.328</option>
+                <option>MUG CUP NO.329</option>
+                <option>MUG CUP NO.330</option>
+                <option>PLATE NO.702</option>
+                <option>PLATE NO.704</option>
+                <option>PLATE NO.704 MARBLE</option>
+                <option>PLATE NO.707</option>
+                <option>PLATE NO.710</option>
+                <option>PLATE NO.714</option>
+                <option>PLATE NO.715</option>
+                <option>DINNER PLATE</option>
+                <option>SOAP DISH NO.10 OPEN TYPE</option>
+                <option>SOAP DISH NO.3</option>
+                <option>SOAP DISH NO.6</option>
+                <option>SOAP DISH NO.7 OPEN TYPE</option>
+                <option>SOAP DISH NO.8 OPEN TYPE</option>
+                <option>SOAP DISH NO.9</option>
+                <option>LUNCH BOX NO.537</option>
+                <option>PLATE NO.701</option>
+                <option>EGG TRAY - FACTORY SECONDS</option>
+                <option>POLYSTACK CRATE 250</option>
+                <option>ROUND CONTAINER 0.5 LTR BODY ONLY</option>
+                <option>MUG CUP NO.301</option>
+                <option>ROUND CONTAINER 1 LTR BODY ONLY</option>
+                <option>JOHNNY BASIN NO.45 BLACK</option>
+                <option>KENCHAIR 2041 HIGH BACK</option>
+                <option>POLYAIR CRATE 240 - SGP</option>
+                <option>*SP SOAP DISH NO.10*</option>
+                <option>*SP SOAP DISH NO.9*</option>
+                <option>*SP BOWL NO.811*</option>
+                <option>*SP KIDDY CUP NO.2*</option>
+                <option>*SP KASUMU BASIN*</option>
+                <option>BABY CHAIR NO.5010</option>
+                <option>*SP FUNNEL NO.4*</option>
+                <option>*SP FUNNEL NO.3*</option>
+                <option>*SP FUNNEL NO.2*</option>
+                <option>*SP FUNNEL NO.1*</option>
+                <option>*SP FUNNEL TOTO*</option>
+                <option>*SP PLATE NO.704*</option>
+                <option>*SP PLATE NO.710*</option>
+                <option>*SP GLASS NO.G9*</option>
+                <option>*SP GLASS NO.G6*</option>
+                <option>*SP GLASS NO.G5*</option>
+                <option>*SP YOYO BASKET NO.6*</option>
+                <option>*SP MAXI BASIN NO.5*</option>
+                <option>*SP STRIPE BUCKET NO.5 WITH LID CLEAR*</option>
+                <option>*SP STRIPE BUCKET NO.5 WITH LID*</option>
+                <option>*SP STRIPE BUCKET NO.3 WITH LID CLEAR*</option>
+                <option>*SP STRIPE BUCKET NO.3 WITH LID*</option>
+                <option>*SP STRIPE BUCKET NO.1 WITH LID CLEAR*</option>
+                <option>*SP STRIPE BUCKET NO.1 WITH LID*</option>
+                <option>*SP PLATE NO.707*</option>
+                <option>*SP SOAP DISH NO.3*</option>
+                <option>*SP SOAP DISH NO.4 WITH HANDLE*</option>
+                <option>*SP SOAP DISH NO.6*</option>
+                <option>*SP SOAP DISH NO.7 OPEN TYPE*</option>
+                <option>*SP BASIN NO.45 FOOTBALL STRIPE*</option>
+                <option>*SP BASIN NO.45 NDEGE*</option>
+                <option>*SP LUNCH BOX*</option>
+                <option>*SP MUG CUP NO.324 DECO*</option>
+                <option>*SP BOWL NO.836*</option>
+                <option>*SP BOWL NO.835*</option>
+                <option>*SP BOWL NO.829*</option>
+                <option>*SP MUG CUP NO.330*</option>
+                <option>*SP MUG CUP NO.329*</option>
+                <option>*SP MUG CUP NO.328*</option>
+                <option>*SP MUG CUP NO.327 DECO*</option>
+                <option>*SP MUG CUP NO.327*</option>
+                <option>*SP MUG CUP NO.321*</option>
+                <option>*SP DINNER PLATE*</option>
+                <option>*SP CLARO MUG CUP DECO*</option>
+                <option>*SP BABY SIPPER*</option>
+                <option>*SP CENTURY BASIN*</option>
+                <option>BOWL NO.837</option>
+                <option>*SP SOAP DISH NO.8 OPEN TYPE*</option>
+                <option>PLANTER NO.7</option>
+                <option>*SP BOWL NO.837*</option>
+                <option>SMILEY BUCKET NO.17</option>
+                <option>*SP BABY POTI CHAIR*</option>
+                <option>DISH NO.1</option>
+                <option>DISH NO.2</option>
+                <option>BOWL NO.812 WITH LID</option>
+                <option>*SP MUG CUP NO.323*</option>
+                <option>SMILEY 10 PCR - RECYCLED 50% BUCKET</option>
+                <option>*SP PLATE NO.714*</option>
+                <option>*SP PLATE NO.715*</option>
+                <option>PENCIL BOX</option>
+                <option>SNACK BOX</option>
+                <option>BOTTLE CRATE 500ML X 12</option>
+                <option>*SP BOWL NO.832*</option>
+                <option>JUMPY MUG</option>
+                <option>STACKABLE CHAIR SHELL FERRULES</option>
+                <option>RECTANGLE CONTAINER 1 LTR NO LABEL</option>
+                <option>RECTANGLE CONTAINER 2 LTR NO LABEL</option>
+                <option>RECTANGLE CONTAINER 4 LTR NO LABEL</option>
+                <option>HANDY HANGER</option>
+                <option>2042 KENCHAIR BAMBOO - ALUMINIUM LEGS</option>
+                <option>*SP POLO BOTTLE NO.1*</option>
+                <option>*SP POLO BOTTLE NO.2*</option>
+                <option>*SP POLO BOTTLE NO.3*</option>
+                <option>*SP POLO BOTTLE NO.5*</option>
+                <option>20 LTR HEAVY DUTY FLOWER BUCKET</option>
+                <option>ROUND CONTAINER 450 ML</option>
+                <option>PLANTER NO.6 BASE ONLY</option>
+                <option>*SP BASIN NO.25*</option>
+                <option>*SP FROSTY JUG NO.430*</option>
+                <option>PENCIL BOX - BRANDED</option>
+                <option>BUCKET NO.16 WITH LID-BRANDED</option>
+                <option>JOHNNY PAINT BUCKET 20 LTR - 17 KG WITH LID</option>
+                <option>FOLDING TABLE 3009 BAMBOO</option>
+                <option>PEDAL BIN 50 LTRS</option>
+                <option>CHICKEN FEEDER NO.4 FEMALE</option>
+                <option>CHICKEN FEEDER NO.5 MALE</option>
+                <option>RECTANGLE FOODMATE 2 - 4 LTR LID ONLY</option>
+                <option>SERVING TRAY NO.1</option>
+                <option>SERVING TRAY NO.4</option>
+                <option>*SP YOYO BASKET NO.5*</option>
+                <option>GLASS NO.G9 CLEAR</option>
+                <option>GLASS NO.G5 CLEAR</option>
+                <option>GLASS NO.G6 CLEAR</option>
+                <option>BOTTLE CRATE 300ML X 25</option>
+                <option>TRASH - SWING BIN BOLT</option>
+                <option>MUG CUP NO.331</option>
+                <option>HOMEWARE MUG NO.2</option>
+                <option>PLATE NO.716</option>
+                <option>*SP MUG CUP NO.331*</option>
+                <option>*SP UTILITY TRAY*</option>
+                <option>*SP CUTLERY TRAY*</option>
+                <option>BIG PACK BOWL NO.836</option>
+                <option>*SP GLASS NO.G5 CLEAR*</option>
+                <option>*SP GLASS NO.G9 CLEAR*</option>
+                <option>*SP GLASS NO.G6 CLEAR*</option>
+                <option>PLANTER NO.10 WITH DISH</option>
+                <option>SHRINK TRAY 1</option>
+                <option>PLANTER NO.1 BASE ONLY</option>
+                <option>PLANTER NO.2 BASE ONLY</option>
+                <option>LID ONLY MOP BUCKET NO.3</option>
+                <option>TALL LAUNDRY BASKET NO.1 BODY ONLY</option>
+                <option>BOWL NO.838</option>
+                <option>PLATE NO.712</option>
+                <option>BOWL NO.509 WITH LID</option>
+                <option>PLATE NO. 708</option>
+                <option>DISH RACK NO.3 WITH TRAY</option>
+                <option>BOWL NO.839</option>
+                <option>PLANTER NO.5 BASE ONLY</option>
+                <option>LARGE DRAWER ONLY</option>
+                <option>HOMEWARE BOWL NO.3</option>
+                <option>HOMEWARE BOWL NO.4</option>
+
+            </select>
         </div>
 
         <div class="form-group form-inline">
