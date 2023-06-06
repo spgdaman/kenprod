@@ -8,6 +8,7 @@ import csv
 from .forms import MarketPriceForm
 from accounts.models import User
 from .models import MarketPrice
+from .filters import MarketPriceFilter
 
 def get_market_price(request):
     if request.method == "POST":
@@ -102,6 +103,7 @@ def export_csv(request):
     # Get all market price information from the marketprice table
     marketprice = MarketPrice.objects.all()
 
+    search = MarketPriceFilter(request.GET, queryset=marketprice).qs
     # Create the HttpResponse object with the appropriate CSV header
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="marketprice.csv"'
@@ -109,7 +111,15 @@ def export_csv(request):
     writer = csv.writer(response)
     writer.writerow(['sales_person', 'customer_name', 'customer_branch', 'kenpoly_product_name', 'kenpoly_price', 'competitor_name', 'competitor_product_name', 'competitor_price', 'created_at'])
 
-    for price in marketprice:
-        writer.writerow([price.sales_person, price.customer_name, price.customer_branch, price.kenpoly_product_name, price.kenpoly_price, price.competitor_name, price.competitor_product_name, price.competitor_price, price.created_at])
-
+    for e in search.values_list('sales_person', 'customer_name', 'customer_branch', 'kenpoly_product_name', 'kenpoly_price', 'competitor_name', 'competitor_product_name', 'competitor_price', 'created_at'):
+        writer.writerow(e)  
     return response
+    # for price in marketprice:
+    #     writer.writerow([price.sales_person, price.customer_name, price.customer_branch, price.kenpoly_product_name, price.kenpoly_price, price.competitor_name, price.competitor_product_name, price.competitor_price, price.created_at])
+
+    # return response
+
+def search(request):
+    market_prices = MarketPrice.objects.all().order_by('-created_at')
+    market_prices_filter = MarketPriceFilter(request.GET, queryset=market_prices)
+    return render(request, 'search/market_prices_list.html', {'filter': market_prices_filter})
