@@ -1,8 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
 import pandas as pd
+import csv
 
 from .forms import MarketPriceForm
 from accounts.models import User
@@ -96,3 +97,19 @@ def get_market_price(request):
         form = MarketPriceForm()
     
     return render(request, "marketprice/price_capture.html", {"form":form})
+
+def export_csv(request):
+    # Get all market price information from the marketprice table
+    marketprice = MarketPrice.objects.all()
+
+    # Create the HttpResponse object with the appropriate CSV header
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="marketprice.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['sales_person', 'customer_name', 'customer_branch', 'kenpoly_product_name', 'kenpoly_price', 'competitor_name', 'competitor_product_name', 'competitor_price', 'created_at'])
+
+    for price in marketprice:
+        writer.writerow([price.sales_person, price.customer_name, price.customer_branch, price.kenpoly_product_name, price.kenpoly_price, price.competitor_name, price.competitor_product_name, price.competitor_price, price.created_at])
+
+    return response
