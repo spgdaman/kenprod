@@ -203,8 +203,11 @@
             fieldSel.length = 1; // remove all options bar first
             if (this.selectedIndex < 1) return; // done  
             var ft = typeObject[this.value];
+            console.log(ft)
+            
             for (var field in typeObject[this.value]) {
-                fieldSel.options[fieldSel.options.length] = new Option(ft[field], field);
+                
+                fieldSel.options[fieldSel.options.length] = new Option(ft[field], ft[field].value);
             }
         }
         typeSel.onchange();
@@ -228,7 +231,7 @@
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="customer_branch">Customer Branch:</label>
             <!-- <input name="customer_branch" type="text" class="form-control col-md-4" placeholder="Customer Branch"> -->
-            <select class="form-control" name="customer_branch" id="fieldSel" size="1">
+            <select class="form-control" name="customer_branch" id="fieldSel">
                 <option selected="selected">Select field</option>
             </select> 
         </div>

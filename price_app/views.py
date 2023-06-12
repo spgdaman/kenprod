@@ -25,7 +25,7 @@ def get_market_price(request):
             if len(info["competitor_name"]) >= 2:
                 counter = len(info["competitor_name"])
 
-
+                user_name = f"{request.user.first_name} {request.user.last_name}"
                 customer_name = info["customer_name"][0]
                 customer_branch = info["customer_branch"][0]
                 kenpoly_product_name = info["kenpoly_product_name"][0]
@@ -54,7 +54,7 @@ def get_market_price(request):
 
                 for i in market_agg:
                     market_data = MarketPrice.objects.create(
-                    sales_person = request.user,
+                    sales_person = user_name,
                     customer_name = i[0],
                     customer_branch = i[1],
                     kenpoly_product_name = i[2],
@@ -63,7 +63,7 @@ def get_market_price(request):
                     competitor_product_name = i[5],
                     competitor_price = i[6]
                 )
-                            
+                print(f"{request.user.first_name} {request.user.first_name}")
 
                 # print(info["competitor_name"])
                 # print(counter)
@@ -91,6 +91,7 @@ def get_market_price(request):
                     competitor_price = competitor_price
                 )
                 print(request.POST['customer_branch'])
+                print(f"{request.user.first_name} {request.user.last_name}")
                 messages.success(request,'Data has been submitted')
                 return render(request, "marketprice/price_capture.html")
     
@@ -104,6 +105,7 @@ def export_csv(request):
     marketprice = MarketPrice.objects.all()
 
     search = MarketPriceFilter(request.GET, queryset=marketprice).qs
+    print(search)
     # Create the HttpResponse object with the appropriate CSV header
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="marketprice.csv"'
