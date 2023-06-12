@@ -27,9 +27,11 @@ class RawMaterials(models.Model):
     rm_cost = models.DecimalField(blank=True)
     landing_cost = models.DecimalField(blank=True)
     
-    def landed_cost_per_kg(self):
+    def landed_cost_per_kilo(self):
         '''returns the landing cost per kg'''
         if self.rm_cost < 0:
             return (-1*self.rm_cost)*(1+(self.landing_cost/100))
         else:
             return self.rm_cost *(1+(self.landing_cost/100))
+        
+    landed_cost_per_kg = property(landed_cost_per_kilo)

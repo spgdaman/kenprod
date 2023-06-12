@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'price_app',
     'accounts',
+    'cogs',
     
     'bootstrap4',
     'crispy_forms',
