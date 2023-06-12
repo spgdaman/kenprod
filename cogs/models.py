@@ -4,14 +4,19 @@ from django.conf import settings
 class FinishedGoods(models.Model):
     name = models.CharField(max_length=50, blank=True)
     attribute = models.CharField(max_length=30, blank=True)
-    weight = models.DecimalField(blank=True)
+    weight = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
     recipe = models.CharField(max_length=50, blank=True)
-    selling_price = models.DecimalField(blank=True)
+    selling_price = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
 class Composition(models.Model):
+    item_name = models.ForeignKey(FinishedGoods, on_delete=models.CASCADE)
     composition = models.CharField(max_length=30, blank=True)
-    ratio = models.DecimalField(blank=True)
-    price_per_kg = models.DecimalField(blank=True)
+    ratio = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    price_per_kg = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     def get_price_for_ratio(self):
         '''returns the price for ratio'''
@@ -22,10 +27,13 @@ class Composition(models.Model):
     price_for_ratio = property(get_price_for_ratio)
 
 class RawMaterials(models.Model):
+    item_name = models.ForeignKey(FinishedGoods, on_delete=models.CASCADE)
     material = models.CharField(max_length=50, blank=True)
     category = models.CharField(max_length=50, blank=True)
-    rm_cost = models.DecimalField(blank=True)
-    landing_cost = models.DecimalField(blank=True)
+    rm_cost = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    landing_cost = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
     
     def landed_cost_per_kilo(self):
         '''returns the landing cost per kg'''
