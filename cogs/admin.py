@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import FinishedGoods, Composition, RawMaterials
+from .models import FinishedGood, Composition, RawMaterial
 
-admin.site.register(FinishedGoods)
+admin.site.register(FinishedGood)
 admin.site.register(Composition)
-admin.site.register(RawMaterials)
+admin.site.register(RawMaterial)
