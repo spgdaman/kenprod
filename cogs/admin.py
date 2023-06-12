@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import FinishedGoods, Composition, RawMaterials
 
-# Register your models here.
+admin.site.register(FinishedGoods)
+admin.site.register(Composition)
+admin.site.register(RawMaterials)
