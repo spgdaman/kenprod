@@ -49,6 +49,8 @@ class VariableCost(models.Model):
     weight_polymers_kilo = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     power = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     labour = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
 class Packing(models.Model):
     PACKING_UNIT = [("pcs", "Pieces"),
@@ -76,6 +78,9 @@ class Packing(models.Model):
     glue = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     shrink_wrap = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     foil = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     def total_cost_of_packing(self):
         variable_costs = (
