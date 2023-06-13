@@ -15,7 +15,6 @@ class Recipe(models.Model):
 
 class FinishedGood(models.Model):
     name = models.CharField(max_length=50, blank=True)
-    # attribute = models.CharField(max_length=30, blank=True)
     attribute = models.ForeignKey(Attribute, models.DO_NOTHING, blank=True, null=True)
     weight = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
     recipe = models.ForeignKey(Recipe, models.DO_NOTHING, blank=True, null=True)
@@ -63,7 +62,7 @@ class RawMaterial(models.Model):
     updated_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.raw_material} material used for {self.item_name}"
+        return f"{self.raw_material} material used for --> product {self.item_name}"
 
 class CompositionLineItem(models.Model):
     composite_material = models.CharField(max_length=30, blank=True)
@@ -80,7 +79,7 @@ class Composition(models.Model):
     updated_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.item_name}"
+        return f"{self.composition} composition for --> {self.item_name}"
 
     def get_price_for_ratio(self):
         '''returns the price for ratio'''
@@ -89,6 +88,12 @@ class Composition(models.Model):
         else:
             return (self.price_per_kg * self.ratio) * 100
     price_for_ratio = property(get_price_for_ratio)
+
+class ExternalComponent(models.Model):
+    pass
+
+class Packaging(models.Model):
+    pass
 
 # class VariableCost(models.Model):
 #     # item_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
