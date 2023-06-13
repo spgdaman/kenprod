@@ -8,6 +8,7 @@ from .models import (
     RawMaterialLineItem,
     RawMaterial,
     RawMaterialCategory,
+    Attribute
 )
 
 admin.site.register(FinishedGood)
@@ -16,6 +17,7 @@ admin.site.register(CompositionLineItem)
 admin.site.register(RawMaterialLineItem)
 admin.site.register(RawMaterial)
 admin.site.register(RawMaterialCategory)
+admin.site.register(Attribute)
 # admin.site.register(VariableCost)
 # admin.site.register(Packing)
 admin.site.register(Test)
