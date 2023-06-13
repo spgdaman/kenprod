@@ -26,6 +26,7 @@ def get_market_price(request):
                 counter = len(info["competitor_name"])
 
                 user_name = f"{request.user.first_name} {request.user.last_name}"
+                print(user_name)
                 customer_name = info["customer_name"][0]
                 customer_branch = info["customer_branch"][0]
                 kenpoly_product_name = info["kenpoly_product_name"][0]
