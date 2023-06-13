@@ -1,12 +1,20 @@
 from django.db import models
 from django.conf import settings
 
+class Attribute(models.Model):
+    attribute_name = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):
+        return self.attribute_name
+
 class FinishedGood(models.Model):
     name = models.CharField(max_length=50, blank=True)
-    attribute = models.CharField(max_length=30, blank=True)
+    # attribute = models.CharField(max_length=30, blank=True)
+    attribute = models.ForeignKey(Attribute, models.DO_NOTHING, blank=True, null=True)
     weight = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
     recipe = models.CharField(max_length=50, blank=True)
     selling_price = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(null=True, blank=True)
 
