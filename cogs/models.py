@@ -4,7 +4,7 @@ from django.conf import settings
 class FinishedGood(models.Model):
     name = models.CharField(max_length=50, blank=True)
     attribute = models.CharField(max_length=30, blank=True)
-    weight = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    weight = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
     recipe = models.CharField(max_length=50, blank=True)
     selling_price = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
     created_at = models.DateTimeField(auto_now=True)
@@ -12,31 +12,6 @@ class FinishedGood(models.Model):
 
     def __str__(self):
         return self.name
-    
-class CompositionLineItem(models.Model):
-    composite_material = models.CharField(max_length=30, blank=True)
-
-    def __str__(self):
-        return self.composite_material
-
-class Composition(models.Model):
-    item_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
-    composition = models.ForeignKey(CompositionLineItem, models.DO_NOTHING, blank=True, null=True)
-    ratio = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
-    price_per_kg = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
-    created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.item_name}"
-
-    def get_price_for_ratio(self):
-        '''returns the price for ratio'''
-        if self.ratio < 0:
-            return (self.price_per_kg * (-1*self.ratio)) * 100
-        else:
-            return (self.price_per_kg * self.ratio) * 100
-    price_for_ratio = property(get_price_for_ratio)
 
 class RawMaterialCategory(models.Model):
     category = models.CharField(max_length=50, blank=True)
@@ -75,6 +50,31 @@ class RawMaterial(models.Model):
 
     def __str__(self):
         return f"{self.raw_material} material used for {self.item_name}"
+
+class CompositionLineItem(models.Model):
+    composite_material = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):
+        return self.composite_material
+
+class Composition(models.Model):
+    item_name = models.ForeignKey(RawMaterial, models.DO_NOTHING, blank=True, null=True)
+    composition = models.ForeignKey(CompositionLineItem, models.DO_NOTHING, blank=True, null=True)
+    ratio = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    price_per_kg = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.item_name}"
+
+    def get_price_for_ratio(self):
+        '''returns the price for ratio'''
+        if self.ratio < 0:
+            return (self.price_per_kg * (-1*self.ratio)) * 100
+        else:
+            return (self.price_per_kg * self.ratio) * 100
+    price_for_ratio = property(get_price_for_ratio)
 
 # class VariableCost(models.Model):
 #     # item_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
