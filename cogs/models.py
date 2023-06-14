@@ -89,6 +89,16 @@ class Composition(models.Model):
             return (self.price_per_kg * self.ratio) * 100
     price_for_ratio = property(get_price_for_ratio)
 
+class SemiFinishedGood(models.Model):
+    item_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
+    sfg_name = models.CharField(max_length=50, blank=True)
+    weight = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    attribute = models.ForeignKey(Attribute, models.DO_NOTHING, blank=True, null=True)
+    component_quantity = models.IntegerField()
+    composition = models.ForeignKey(Composition, models.DO_NOTHING, blank=True, null=True)
+    # recipe = models.ForeignKey(Recipe, models.DO_NOTHING, blank=True, null=True)
+
+
 class ExternalComponent(models.Model):
     pass
 
