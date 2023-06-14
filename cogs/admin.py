@@ -10,6 +10,7 @@ from .models import (
     RawMaterialCategory,
     Attribute,
     Recipe,
+    SemiFinishedGood
 )
 
 admin.site.register(FinishedGood)
@@ -20,6 +21,7 @@ admin.site.register(RawMaterial)
 admin.site.register(RawMaterialCategory)
 admin.site.register(Attribute)
 admin.site.register(Recipe)
+admin.site.register(SemiFinishedGood)
 # admin.site.register(VariableCost)
 # admin.site.register(Packing)
 admin.site.register(Test)
