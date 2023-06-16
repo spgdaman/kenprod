@@ -15,3 +15,7 @@ class MarketPrice(models.Model):
 
     def __str__(self):
         return f"Entry #{self.id} on {self.created_at} by {self.sales_person}"
+    
+class Products(models.Model):
+    description = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now=True)
