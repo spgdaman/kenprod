@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4>Import Farmer</h4>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="productsfile">
+    <button type="submit">Upload</button>
+  </form>
+{% endblock %}

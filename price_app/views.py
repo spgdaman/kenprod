@@ -1,14 +1,49 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views import View
 
 import pandas as pd
-import csv
+import io,csv
 
 from .forms import MarketPriceForm
 from accounts.models import User
-from .models import MarketPrice
+from .models import MarketPrice, Products
 from .filters import MarketPriceFilter
+
+class ProductsUploadView(View):
+    def get(self, request):
+        template_name = 'bulkupload/import.html'
+        return render(request, template_name)
+    
+    def post(self, request):
+        # paramFile = io.TextIOWrapper(request.FILES['productsfile'].file)
+        paramFile = io.TextIOWrapper(request.FILES['productsfile'].file)
+        portfolio = csv.DictReader(paramFile)
+        list_of_dict = list(portfolio)
+        objs = [row['ï»¿description'] for row in list_of_dict]
+        for i in objs:
+            print(i)
+            Products.objects.create(description=i)
+        
+        
+        return JsonResponse({"status_code":200})
+        # portfolio = csv.DictReader(paramFile)
+        # list_of_dict = list(portfolio)
+        # objs = [
+        #     Products(
+        #         description = row['description']
+        #     )
+        #     for row in list_of_dict
+        # ]
+        # try:
+        #     msg = Products.objects.bul_create(objs)
+        #     returnmsg = {"status_code":200}
+        #     print('imported successfully')
+        # except Exception as e:
+        #     print('Error While Importing Data: ', e)
+        #     returnmsg = {"status_code": 500}
+        # return JsonResponse(returnmsg)
 
 def get_market_price(request):
     if request.method == "POST":
