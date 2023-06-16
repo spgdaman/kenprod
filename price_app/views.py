@@ -8,8 +8,44 @@ import io,csv
 
 from .forms import MarketPriceForm
 from accounts.models import User
-from .models import MarketPrice, Products
+from .models import MarketPrice, Products, Customers, CustomerBranches
 from .filters import MarketPriceFilter
+
+class CustomerUploadView(View):
+    def get(self, request):
+        template_name = 'bulkupload/import.html'
+        return render(request, template_name)
+    
+    def post(self, request):
+        # print(request.FILES['data'].file)
+        paramFile = io.TextIOWrapper(request.FILES['data'].file)
+        portfolio = csv.DictReader(paramFile)
+        list_of_dict = list(portfolio)
+        objs = [row["name"] for row in list_of_dict]
+        for i in objs:
+            Customers.objects.create(name=i)
+        
+        return JsonResponse({"status_code":200})
+    
+class CustomerBranchesUploadView(View):
+    def get(self, request):
+        template_name = 'bulkupload/import.html'
+        return render(request, template_name)
+    
+    def post(self, request):
+        # print(request.FILES['data'].file)
+        paramFile = io.TextIOWrapper(request.FILES['data'].file)
+        portfolio = csv.DictReader(paramFile)
+        list_of_dict = list(portfolio)
+        # objs = [row["name"] for row in list_of_dict]
+        for i in list_of_dict:
+            id = i["id"]
+            name = i["Customer Name"]
+            CustomerBranches.objects.create(name=name, parent_company_id=id)
+        # for i in objs:
+        #     Customers.objects.create(name=i)
+        
+        return JsonResponse({"status_code":200})
 
 class ProductsUploadView(View):
     def get(self, request):
@@ -18,7 +54,7 @@ class ProductsUploadView(View):
     
     def post(self, request):
         # paramFile = io.TextIOWrapper(request.FILES['productsfile'].file)
-        paramFile = io.TextIOWrapper(request.FILES['productsfile'].file)
+        paramFile = io.TextIOWrapper(request.FILES['data'].file)
         portfolio = csv.DictReader(paramFile)
         list_of_dict = list(portfolio)
         objs = [row['ï»¿description'] for row in list_of_dict]
