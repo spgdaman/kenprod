@@ -46,6 +46,7 @@ class ProductsUploadView(View):
         # return JsonResponse(returnmsg)
 
 def get_market_price(request):
+    products = Products.objects.all().order_by('description')
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = MarketPriceForm(request.POST)
@@ -134,7 +135,7 @@ def get_market_price(request):
     else:
         form = MarketPriceForm()
     
-    return render(request, "marketprice/price_capture.html", {"form":form})
+    return render(request, "marketprice/price_capture.html", {"form":form,"products":products})
 
 def export_csv(request):
     # Get all market price information from the marketprice table
