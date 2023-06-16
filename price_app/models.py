@@ -22,3 +22,14 @@ class Products(models.Model):
 
     def __str__(self):
         return self.description
+    
+class Customers(models.Model):
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+    
+class CustomerBranches(models.Model):
+    name = models.CharField(max_length=100)
+    parent_company = models.ForeignKey(Customers, on_delete=models.CASCADE)
