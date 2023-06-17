@@ -2,4 +2,4 @@ env/
 migrations/
 db.*
 __pycache__/
-*.env
+# *.env
