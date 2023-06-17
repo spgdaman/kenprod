@@ -83,6 +83,24 @@ class ProductsUploadView(View):
 
 def get_market_price(request):
     products = Products.objects.all().order_by('description')
+    customer_and_branches = {}
+    customers = Customers.objects.all().values('pk', 'name')
+    customers = [i for i in customers]
+    customers = pd.DataFrame(customers)
+    customer_list = customers[["name"]]
+    # customer_list = customer_list.to_list('records')
+
+    branches = CustomerBranches.objects.all().values('pk', 'name', 'parent_company')
+    branches = [i for i in branches]
+    branches = pd.DataFrame(branches)
+
+    total = customers.merge(branches, left_on='pk', right_on='parent_company')
+    total.rename(columns = {"name_x":"customer", "name_y":"branch"}, inplace = True)
+    total = total[["customer", "branch"]]
+    total = (total.groupby('customer')
+              .apply(lambda x: [y for y in x['branch']])
+              .to_dict())
+    
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = MarketPriceForm(request.POST)
@@ -166,12 +184,13 @@ def get_market_price(request):
                 print(request.POST['customer_branch'])
                 print(f"{request.user.first_name} {request.user.last_name}")
                 messages.success(request,'Data has been submitted')
-                return render(request, "marketprice/price_capture.html")
+                return render(request, "marketprice/price_capture.html", {"form":form,"products":products,"total":total})
     
     else:
         form = MarketPriceForm()
+        return render(request, "marketprice/price_capture.html", {"form":form,"products":products,"total":total})
     
-    return render(request, "marketprice/price_capture.html", {"form":form,"products":products})
+    return render(request, "marketprice/price_capture.html", {"form":form,"products":products,"total":total})
 
 def export_csv(request):
     # Get all market price information from the marketprice table

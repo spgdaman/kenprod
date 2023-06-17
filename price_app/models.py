@@ -33,3 +33,6 @@ class Customers(models.Model):
 class CustomerBranches(models.Model):
     name = models.CharField(max_length=100)
     parent_company = models.ForeignKey(Customers, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name} {self.parent_company.name}"
