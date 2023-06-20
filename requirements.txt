@@ -5,8 +5,6 @@ soupsieve==2.4.1
 sqlparse==0.4.4
 typing_extensions==4.6.3
 tzdata==2023.3
-(env) ubuntu@ip-172-31-24-22:~/kenprod$ deactivate
-ubuntu@ip-172-31-24-22:~/kenprod$ pip freeze
 asgiref==3.7.2
 attrs==21.2.0
 Automat==20.2.0
