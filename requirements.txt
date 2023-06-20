@@ -24,7 +24,6 @@ cryptography==3.4.8
 dbus-python==1.2.18
 distlib==0.3.6
 distro==1.7.0
-distro-info===1.1build1
 Django==4.2.2
 django-bootstrap4==23.1
 django-crispy-forms==2.0
