@@ -48,6 +48,5 @@ pandas==2.0.2
 psycopg==3.1.9
 psycopg2-binary==2.9.6
 ptyprocess==0.7.0
-unattended-upgrades==0.1
 urllib3==1.26.5
 virtualenv==20.23.1
