@@ -87,7 +87,7 @@ def get_market_price(request):
     customers = Customers.objects.all().values('pk', 'name')
     customers = [i for i in customers]
     customers = pd.DataFrame(customers)
-    customer_list = customers[["name"]]
+    # customer_list = customers["name"]
     # customer_list = customer_list.to_list('records')
 
     branches = CustomerBranches.objects.all().values('pk', 'name', 'parent_company')
