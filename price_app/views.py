@@ -94,12 +94,15 @@ def get_market_price(request):
     branches = [i for i in branches]
     branches = pd.DataFrame(branches)
 
-    total = customers.merge(branches, left_on='pk', right_on='parent_company')
-    total.rename(columns = {"name_x":"customer", "name_y":"branch"}, inplace = True)
-    total = total[["customer", "branch"]]
-    total = (total.groupby('customer')
-              .apply(lambda x: [y for y in x['branch']])
-              .to_dict())
+    try:
+        total = customers.merge(branches, left_on='pk', right_on='parent_company')
+        total.rename(columns = {"name_x":"customer", "name_y":"branch"}, inplace = True)
+        total = total[["customer", "branch"]]
+        total = (total.groupby('customer')
+                .apply(lambda x: [y for y in x['branch']])
+                .to_dict())
+    except:
+        branches
     
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
