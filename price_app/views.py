@@ -102,7 +102,7 @@ def get_market_price(request):
                 .apply(lambda x: [y for y in x['branch']])
                 .to_dict())
     except:
-        branches
+        total = branches
     
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
