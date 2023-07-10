@@ -386,7 +386,12 @@ def external_component_semi_finished_goods_input(request):
         form = forms.ExternalComponentFormSemiFinishedGood(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+
+            form = forms.ExternalComponentFormSemiFinishedGood()
             return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
     
     else:
