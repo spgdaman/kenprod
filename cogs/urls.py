@@ -26,4 +26,6 @@ urlpatterns = [
     path("raw_material_line_item_input/", views.raw_material_line_item_input, name="raw_material_category_line_item_input"),
     path("raw_material_finished_goods_input/", views.raw_material_finished_goods_input, name="raw_material_finished_goods_input"),
     path("raw_material_semi_finished_goods_input/", views.raw_material_semi_finished_goods_input, name="raw_material_semi_finished_goods_input"),
+
+    # path("/", views.)
 ]

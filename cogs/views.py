@@ -210,7 +210,7 @@ def raw_material_line_item_input(request):
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
     
 def raw_material_finished_goods_input(request):
-    page_view = "Raw Material Line Item Input Form"
+    page_view = "Raw Material Finished Goods Input Form"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.RawMaterialFormFinishedGood(request.POST)
@@ -224,7 +224,7 @@ def raw_material_finished_goods_input(request):
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
     
 def raw_material_semi_finished_goods_input(request):
-    page_view = "Raw Material Line Item Input Form"
+    page_view = "Raw Material Semi Finished Goods Input Form"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.RawMaterialFormSemiFinishedGood(request.POST)
@@ -236,3 +236,59 @@ def raw_material_semi_finished_goods_input(request):
     else:
         form = forms.RawMaterialFormSemiFinishedGood()
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
+    
+def external_component_name_input(request):
+    page_view = "External Component Name Input Form"
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = forms.ExternalComponentNameForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
+    
+    else:
+        form = forms.ExternalComponentNameForm()
+        return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
+    
+def external_component_line_item_input(request):
+    page_view = "External Component Line Item Input Form"
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = forms.ExternalComponentLineItemForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
+    
+    else:
+        form = forms.ExternalComponentLineItemForm()
+        return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
+    
+def external_component_finished_goods_input(request):
+    page_view = "External Component Finished Goods Input Form"
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = forms.ExternalComponentFormFinishedGood(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
+    
+    else:
+        form = forms.ExternalComponentFormFinishedGood()
+        return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
+    
+def external_component_semi_finished_goods_input(request):
+    page_view = "External Component Semi Finished Goods Input Form"
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = forms.ExternalComponentFormSemiFinishedGood(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
+    
+    else:
+        form = forms.ExternalComponentFormSemiFinishedGood()
+        return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})

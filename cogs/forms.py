@@ -123,3 +123,24 @@ class RawMaterialFormSemiFinishedGood(forms.ModelForm):
     class Meta:
         model = models.RawMaterial
         fields = ['sfg_name', 'raw_material']
+
+class ExternalComponentNameForm(forms.ModelForm):
+    class Meta:
+        model = models.ExternalComponentName
+        fields = ['name']
+
+class ExternalComponentLineItemForm(forms.ModelForm):
+    class Meta:
+        model = models.ExternalComponentLineItem
+        fields = ['name', 'unit', 'cost_per_unit']
+
+class ExternalComponentFormFinishedGood(forms.ModelForm):
+    class Meta:
+        model = models.ExternalComponent
+        fields = ['fg_name', 'component']
+
+
+class ExternalComponentFormSemiFinishedGood(forms.ModelForm):
+    class Meta:
+        model = models.ExternalComponent
+        fields = ['sfg_name', 'component']
