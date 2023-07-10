@@ -85,9 +85,15 @@ def power_input_sfg(request):
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.PowerFormSemiFinishedGood(request.POST)
+
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+            
+            form = forms.PowerFormSemiFinishedGood()
             return render(request, "cogs/powerform.html", {"form":form})
     
     else:
