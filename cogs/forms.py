@@ -97,3 +97,8 @@ class FinishedGoodForm(forms.ModelForm):
     class Meta:
         model = FinishedGood
         fields = ['name', 'unit', 'cost_per_unit']
+
+class SemiFinishedGoodForm(forms.ModelForm):
+    class Meta:
+        model = SemiFinishedGood
+        fields = ['name', 'fg_name', 'unit', 'cost_per_unit']
