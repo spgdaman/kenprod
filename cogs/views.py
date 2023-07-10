@@ -253,7 +253,12 @@ def raw_material_category_input(request):
         form = forms.RawMaterialCategoryForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+
+            form = forms.RawMaterialCategoryForm()
             return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
     
     else:
