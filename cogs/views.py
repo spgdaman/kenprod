@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
 from django.contrib import messages
 from django.views import View
 
-from .forms import LabourFormFinishedGood,LabourFormSemiFinishedGood, PackingFormFinishedGood, PackingFormSemiFinishedGood,PowerFormFinishedGood,PowerFormSemiFinishedGood, LabelFormFinishedGood,LabelFormSemiFinishedGood
+from .forms import LabourFormFinishedGood,LabourFormSemiFinishedGood, PackingFormFinishedGood, PackingFormSemiFinishedGood,PowerFormFinishedGood,PowerFormSemiFinishedGood, LabelFormFinishedGood,LabelFormSemiFinishedGood, FoilingFormFinishedGood, FoilingFormSemiFinishedGood
 
 # class LabourView(View):
 #   template_name = 'cogs/labourform.html'
@@ -127,3 +127,29 @@ def label_input_sfg(request):
     else:
         form = LabelFormSemiFinishedGood()
         return render(request, "cogs/labelform.html", {"form":form})
+    
+def foiling_input_fg(request):
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = FoilingFormFinishedGood(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/foilingform.html", {"form":form})
+    
+    else:
+        form = FoilingFormFinishedGood()
+        return render(request, "cogs/foilingform.html", {"form":form})
+
+def foiling_input_sfg(request):
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = FoilingFormSemiFinishedGood(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/foilingform.html", {"form":form})
+    
+    else:
+        form = FoilingFormSemiFinishedGood()
+        return render(request, "cogs/foilingform.html", {"form":form})
