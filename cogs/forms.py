@@ -92,3 +92,8 @@ class FoilingFormSemiFinishedGood(forms.ModelForm):
     class Meta:
         model = Foiling     
         fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
+
+class FinishedGoodForm(forms.ModelForm):
+    class Meta:
+        model = FinishedGood
+        fields = ['name', 'unit', 'cost_per_unit']

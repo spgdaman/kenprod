@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import labour_input_fg, labour_input_sfg, power_input_fg, power_input_sfg, packing_input_fg, packing_input_sfg, label_input_fg, label_input_sfg, foiling_input_fg, foiling_input_sfg
+from .views import labour_input_fg, labour_input_sfg, power_input_fg, power_input_sfg, packing_input_fg, packing_input_sfg, label_input_fg, label_input_sfg, foiling_input_fg, foiling_input_sfg, finished_good_input
 
 urlpatterns = [
     path("labour_input_finsihed_goods/", labour_input_fg, name='labour_input_fg'),
     path("labour_input_semifinsihed_goods/", labour_input_sfg, name='labour_input_sfg'),
-    
+
     path("power_input_finsihed_goods/", power_input_fg, name='power_input_fg'),
     path("power_input_semifinsihed_goods/", power_input_sfg, name='power_input_sfg'),
 
@@ -16,4 +16,6 @@ urlpatterns = [
 
     path("foiling_input_finsihed_goods/", foiling_input_fg, name='foiling_input_fg'),
     path("foiling_input_semifinsihed_goods/", foiling_input_sfg, name='foiling_input_sfg'),
+
+    path("finished_goods_input/", finished_good_input, name="finished_good_input"),
 ]
