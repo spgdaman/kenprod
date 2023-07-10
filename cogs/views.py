@@ -234,7 +234,12 @@ def semi_finished_good_input(request):
         form = forms.SemiFinishedGoodForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+
+            form = forms.SemiFinishedGoodForm()
             return render(request, "cogs/semifinishedgoodform.html", {"form":form})
     
     else:
