@@ -6,8 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
 from django.contrib import messages
 from django.views import View
 
-# from .forms import LabourFormFinishedGood
-from .forms import LabourFormFinishedGood,LabourFormSemiFinishedGood, PackingFormFinishedGood, PackingFormSemiFinishedGood,PowerFormFinishedGood,PowerFormSemiFinishedGood
+from .forms import LabourFormFinishedGood,LabourFormSemiFinishedGood, PackingFormFinishedGood, PackingFormSemiFinishedGood,PowerFormFinishedGood,PowerFormSemiFinishedGood, LabelFormFinishedGood,LabelFormSemiFinishedGood
 
 # class LabourView(View):
 #   template_name = 'cogs/labourform.html'
@@ -84,11 +83,11 @@ def packing_input_fg(request):
         # check whether it's valid:
         if form.is_valid():
             messages.success(request,'Data has been submitted')
-            return render(request, "cogs/powerform.html", {"form":form})
+            return render(request, "cogs/packingform.html", {"form":form})
     
     else:
         form = PackingFormFinishedGood()
-        return render(request, "cogs/powerform.html", {"form":form})
+        return render(request, "cogs/packingform.html", {"form":form})
 
 def packing_input_sfg(request):
     if request.method == "POST":
@@ -97,8 +96,34 @@ def packing_input_sfg(request):
         # check whether it's valid:
         if form.is_valid():
             messages.success(request,'Data has been submitted')
-            return render(request, "cogs/powerform.html", {"form":form})
+            return render(request, "cogs/packingform.html", {"form":form})
     
     else:
         form = PackingFormSemiFinishedGood()
-        return render(request, "cogs/powerform.html", {"form":form})
+        return render(request, "cogs/packingform.html", {"form":form})
+    
+def label_input_fg(request):
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = LabelFormFinishedGood(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/labelform.html", {"form":form})
+    
+    else:
+        form = LabelFormFinishedGood()
+        return render(request, "cogs/labelform.html", {"form":form})
+
+def label_input_sfg(request):
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = LabelFormSemiFinishedGood(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/labelform.html", {"form":form})
+    
+    else:
+        form = LabelFormSemiFinishedGood()
+        return render(request, "cogs/labelform.html", {"form":form})

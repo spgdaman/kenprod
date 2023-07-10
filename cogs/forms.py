@@ -70,3 +70,14 @@ class PackingFormSemiFinishedGood(forms.ModelForm):
     class Meta:
         model = Packing
         fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
+
+class LabelFormFinishedGood(forms.ModelForm):
+    class Meta:
+        model = Labeling
+        fields = ['description', 'fg_name', 'unit', 'cost_per_unit']
+        # widgets = {'FinishedGood': FinishedGoodSelect}
+
+class LabelFormSemiFinishedGood(forms.ModelForm):
+    class Meta:
+        model = Labeling
+        fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
