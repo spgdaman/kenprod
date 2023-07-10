@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.views import View
 
 # from .forms import LabourFormFinishedGood
-from .forms import LabourFormFinishedGood,LabourFormSemiFinishedGood
+from .forms import LabourFormFinishedGood,LabourFormSemiFinishedGood, PackingFormFinishedGood, PackingFormSemiFinishedGood,PowerFormFinishedGood,PowerFormSemiFinishedGood
 
 # class LabourView(View):
 #   template_name = 'cogs/labourform.html'
@@ -54,25 +54,51 @@ def labour_input_sfg(request):
 def power_input_fg(request):
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
-        form = LabourFormFinishedGood(request.POST)
+        form = PowerFormFinishedGood(request.POST)
         # check whether it's valid:
         if form.is_valid():
             messages.success(request,'Data has been submitted')
             return render(request, "cogs/powerform.html", {"form":form})
     
     else:
-        form = LabourFormFinishedGood()
+        form = PowerFormFinishedGood()
         return render(request, "cogs/powerform.html", {"form":form})
 
 def power_input_sfg(request):
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
-        form = LabourFormSemiFinishedGood(request.POST)
+        form = PowerFormSemiFinishedGood(request.POST)
         # check whether it's valid:
         if form.is_valid():
             messages.success(request,'Data has been submitted')
             return render(request, "cogs/powerform.html", {"form":form})
     
     else:
-        form = LabourFormSemiFinishedGood()
+        form = PowerFormSemiFinishedGood()
+        return render(request, "cogs/powerform.html", {"form":form})
+    
+def packing_input_fg(request):
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = PackingFormFinishedGood(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/powerform.html", {"form":form})
+    
+    else:
+        form = PackingFormFinishedGood()
+        return render(request, "cogs/powerform.html", {"form":form})
+
+def packing_input_sfg(request):
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = PackingFormSemiFinishedGood(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            messages.success(request,'Data has been submitted')
+            return render(request, "cogs/powerform.html", {"form":form})
+    
+    else:
+        form = PackingFormSemiFinishedGood()
         return render(request, "cogs/powerform.html", {"form":form})

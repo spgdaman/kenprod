@@ -1,5 +1,5 @@
 from django import forms
-from .models import Labeling, Labour, FinishedGood, SemiFinishedGood,Power
+from .models import Labeling, Labour, FinishedGood, SemiFinishedGood, Power, Packing
 
 # class LabourFormFinishedGood(forms.ModelForm):
 #     class Meta:
@@ -58,4 +58,15 @@ class PowerFormFinishedGood(forms.ModelForm):
 class PowerFormSemiFinishedGood(forms.ModelForm):
     class Meta:
         model = Power
+        fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
+
+class PackingFormFinishedGood(forms.ModelForm):
+    class Meta:
+        model = Packing
+        fields = ['description', 'fg_name', 'unit', 'cost_per_unit']
+        # widgets = {'FinishedGood': FinishedGoodSelect}
+
+class PackingFormSemiFinishedGood(forms.ModelForm):
+    class Meta:
+        model = Packing
         fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
