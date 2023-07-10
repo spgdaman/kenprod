@@ -21,7 +21,7 @@ class SemiFinishedGood(models.Model):
     name = models.CharField(max_length=50, blank=True)
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     unit = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
-    cost_per_unit = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
+    cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
