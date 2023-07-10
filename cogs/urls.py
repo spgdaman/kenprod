@@ -1,5 +1,4 @@
 from django.urls import path
-# from .views import labour_input_fg, labour_input_sfg, power_input_fg, power_input_sfg, packing_input_fg, packing_input_sfg, label_input_fg, label_input_sfg, foiling_input_fg, foiling_input_sfg, finished_good_input, semi_finished_good_input
 from . import views
 
 urlpatterns = [
@@ -27,5 +26,8 @@ urlpatterns = [
     path("raw_material_finished_goods_input/", views.raw_material_finished_goods_input, name="raw_material_finished_goods_input"),
     path("raw_material_semi_finished_goods_input/", views.raw_material_semi_finished_goods_input, name="raw_material_semi_finished_goods_input"),
 
-    # path("/", views.)
+    path("external_component_name_input/", views.external_component_name_input, name="external_component_name_input"),
+    path("external_component_line_item_input/", views.external_component_line_item_input, name="external_component_line_item_input"),
+    path("external_component_finished_goods_input/", views.external_component_finished_goods_input, name="external_component_finished_goods_input"),
+    path("external_component_semi_finished_goods_input/", views.external_component_semi_finished_goods_input, name="external_component_semi_finished_goods_input"),
 ]
