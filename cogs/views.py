@@ -216,7 +216,12 @@ def finished_good_input(request):
         form = forms.FinishedGoodForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+
+            form = forms.FinishedGoodForm()
             return render(request, "cogs/finishedgoodform.html", {"form":form})
     
     else:
