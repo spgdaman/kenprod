@@ -162,7 +162,12 @@ def label_input_sfg(request):
         form = forms.LabelFormSemiFinishedGood(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+
+            form = forms.LabelFormSemiFinishedGood()
             return render(request, "cogs/labelform.html", {"form":form})
     
     else:
