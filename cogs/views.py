@@ -25,6 +25,7 @@ from . import forms
 #       return render(request, self.template_name, {'form': form})
 
 def labour_input_fg(request):
+    page_view = "Labour Cost Input Form (Finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.LabourFormFinishedGood(request.POST)
@@ -37,13 +38,14 @@ def labour_input_fg(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.LabourFormSemiFinishedGood()
-            return render(request, "cogs/labourform.html", {"form":form})
+            return render(request, "cogs/labourform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.LabourFormFinishedGood()
-        return render(request, "cogs/labourform.html", {"form":form})
+        return render(request, "cogs/labourform.html", {"form":form, "header":page_view})
 
 def labour_input_sfg(request):
+    page_view = "Labour Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.LabourFormSemiFinishedGood(request.POST)
@@ -56,13 +58,14 @@ def labour_input_sfg(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.LabourFormSemiFinishedGood()
-            return render(request, "cogs/labourform.html", {"form":form})
+            return render(request, "cogs/labourform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.LabourFormSemiFinishedGood()
-        return render(request, "cogs/labourform.html", {"form":form})
+        return render(request, "cogs/labourform.html", {"form":form, "header":page_view})
     
 def power_input_fg(request):
+    page_view = "Power Cost Input Form (Finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.PowerFormFinishedGood(request.POST)
@@ -75,13 +78,14 @@ def power_input_fg(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.PowerFormFinishedGood()
-            return render(request, "cogs/powerform.html", {"form":form})
+            return render(request, "cogs/powerform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.PowerFormFinishedGood()
-        return render(request, "cogs/powerform.html", {"form":form})
+        return render(request, "cogs/powerform.html", {"form":form, "header":page_view})
 
 def power_input_sfg(request):
+    page_view = "Power Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.PowerFormSemiFinishedGood(request.POST)
@@ -94,13 +98,14 @@ def power_input_sfg(request):
             messages.success(request,'Data has been submitted')
             
             form = forms.PowerFormSemiFinishedGood()
-            return render(request, "cogs/powerform.html", {"form":form})
+            return render(request, "cogs/powerform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.PowerFormSemiFinishedGood()
-        return render(request, "cogs/powerform.html", {"form":form})
+        return render(request, "cogs/powerform.html", {"form":form, "header":page_view})
     
 def packing_input_fg(request):
+    page_view = "Packing Cost Input Form (Finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.PackingFormFinishedGood(request.POST)
@@ -112,13 +117,14 @@ def packing_input_fg(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.PackingFormFinishedGood()
-            return render(request, "cogs/packingform.html", {"form":form})
+            return render(request, "cogs/packingform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.PackingFormFinishedGood()
-        return render(request, "cogs/packingform.html", {"form":form})
+        return render(request, "cogs/packingform.html", {"form":form, "header":page_view})
 
 def packing_input_sfg(request):
+    page_view = "Packing Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.PackingFormSemiFinishedGood(request.POST)
@@ -131,13 +137,14 @@ def packing_input_sfg(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.PackingFormSemiFinishedGood()
-            return render(request, "cogs/packingform.html", {"form":form})
+            return render(request, "cogs/packingform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.PackingFormSemiFinishedGood()
-        return render(request, "cogs/packingform.html", {"form":form})
+        return render(request, "cogs/packingform.html", {"form":form, "header":page_view})
     
 def label_input_fg(request):
+    page_view = "Label Cost Input Form (Finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.LabelFormFinishedGood(request.POST)
@@ -150,13 +157,14 @@ def label_input_fg(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.LabelFormFinishedGood()
-            return render(request, "cogs/labelform.html", {"form":form})
+            return render(request, "cogs/labelform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.LabelFormFinishedGood()
-        return render(request, "cogs/labelform.html", {"form":form})
+        return render(request, "cogs/labelform.html", {"form":form, "header":page_view})
 
 def label_input_sfg(request):
+    page_view = "Label Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.LabelFormSemiFinishedGood(request.POST)
@@ -168,13 +176,14 @@ def label_input_sfg(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.LabelFormSemiFinishedGood()
-            return render(request, "cogs/labelform.html", {"form":form})
+            return render(request, "cogs/labelform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.LabelFormSemiFinishedGood()
-        return render(request, "cogs/labelform.html", {"form":form})
+        return render(request, "cogs/labelform.html", {"form":form, "header":page_view})
     
 def foiling_input_fg(request):
+    page_view = "Foiling Cost Input Form (Finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.FoilingFormFinishedGood(request.POST)
@@ -186,13 +195,14 @@ def foiling_input_fg(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.FoilingFormFinishedGood()
-            return render(request, "cogs/foilingform.html", {"form":form})
+            return render(request, "cogs/foilingform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.FoilingFormFinishedGood()
-        return render(request, "cogs/foilingform.html", {"form":form})
+        return render(request, "cogs/foilingform.html", {"form":form, "header":page_view})
 
 def foiling_input_sfg(request):
+    page_view = "Foiling Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.FoilingFormSemiFinishedGood(request.POST)
@@ -204,13 +214,14 @@ def foiling_input_sfg(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.FoilingFormSemiFinishedGood()
-            return render(request, "cogs/foilingform.html", {"form":form})
+            return render(request, "cogs/foilingform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.FoilingFormSemiFinishedGood()
-        return render(request, "cogs/foilingform.html", {"form":form})
+        return render(request, "cogs/foilingform.html", {"form":form, "header":page_view})
     
 def finished_good_input(request):
+    page_view = "Finished Goods Input Form"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.FinishedGoodForm(request.POST)
@@ -222,13 +233,14 @@ def finished_good_input(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.FinishedGoodForm()
-            return render(request, "cogs/finishedgoodform.html", {"form":form})
+            return render(request, "cogs/finishedgoodform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.FinishedGoodForm()
-        return render(request, "cogs/finishedgoodform.html", {"form":form})
+        return render(request, "cogs/finishedgoodform.html", {"form":form, "header":page_view})
     
 def semi_finished_good_input(request):
+    page_view = "Semi Finished Goods Input Form"
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.SemiFinishedGoodForm(request.POST)
@@ -240,11 +252,11 @@ def semi_finished_good_input(request):
             messages.success(request,'Data has been submitted')
 
             form = forms.SemiFinishedGoodForm()
-            return render(request, "cogs/semifinishedgoodform.html", {"form":form})
+            return render(request, "cogs/semifinishedgoodform.html", {"form":form, "header":page_view})
     
     else:
         form = forms.SemiFinishedGoodForm()
-        return render(request, "cogs/semifinishedgoodform.html", {"form":form})
+        return render(request, "cogs/semifinishedgoodform.html", {"form":form, "header":page_view})
     
 def raw_material_category_input(request):
     page_view = "Raw Material Name Input Form"
