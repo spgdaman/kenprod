@@ -122,9 +122,15 @@ def packing_input_sfg(request):
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.PackingFormSemiFinishedGood(request.POST)
+
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+
+            form = forms.PackingFormSemiFinishedGood()
             return render(request, "cogs/packingform.html", {"form":form})
     
     else:
