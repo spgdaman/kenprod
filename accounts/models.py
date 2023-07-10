@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, AbstractUser, PermissionsMixin
 )
+from django.contrib.auth.models import Group as DjangoGroup
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -63,7 +64,7 @@ class User(AbstractBaseUser):
 
     def get_full_name(self):
         # The user is identified by their email address
-        return self.email
+        return f"{self.first_name} {self.last_name}"
     
     def get_short_name(self):
         # The user is identifed by their email address
@@ -93,3 +94,32 @@ class User(AbstractBaseUser):
         return self.admin
     
     objects = UserManager()
+
+    # class Meta:
+    #     db_table = 'auth_user'
+
+    @property
+    def cached_groups(self):
+        """Warning 'groups' is a field name (M2M) so can't called this property 'groups'"""
+        if not hasattr(self, '_cached_groups'):
+            self._cached_groups = DjangoGroup.objects.filter(user=self).values_list(
+                'name', flat=True
+            )
+        return self._cached_groups
+
+    def in_groups(self, *names):
+        for name in names:
+            if name in self.cached_groups:
+                return True
+        return False
+
+class Group(DjangoGroup):
+    """Instead of trying to get new user under existing `Aunthentication and Authorization`
+    banner, create a proxy group model under our Accounts app label.
+    Refer to: https://github.com/tmm/django-username-email/blob/master/cuser/admin.py
+    """
+
+    class Meta:
+        verbose_name = 'group'
+        verbose_name_plural = 'groups'
+        proxy = True
