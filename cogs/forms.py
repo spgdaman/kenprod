@@ -1,5 +1,6 @@
 from django import forms
-from .models import Labeling, Labour, FinishedGood, SemiFinishedGood, Power, Packing, Foiling
+# from .models import Labeling, Labour, FinishedGood, SemiFinishedGood, Power, Packing, Foiling
+from . import models
 
 # class LabourFormFinishedGood(forms.ModelForm):
 #     class Meta:
@@ -40,65 +41,85 @@ from .models import Labeling, Labour, FinishedGood, SemiFinishedGood, Power, Pac
     
 class LabourFormFinishedGood(forms.ModelForm):
     class Meta:
-        model = Labour
+        model = models.Labour
         fields = ['description', 'fg_name', 'unit', 'cost_per_unit']
         # widgets = {'FinishedGood': FinishedGoodSelect}
 
 class LabourFormSemiFinishedGood(forms.ModelForm):
     class Meta:
-        model = Labour
+        model = models.Labour
         fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
 
 class PowerFormFinishedGood(forms.ModelForm):
     class Meta:
-        model = Power
+        model = models.Power
         fields = ['description', 'fg_name', 'unit', 'cost_per_unit']
         # widgets = {'FinishedGood': FinishedGoodSelect}
 
 class PowerFormSemiFinishedGood(forms.ModelForm):
     class Meta:
-        model = Power
+        model = models.Power
         fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
 
 class PackingFormFinishedGood(forms.ModelForm):
     class Meta:
-        model = Packing
+        model = models.Packing
         fields = ['description', 'fg_name', 'unit', 'cost_per_unit']
         # widgets = {'FinishedGood': FinishedGoodSelect}
 
 class PackingFormSemiFinishedGood(forms.ModelForm):
     class Meta:
-        model = Packing
+        model = models.Packing
         fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
 
 class LabelFormFinishedGood(forms.ModelForm):
     class Meta:
-        model = Labeling
+        model = models.Labeling
         fields = ['description', 'fg_name', 'unit', 'cost_per_unit']
         # widgets = {'FinishedGood': FinishedGoodSelect}
 
 class LabelFormSemiFinishedGood(forms.ModelForm):
     class Meta:
-        model = Labeling
+        model = models.Labeling
         fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
 
 class FoilingFormFinishedGood(forms.ModelForm):
     class Meta:
-        model = Foiling
+        model = models.Foiling
         fields = ['description', 'fg_name', 'unit', 'cost_per_unit']
         # widgets = {'FinishedGood': FinishedGoodSelect}
 
 class FoilingFormSemiFinishedGood(forms.ModelForm):
     class Meta:
-        model = Foiling     
+        model = models.Foiling     
         fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
 
 class FinishedGoodForm(forms.ModelForm):
     class Meta:
-        model = FinishedGood
+        model = models.FinishedGood
         fields = ['name', 'unit', 'cost_per_unit']
 
 class SemiFinishedGoodForm(forms.ModelForm):
     class Meta:
-        model = SemiFinishedGood
+        model = models.SemiFinishedGood
         fields = ['name', 'fg_name', 'unit', 'cost_per_unit']
+
+class RawMaterialCategoryForm(forms.ModelForm):
+    class Meta:
+        model = models.RawMaterialCategory
+        fields = ['category']
+
+class RawMaterialLineItemForm(forms.ModelForm):
+    class Meta:
+        model = models.RawMaterialLineItem
+        fields = ['name', 'unit', 'cost_per_unit']
+
+class RawMaterialFormFinishedGood(forms.ModelForm):
+    class Meta:
+        model = models.RawMaterial
+        fields = ['fg_name', 'raw_material']
+
+class RawMaterialFormSemiFinishedGood(forms.ModelForm):
+    class Meta:
+        model = models.RawMaterial
+        fields = ['sfg_name', 'raw_material']
