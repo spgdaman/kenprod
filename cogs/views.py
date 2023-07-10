@@ -272,7 +272,12 @@ def raw_material_line_item_input(request):
         form = forms.RawMaterialLineItemForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+
+            form = forms.RawMaterialLineItemForm()
             return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
     
     else:
@@ -286,7 +291,12 @@ def raw_material_finished_goods_input(request):
         form = forms.RawMaterialFormFinishedGood(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+
+            form = forms.RawMaterialFormFinishedGood()
             return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
     
     else:
