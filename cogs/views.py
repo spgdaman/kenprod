@@ -6,7 +6,6 @@ from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
 from django.contrib import messages
 from django.views import View
 
-# from .forms import LabourFormFinishedGood,LabourFormSemiFinishedGood, PackingFormFinishedGood, PackingFormSemiFinishedGood,PowerFormFinishedGood,PowerFormSemiFinishedGood, LabelFormFinishedGood,LabelFormSemiFinishedGood, FoilingFormFinishedGood, FoilingFormSemiFinishedGood, FinishedGoodForm, SemiFinishedGoodForm
 from . import forms
 
 # class LabourView(View):
@@ -29,9 +28,15 @@ def labour_input_fg(request):
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = forms.LabourFormFinishedGood(request.POST)
+
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+            # return render(request, "cogs/labourform.html", {"form":form})
+            form = forms.LabourFormSemiFinishedGood()
             return render(request, "cogs/labourform.html", {"form":form})
     
     else:
