@@ -180,7 +180,12 @@ def foiling_input_fg(request):
         form = forms.FoilingFormFinishedGood(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             messages.success(request,'Data has been submitted')
+
+            form = forms.FoilingFormFinishedGood()
             return render(request, "cogs/foilingform.html", {"form":form})
     
     else:
