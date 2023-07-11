@@ -28,6 +28,7 @@ from . import forms
 #     else:
 #       return render(request, self.template_name, {'form': form})
 
+@login_required()
 def welcome(request):
     return render(request, 'cogs/welcome.html')
 
