@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
 
 from django.contrib.auth.models import Group,Permission
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import permission_required, login_required
 
 from django.contrib import messages
 from django.views import View
@@ -30,12 +31,14 @@ from . import forms
 def welcome(request):
     return render(request, 'cogs/welcome.html')
 
+@permission_required("labour.Can add labour")
+@login_required()
 def labour_input_fg(request):
     content_type = ContentType.objects.get_for_model(Labour)
     post_permission = Permission.objects.filter(content_type=content_type)
 
     page_view = "Labour Cost Input Form (Finished Goods)"
-    if request.method == "POST" and request.user.has_perm("labour.Can add labour") == True:
+    if request.method == "POST" :
         # create a form instance and populate it with data from the request:
         form = forms.LabourFormFinishedGood(request.POST)
 
@@ -55,6 +58,7 @@ def labour_input_fg(request):
             print("user can add labour cost")
         return render(request, "cogs/labourform.html", {"form":form, "header":page_view})
 
+@login_required()
 def labour_input_sfg(request):
     page_view = "Labour Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
@@ -74,7 +78,8 @@ def labour_input_sfg(request):
     else:
         form = forms.LabourFormSemiFinishedGood()
         return render(request, "cogs/labourform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def power_input_fg(request):
     page_view = "Power Cost Input Form (Finished Goods)"
     if request.method == "POST":
@@ -95,6 +100,7 @@ def power_input_fg(request):
         form = forms.PowerFormFinishedGood()
         return render(request, "cogs/powerform.html", {"form":form, "header":page_view})
 
+@login_required()
 def power_input_sfg(request):
     page_view = "Power Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
@@ -114,7 +120,8 @@ def power_input_sfg(request):
     else:
         form = forms.PowerFormSemiFinishedGood()
         return render(request, "cogs/powerform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def packing_input_fg(request):
     page_view = "Packing Cost Input Form (Finished Goods)"
     if request.method == "POST":
@@ -134,6 +141,7 @@ def packing_input_fg(request):
         form = forms.PackingFormFinishedGood()
         return render(request, "cogs/packingform.html", {"form":form, "header":page_view})
 
+@login_required()
 def packing_input_sfg(request):
     page_view = "Packing Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
@@ -153,7 +161,8 @@ def packing_input_sfg(request):
     else:
         form = forms.PackingFormSemiFinishedGood()
         return render(request, "cogs/packingform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def label_input_fg(request):
     page_view = "Label Cost Input Form (Finished Goods)"
     if request.method == "POST":
@@ -174,6 +183,7 @@ def label_input_fg(request):
         form = forms.LabelFormFinishedGood()
         return render(request, "cogs/labelform.html", {"form":form, "header":page_view})
 
+@login_required()
 def label_input_sfg(request):
     page_view = "Label Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
@@ -192,7 +202,8 @@ def label_input_sfg(request):
     else:
         form = forms.LabelFormSemiFinishedGood()
         return render(request, "cogs/labelform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def foiling_input_fg(request):
     page_view = "Foiling Cost Input Form (Finished Goods)"
     if request.method == "POST":
@@ -212,6 +223,7 @@ def foiling_input_fg(request):
         form = forms.FoilingFormFinishedGood()
         return render(request, "cogs/foilingform.html", {"form":form, "header":page_view})
 
+@login_required()
 def foiling_input_sfg(request):
     page_view = "Foiling Cost Input Form (Semi-finished Goods)"
     if request.method == "POST":
@@ -230,7 +242,8 @@ def foiling_input_sfg(request):
     else:
         form = forms.FoilingFormSemiFinishedGood()
         return render(request, "cogs/foilingform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def finished_good_input(request):
     page_view = "Finished Goods Input Form"
     if request.method == "POST":
@@ -249,7 +262,8 @@ def finished_good_input(request):
     else:
         form = forms.FinishedGoodForm()
         return render(request, "cogs/finishedgoodform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def semi_finished_good_input(request):
     page_view = "Semi Finished Goods Input Form"
     if request.method == "POST":
@@ -268,7 +282,8 @@ def semi_finished_good_input(request):
     else:
         form = forms.SemiFinishedGoodForm()
         return render(request, "cogs/semifinishedgoodform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def raw_material_category_input(request):
     page_view = "Raw Material Name Input Form"
     if request.method == "POST":
@@ -287,7 +302,8 @@ def raw_material_category_input(request):
     else:
         form = forms.RawMaterialCategoryForm()
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def raw_material_line_item_input(request):
     page_view = "Raw Material Line Item Input Form"
     if request.method == "POST":
@@ -306,7 +322,8 @@ def raw_material_line_item_input(request):
     else:
         form = forms.RawMaterialLineItemForm()
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def raw_material_finished_goods_input(request):
     page_view = "Raw Material Finished Goods Input Form"
     if request.method == "POST":
@@ -325,7 +342,8 @@ def raw_material_finished_goods_input(request):
     else:
         form = forms.RawMaterialFormFinishedGood()
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def raw_material_semi_finished_goods_input(request):
     page_view = "Raw Material Semi Finished Goods Input Form"
     if request.method == "POST":
@@ -344,7 +362,8 @@ def raw_material_semi_finished_goods_input(request):
     else:
         form = forms.RawMaterialFormSemiFinishedGood()
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def external_component_name_input(request):
     page_view = "External Component Name Input Form"
     if request.method == "POST":
@@ -363,7 +382,8 @@ def external_component_name_input(request):
     else:
         form = forms.ExternalComponentNameForm()
         return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def external_component_line_item_input(request):
     page_view = "External Component Line Item Input Form"
     if request.method == "POST":
@@ -382,7 +402,8 @@ def external_component_line_item_input(request):
     else:
         form = forms.ExternalComponentLineItemForm()
         return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def external_component_finished_goods_input(request):
     page_view = "External Component Finished Goods Input Form"
     if request.method == "POST":
@@ -401,7 +422,8 @@ def external_component_finished_goods_input(request):
     else:
         form = forms.ExternalComponentFormFinishedGood()
         return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
-    
+
+@login_required()    
 def external_component_semi_finished_goods_input(request):
     page_view = "External Component Semi Finished Goods Input Form"
     if request.method == "POST":
