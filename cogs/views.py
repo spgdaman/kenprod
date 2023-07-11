@@ -24,6 +24,9 @@ from . import forms
 #     else:
 #       return render(request, self.template_name, {'form': form})
 
+def welcome(request):
+    return render(request, 'cogs/welcome.html')
+
 def labour_input_fg(request):
     page_view = "Labour Cost Input Form (Finished Goods)"
     if request.method == "POST":
