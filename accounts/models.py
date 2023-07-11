@@ -45,7 +45,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='email_address',
         max_length=255,

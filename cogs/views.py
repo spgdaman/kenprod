@@ -3,6 +3,9 @@ from django.urls import reverse
 from .models import ExchangeRate, FinishedGood, SemiFinishedGood, RawMaterialCategory, RawMaterialLineItem, RawMaterial, ExternalComponentName, ExternalComponentLineItem, ExternalComponent, Labeling, Foiling, Packing, Power, Labour
 from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
 
+from django.contrib.auth.models import Group,Permission
+from django.contrib.contenttypes.models import ContentType
+
 from django.contrib import messages
 from django.views import View
 
@@ -28,8 +31,11 @@ def welcome(request):
     return render(request, 'cogs/welcome.html')
 
 def labour_input_fg(request):
+    content_type = ContentType.objects.get_for_model(Labour)
+    post_permission = Permission.objects.filter(content_type=content_type)
+
     page_view = "Labour Cost Input Form (Finished Goods)"
-    if request.method == "POST":
+    if request.method == "POST" and request.user.has_perm("labour.Can add labour") == True:
         # create a form instance and populate it with data from the request:
         form = forms.LabourFormFinishedGood(request.POST)
 
@@ -45,6 +51,8 @@ def labour_input_fg(request):
     
     else:
         form = forms.LabourFormFinishedGood()
+        if request.user.has_perm("labour.Can add labour") == True:
+            print("user can add labour cost")
         return render(request, "cogs/labourform.html", {"form":form, "header":page_view})
 
 def labour_input_sfg(request):
