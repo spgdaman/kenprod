@@ -4,6 +4,21 @@ from django.contrib.auth.models import (
 )
 from django.contrib.auth.models import Group as DjangoGroup
 
+class Group(DjangoGroup):
+    """Instead of trying to get new user under existing `Aunthentication and Authorization`
+    banner, create a proxy group model under our Accounts app label.
+    Refer to: https://github.com/tmm/django-username-email/blob/master/cuser/admin.py
+    """
+    description = models.CharField(max_length=150, null=True, blank=True, verbose_name="Human readable name")
+
+    class Meta:
+        verbose_name = 'group'
+        verbose_name_plural = 'groups'
+        proxy = False
+
+    def __str__(self):
+        return self.description or self.name
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
@@ -45,19 +60,21 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser):
     email = models.EmailField(
         verbose_name='email_address',
         max_length=255,
         unique=True,
     )
-    username= None
+    username= models.CharField(max_length=30, null=True,blank=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
+    groups = models.ManyToManyField(Group, verbose_name=('Groups'), blank=True, help_text=('The groups this user belongs to. A user will get all permissions granted to each of their groups.'))
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [] # Email & Password are required by default
@@ -98,28 +115,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     # class Meta:
     #     db_table = 'auth_user'
 
-    @property
-    def cached_groups(self):
-        """Warning 'groups' is a field name (M2M) so can't called this property 'groups'"""
-        if not hasattr(self, '_cached_groups'):
-            self._cached_groups = DjangoGroup.objects.filter(user=self).values_list(
-                'name', flat=True
-            )
-        return self._cached_groups
+    # @property
+    # def cached_groups(self):
+    #     """Warning 'groups' is a field name (M2M) so can't called this property 'groups'"""
+    #     if not hasattr(self, '_cached_groups'):
+    #         self._cached_groups = DjangoGroup.objects.filter(user=self).values_list(
+    #             'name', flat=True
+    #         )
+    #     return self._cached_groups
 
-    def in_groups(self, *names):
-        for name in names:
-            if name in self.cached_groups:
-                return True
-        return False
+    # def in_groups(self, *names):
+    #     for name in names:
+    #         if name in self.cached_groups:
+    #             return True
+    #     return False
 
-class Group(DjangoGroup):
-    """Instead of trying to get new user under existing `Aunthentication and Authorization`
-    banner, create a proxy group model under our Accounts app label.
-    Refer to: https://github.com/tmm/django-username-email/blob/master/cuser/admin.py
-    """
-
-    class Meta:
-        verbose_name = 'group'
-        verbose_name_plural = 'groups'
-        proxy = True

@@ -1,9 +1,13 @@
+from typing import Set
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin, GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.models import Group as DjangoGroup
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import User, Group
+
+# admin.site.register(User, UserAdmin)
 
 admin.site.register(User)
 class CustomUserAdmin(UserAdmin):
@@ -12,38 +16,101 @@ class CustomUserAdmin(UserAdmin):
     model = User
     ordering = ('first_name', 'last_name', 'email')
     # list_display = ['email', 'first_name', 'last_name']
-    list_display = (
-        'first_name',
-        'last_name',
-        'email',
-        'is_staff',
-        'is_active',
-        'in_groups',
-    )
-    list_display_links = list_display
-    list_filter = (
-        'groups',
-        'is_staff',
-        'is_active',
-    )
-    search_fields = ('email', 'first_name', 'last_name')
+#     list_display = (
+#         'first_name',
+#         'last_name',
+#         'email',
+#         'is_staff',
+#         'is_active',
+#         'in_groups',
+#     )
+#     list_display_links = list_display
+#     list_filter = (
+#         'groups',
+#         'is_staff',
+#         'is_active',
+#     )
+#     search_fields = ('email', 'first_name', 'last_name')
 
-    def in_groups(self, obj):
-        """
-        get group, separate by comma, and display empty string if user has no group
-        """
-        return ', '.join([x.name for x in obj.groups.all()]) if obj.groups.count() else ''
-
+#     def in_groups(self, obj):
+#         """
+#         get group, separate by comma, and display empty string if user has no group
+#         """
+#         return ', '.join([x.name for x in obj.groups.all()]) if obj.groups.count() else ''
     
+#     def get_form(self, request, obj=None, **kwargs):
+#         form = super().get_form(request, obj, **kwargs)
+#         is_superuser = request.user.is_superuser
+#         disabled_fields = set()  # type: Set[str]
+
+#         if not is_superuser:
+#             disabled_fields |= {
+#                 'username',
+#                 'is_superuser',
+#                 'user_permissions',
+#             }
+
+#         for f in disabled_fields:
+#             if f in form.base_fields:
+#                 form.base_fields[f].disabled = True
+
+#         return form
+
 # admin.site.register(User, CustomUserAdmin)
 admin.site.unregister(DjangoGroup)
 
-
-@admin.register(Group)
-class GroupAdmin(BaseGroupAdmin):
-    fields = ('name', 'permissions')
-    list_display = ('name', )
-    list_display_links = list_display
-    order = ('name',)
+admin.site.register(Group)
 
 
+# @admin.register(Group)
+# class GroupAdmin(BaseGroupAdmin):
+#     model = Group
+#     fields = ('name', 'permissions',)
+#     list_display = ('name', 'description')
+#     list_display_links = list_display
+#     order = ('name',)
+
+
+
+
+
+
+
+
+# from django.contrib.auth import get_user_model
+
+# User = get_user_model()
+
+# class CustomUserAdmin(UserAdmin):
+#     list_filter = ['is_active']
+#     ordering = ('first_name', 'last_name', 'email')
+#     readonly_fields = ["date_joined"]
+    
+#     def get_form(self, request, obj=None, **kwargs):
+#         form = super().get_form(request, obj, **kwargs)
+#         is_superuser = request.user.is_superuser
+#         disabled_fields = set()
+
+#         # Prevent changing permissions without using groups
+#         if not is_superuser:
+#             disabled_fields |= {
+#                 "is_superuser",
+#                 "user_permissions",
+#             }
+
+#         # Prevent users changing own permissions
+#         if not is_superuser and obj is not None and obj == request.user:
+#             disabled_fields = {
+#                 "is_staff",
+#                 "is_superuser",
+#                 "groups",
+#                 "user_permissions",
+#             }
+
+#         for f in disabled_fields:
+#             if f in form.base_fields:
+#                 form.base_fields[f].disabled = True
+
+#         return form
+
+# admin.site.register(User, CustomUserAdmin)
