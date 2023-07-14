@@ -10,7 +10,9 @@ from .forms import MarketPriceForm
 from accounts.models import User
 from .models import MarketPrice, Products, Customers, CustomerBranches
 from .filters import MarketPriceFilter
+from cogs.check_groups_decorator import validate_user_in_group
 
+@validate_user_in_group("Sales", "Admin")
 class CustomerUploadView(View):
     def get(self, request):
         template_name = 'bulkupload/import.html'
@@ -26,7 +28,8 @@ class CustomerUploadView(View):
             Customers.objects.create(name=i)
         
         return JsonResponse({"status_code":200})
-    
+
+@validate_user_in_group("Sales", "Admin")
 class CustomerBranchesUploadView(View):
     def get(self, request):
         template_name = 'bulkupload/import.html'
@@ -47,6 +50,7 @@ class CustomerBranchesUploadView(View):
         
         return JsonResponse({"status_code":200})
 
+@validate_user_in_group("Sales", "Admin")
 class ProductsUploadView(View):
     def get(self, request):
         template_name = 'bulkupload/import.html'
@@ -81,6 +85,7 @@ class ProductsUploadView(View):
         #     returnmsg = {"status_code": 500}
         # return JsonResponse(returnmsg)
 
+@validate_user_in_group("Sales", "Admin")
 def get_market_price(request):
     products = Products.objects.all().order_by('description')
     customer_and_branches = {}
@@ -195,6 +200,7 @@ def get_market_price(request):
     
     return render(request, "marketprice/price_capture.html", {"form":form,"products":products,"total":total})
 
+@validate_user_in_group("Sales", "Admin")
 def export_csv(request):
     # Get all market price information from the marketprice table
     marketprice = MarketPrice.objects.all()
@@ -216,6 +222,7 @@ def export_csv(request):
 
     # return response
 
+@validate_user_in_group("Sales", "Admin")
 def search(request):
     market_prices = MarketPrice.objects.all().order_by('-created_at')
     market_prices_filter = MarketPriceFilter(request.GET, queryset=market_prices)
