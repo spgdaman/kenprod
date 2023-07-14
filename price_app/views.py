@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
+from django.contrib.auth.decorators import login_required
 
 import pandas as pd
 import io,csv
@@ -13,11 +14,13 @@ from .filters import MarketPriceFilter
 from cogs.check_groups_decorator import validate_user_in_group
 
 class CustomerUploadView(View):
+    @login_required()
     @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
+    @login_required()
     @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # print(request.FILES['data'].file)
@@ -31,11 +34,13 @@ class CustomerUploadView(View):
         return JsonResponse({"status_code":200})
 
 class CustomerBranchesUploadView(View):
+    @login_required()
     @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
+    @login_required()
     @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # print(request.FILES['data'].file)
@@ -53,11 +58,13 @@ class CustomerBranchesUploadView(View):
         return JsonResponse({"status_code":200})
 
 class ProductsUploadView(View):
+    @login_required()
     @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
+    @login_required()
     @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # paramFile = io.TextIOWrapper(request.FILES['productsfile'].file)
@@ -88,6 +95,7 @@ class ProductsUploadView(View):
         #     returnmsg = {"status_code": 500}
         # return JsonResponse(returnmsg)
 
+@login_required()
 @validate_user_in_group("Sales", "Admin")
 def get_market_price(request):
     products = Products.objects.all().order_by('description')
@@ -203,6 +211,7 @@ def get_market_price(request):
     
     return render(request, "marketprice/price_capture.html", {"form":form,"products":products,"total":total})
 
+@login_required()
 @validate_user_in_group("Sales", "Admin")
 def export_csv(request):
     # Get all market price information from the marketprice table
@@ -225,6 +234,7 @@ def export_csv(request):
 
     # return response
 
+@login_required()
 @validate_user_in_group("Sales", "Admin")
 def search(request):
     market_prices = MarketPrice.objects.all().order_by('-created_at')
