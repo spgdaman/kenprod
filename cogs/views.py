@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.views import View
 
 from . import forms
+from .check_groups_decorator import validate_user_in_group
 
 # class LabourView(View):
 #   template_name = 'cogs/labourform.html'

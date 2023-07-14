@@ -12,12 +12,13 @@ from .models import MarketPrice, Products, Customers, CustomerBranches
 from .filters import MarketPriceFilter
 from cogs.check_groups_decorator import validate_user_in_group
 
-@validate_user_in_group("Sales", "Admin")
 class CustomerUploadView(View):
+    @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
+    @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # print(request.FILES['data'].file)
         paramFile = io.TextIOWrapper(request.FILES['data'].file)
@@ -29,12 +30,13 @@ class CustomerUploadView(View):
         
         return JsonResponse({"status_code":200})
 
-@validate_user_in_group("Sales", "Admin")
 class CustomerBranchesUploadView(View):
+    @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
+    @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # print(request.FILES['data'].file)
         paramFile = io.TextIOWrapper(request.FILES['data'].file)
@@ -50,12 +52,13 @@ class CustomerBranchesUploadView(View):
         
         return JsonResponse({"status_code":200})
 
-@validate_user_in_group("Sales", "Admin")
 class ProductsUploadView(View):
+    @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
+    @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # paramFile = io.TextIOWrapper(request.FILES['productsfile'].file)
         paramFile = io.TextIOWrapper(request.FILES['data'].file)
