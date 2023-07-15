@@ -424,7 +424,7 @@ def raw_material_category_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def rm_name_listing(request):
     page_view = "Raw Materials Name Listing"
-    rawmaterials = RawMaterialCategory.objects.filter(name__isnull=False)
+    rawmaterials = RawMaterialCategory.objects.filter(category__isnull=False)
 
     return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view})
 
