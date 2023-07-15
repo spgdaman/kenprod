@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-4 my-2">
+            <div class="card ">
+                <div class="card-header font-weight-bold">
+                    Finished Goods Listing
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'finished_good_input' %}">Finished Goods Cost Input</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 my-2">
+            <div class="card ">
+                <div class="card-header font-weight-bold">
+                    Semi-Finished Goods Listing
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'semi_finished_good_input' %}">Semi-Finished Goods Cost Input</a></li>
+                </ul>
+            </div>           
+        </div>
+
+
+        <div class="col-md-4 my-2">
+            <div class="card ">
+                <div class="card-header font-weight-bold">
+                    Packing Cost Listing
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'packing_input_fg' %}">Packing Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'packing_input_sfg' %}">Packing Cost Input Semi-Finished Goods</a></li>
+                </ul>
+            </div>           
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 my-2">
+            <div class="card ">
+                <div class="card-header font-weight-bold">
+                    Labour Cost Listing
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'labour_input_fg' %}">Labour Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'labour_input_sfg' %}">Labour Cost Input Semi-Finished Goods</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4 my-2">
+            <div class="card ">
+                <div class="card-header font-weight-bold">
+                    Power Cost Listing
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'power_input_fg' %}">Power Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'power_input_sfg' %}">Power Cost Input Semi-Finished Goods</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4 my-2">
+            <div class="card ">
+                <div class="card-header font-weight-bold">
+                    Labeling Cost Listing
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'label_input_fg' %}">Labeling Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'label_input_sfg' %}">Labeling Cost Input Semi-Finished Goods</a></li>
+                </ul>
+            </div>         
+        </div>
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 my-2">
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    Foiling Cost Listing
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'foiling_input_fg' %}">Foiling Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'foiling_input_sfg' %}">Foiling Cost Input Semi-Finished Goods</a></li>
+                </ul>
+            </div>
+        </div>
+
+        
+        <div class="col-md-4 my-2">
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    Raw Material Cost Listing
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'raw_material_category_input' %}">Raw Material Name Input</a></li>
+                    <li class="list-group-item"><a href="{% url 'raw_material_category_line_item_input' %}">Raw Material Line Item Input</a></li>
+                    <li class="list-group-item"><a href="{% url 'raw_material_finished_goods_input' %}">Raw Material Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'raw_material_semi_finished_goods_input' %}">Raw Material Cost Input Semi-Finished Goods</a></li>
+                </ul>
+            </div> 
+        </div>
+   
+
+        <div class="col-md-4 my-2">
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    External Component Cost Listing
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'external_component_name_input' %}">External Component Name Input</a></li>
+                    <li class="list-group-item"><a href="{% url 'external_component_line_item_input' %}">External Component Line Item Input</a></li>
+                    <li class="list-group-item"><a href="{% url 'external_component_finished_goods_input' %}">External Component Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'external_component_semi_finished_goods_input' %}">External Component Cost Input Semi-Finished Goods</a></li>
+                </ul>
+            </div>  
+        </div>
+  
+    </div>
+
+</div>
+{% endblock %}
