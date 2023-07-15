@@ -7,6 +7,8 @@ urlpatterns = [
     path("labour_input_finished_goods/", views.labour_input_fg, name='labour_input_fg'),
     path("labour_input_semifinsihed_goods/", views.labour_input_sfg, name='labour_input_sfg'),
 
+    path("labour_cost_finished_goods_listing/", views.labour_fg_listing, name="labour_fg_listing"),
+
     path("power_input_finished_goods/", views.power_input_fg, name='power_input_fg'),
     path("power_input_semifinished_goods/", views.power_input_sfg, name='power_input_sfg'),
 

@@ -58,9 +58,18 @@ def labour_input_fg(request):
     
     else:
         form = forms.LabourFormFinishedGood()
-        if request.user.has_perm("labour.Can add labour") == True:
-            print("user can add labour cost")
+        # if request.user.has_perm("labour.Can add labour") == True:
+        #     print("user can add labour cost")
         return render(request, "cogs/labourform.html", {"form":form, "header":page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def labour_fg_listing(request):
+    page_view = "Labour Cost Finished Goods Listing"
+    labours = Labour.objects.filter(fg_name__isnull=False)
+
+    return render(request, "cogs/labourlisting.html", {"labours": labours, "header": page_view})
+
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")
@@ -86,6 +95,14 @@ def labour_input_sfg(request):
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
+def labour_sfg_listing(request):
+    page_view = "Labour Cost Semi Finished Goods Listing"
+    labours = Labour.objects.filter(sfg_name__isnull=False)
+
+    return render(request, "cogs/labourlisting.html", {"labours": labours, "header": page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
 def power_input_fg(request):
     page_view = "Power Cost Input Form (Finished Goods)"
     if request.method == "POST":
@@ -105,6 +122,14 @@ def power_input_fg(request):
     else:
         form = forms.PowerFormFinishedGood()
         return render(request, "cogs/powerform.html", {"form":form, "header":page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def power_fg_listing(request):
+    page_view = "Power Cost Finished Goods Listing"
+    powers = Power.objects.filter(fg_name__isnull=False)
+
+    return render(request, "cogs/powerlisting.html", {"powers": powers, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")
@@ -127,6 +152,14 @@ def power_input_sfg(request):
     else:
         form = forms.PowerFormSemiFinishedGood()
         return render(request, "cogs/powerform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def power_sfg_listing(request):
+    page_view = "Power Cost Semi Finished Goods Listing"
+    powers = Power.objects.filter(sfg_name__isnull=False)
+
+    return render(request, "cogs/powerlisting.html", {"powers": powers, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin") 
@@ -148,6 +181,14 @@ def packing_input_fg(request):
     else:
         form = forms.PackingFormFinishedGood()
         return render(request, "cogs/packingform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def packing_fg_listing(request):
+    page_view = "Packing Cost Finished Goods Listing"
+    packings = Packing.objects.filter(fg_name__isnull=False)
+
+    return render(request, "cogs/packinglisting.html", {"packings": packings, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")
@@ -173,6 +214,14 @@ def packing_input_sfg(request):
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
+def packing_sfg_listing(request):
+    page_view = "Packing Cost Semi Finished Goods Listing"
+    packings = Packing.objects.filter(sfg_name__isnull=False)
+
+    return render(request, "cogs/packinglisting.html", {"packings": packings, "header": page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
 def label_input_fg(request):
     page_view = "Label Cost Input Form (Finished Goods)"
     if request.method == "POST":
@@ -192,6 +241,14 @@ def label_input_fg(request):
     else:
         form = forms.LabelFormFinishedGood()
         return render(request, "cogs/labelform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def label_fg_listing(request):
+    page_view = "Label Cost Finished Goods Listing"
+    labels = Labeling.objects.filter(fg_name__isnull=False)
+
+    return render(request, "cogs/labellisting.html", {"labels": labels, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")
@@ -213,6 +270,14 @@ def label_input_sfg(request):
     else:
         form = forms.LabelFormSemiFinishedGood()
         return render(request, "cogs/labelform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def label_sfg_listing(request):
+    page_view = "Label Cost Semi Finished Goods Listing"
+    labels = Labeling.objects.filter(sfg_name__isnull=False)
+
+    return render(request, "cogs/labellisting.html", {"labels": labels, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")   
@@ -234,6 +299,14 @@ def foiling_input_fg(request):
     else:
         form = forms.FoilingFormFinishedGood()
         return render(request, "cogs/foilingform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def foiling_fg_listing(request):
+    page_view = "Foiling Cost Finished Goods Listing"
+    foilings = Foiling.objects.filter(fg_name__isnull=False)
+
+    return render(request, "cogs/foilinglisting.html", {"foilings": foilings, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")
@@ -255,6 +328,14 @@ def foiling_input_sfg(request):
     else:
         form = forms.FoilingFormSemiFinishedGood()
         return render(request, "cogs/foilingform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def foiling_sfg_listing(request):
+    page_view = "Foiling Cost Semi Finished Goods Listing"
+    foilings = Foiling.objects.filter(sfg_name__isnull=False)
+
+    return render(request, "cogs/foilinglisting.html", {"foilings": foilings, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")   
@@ -279,6 +360,14 @@ def finished_good_input(request):
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
+def fg_listing(request):
+    page_view = "Finished Goods Listing"
+    finishedgoods = FinishedGood.objects.filter(fg_name__isnull=False)
+
+    return render(request, "cogs/finishedgoodlisting.html", {"finishedgoods": finishedgoods, "header": page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
 def semi_finished_good_input(request):
     page_view = "Semi Finished Goods Input Form"
     if request.method == "POST":
@@ -297,6 +386,14 @@ def semi_finished_good_input(request):
     else:
         form = forms.SemiFinishedGoodForm()
         return render(request, "cogs/semifinishedgoodform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def sfg_listing(request):
+    page_view = "Semi Finished Goods Listing"
+    semifinishedgoods = SemiFinishedGood.objects.filter(sfg_name__isnull=False)
+
+    return render(request, "cogs/semifinishedgoodlisting.html", {"semifinishedgoods": semifinishedgoods, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")   
@@ -360,6 +457,14 @@ def raw_material_finished_goods_input(request):
     else:
         form = forms.RawMaterialFormFinishedGood()
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def rm_fg_listing(request):
+    page_view = "Raw Materials Cost Finished Goods Listing"
+    rawmaterials = RawMaterial.objects.filter(fg_name__isnull=False)
+
+    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
@@ -381,6 +486,14 @@ def raw_material_semi_finished_goods_input(request):
     else:
         form = forms.RawMaterialFormSemiFinishedGood()
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def rm_sfg_listing(request):
+    page_view = "Raw Materials Cost Semi Finished Goods Listing"
+    rawmaterials = RawMaterial.objects.filter(sfg_name__isnull=False)
+
+    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
@@ -444,6 +557,14 @@ def external_component_finished_goods_input(request):
     else:
         form = forms.ExternalComponentFormFinishedGood()
         return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def ec_fg_listing(request):
+    page_view = "External Component Cost Finished Goods Listing"
+    externalcomponents = ExternalComponent.objects.filter(fg_name__isnull=False)
+
+    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
@@ -465,3 +586,11 @@ def external_component_semi_finished_goods_input(request):
     else:
         form = forms.ExternalComponentFormSemiFinishedGood()
         return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def ec_sfg_listing(request):
+    page_view = "External Component Cost Semi Finished Goods Listing"
+    externalcomponents = ExternalComponent.objects.filter(sfg_name__isnull=False)
+
+    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view})

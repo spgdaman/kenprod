@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ header }}</h1>
+
+    {% for labour in labours %}
+        <p>{{labour}}</p>
+    {% endfor %}
+</div>
+{% endblock %}
