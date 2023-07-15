@@ -366,7 +366,7 @@ def finished_good_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def fg_listing(request):
     page_view = "Finished Goods Listing"
-    finishedgoods = FinishedGood.objects.filter(fg_name__isnull=False)
+    finishedgoods = FinishedGood.objects.filter(name__isnull=False)
 
     return render(request, "cogs/finishedgoodlisting.html", {"finishedgoods": finishedgoods, "header": page_view})
 
@@ -395,7 +395,7 @@ def semi_finished_good_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def sfg_listing(request):
     page_view = "Semi Finished Goods Listing"
-    semifinishedgoods = SemiFinishedGood.objects.filter(sfg_name__isnull=False)
+    semifinishedgoods = SemiFinishedGood.objects.filter(name__isnull=False)
 
     return render(request, "cogs/semifinishedgoodlisting.html", {"semifinishedgoods": semifinishedgoods, "header": page_view})
 
