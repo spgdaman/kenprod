@@ -34,6 +34,10 @@ from .check_groups_decorator import validate_user_in_group
 def welcome(request):
     return render(request, 'cogs/welcome.html')
 
+@login_required()
+@validate_user_in_group("Finance", "Admin")
+def listing(request):
+    return render(request, 'cogs/listing.html')
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")
