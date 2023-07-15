@@ -6,10 +6,8 @@
 <div class="container">
     <h1>{{ header }}</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <input type="submit" class="btn btn-success" value="Submit">
-    </form>
+    {% for semifinishedgood in semifinishedgoods %}
+        <p>{{semifinishedgood}}</p>
+    {% endfor %}
 </div>
 {% endblock %}
