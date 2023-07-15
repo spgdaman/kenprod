@@ -422,6 +422,14 @@ def raw_material_category_input(request):
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
+def rm_name_listing(request):
+    page_view = "Raw Materials Name Listing"
+    rawmaterials = RawMaterialCategory.objects.filter(name__isnull=False)
+
+    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
 def raw_material_line_item_input(request):
     page_view = "Raw Material Line Item Input Form"
     if request.method == "POST":
@@ -440,6 +448,14 @@ def raw_material_line_item_input(request):
     else:
         form = forms.RawMaterialLineItemForm()
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
+def rm_line_item_listing(request):
+    page_view = "Raw Materials Line Item Listing"
+    rawmaterials = RawMaterialLineItem.objects.filter(name__isnull=False)
+
+    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")   
@@ -522,6 +538,14 @@ def external_component_name_input(request):
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
+def ec_name_listing(request):
+    page_view = "External Component Listing"
+    externalcomponents = ExternalComponentName.objects.filter(name__isnull=False)
+
+    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
 def external_component_line_item_input(request):
     page_view = "External Component Line Item Input Form"
     if request.method == "POST":
@@ -543,6 +567,14 @@ def external_component_line_item_input(request):
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
+def ec_line_item_listing(request):
+    page_view = "External Component Line Item Listing"
+    externalcomponents = ExternalComponentLineItem.objects.filter(name__isnull=False)
+
+    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin")    
 def external_component_finished_goods_input(request):
     page_view = "External Component Finished Goods Input Form"
     if request.method == "POST":
@@ -561,7 +593,7 @@ def external_component_finished_goods_input(request):
     else:
         form = forms.ExternalComponentFormFinishedGood()
         return render(request, "cogs/externalcomponentform.html", {"form":form, "header":page_view})
-    
+
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
 def ec_fg_listing(request):

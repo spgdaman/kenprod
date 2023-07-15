@@ -42,6 +42,8 @@ urlpatterns = [
     path("raw_material_semi_finished_goods_input/", views.raw_material_semi_finished_goods_input, name="raw_material_semi_finished_goods_input"),
     path("raw_materials_finished_goods_listing/", views.rm_fg_listing, name='rm_fg_listing'),
     path("raw_materials_semi_finished_goods_listing/", views.rm_sfg_listing, name='rm_sfg_listing'),
+    path("raw_materials_name_listing/", views.rm_name_listing, name='rm_name_listing'),
+    path("raw_materials_line_item_listing/", views.rm_line_item_listing, name='rm_line_item_listing'),
 
     path("external_component_name_input/", views.external_component_name_input, name="external_component_name_input"),
     path("external_component_line_item_input/", views.external_component_line_item_input, name="external_component_line_item_input"),
@@ -49,4 +51,6 @@ urlpatterns = [
     path("external_component_semi_finished_goods_input/", views.external_component_semi_finished_goods_input, name="external_component_semi_finished_goods_input"),
     path("external_component_finished_goods_listing/", views.ec_fg_listing, name='ec_fg_listing'),
     path("external_component_semi_finished_goods_listing/", views.ec_sfg_listing, name='ec_sfg_listing'),
+    path("external_component_name_listing/", views.ec_name_listing, name='ec_name_listing'),
+    path("external_component_line_item_listing/", views.ec_line_item_listing, name='ec_line_item_listing'),
 ]
