@@ -31,7 +31,7 @@ from .check_groups_decorator import validate_user_in_group
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")
-def welcome(request):
+def cost_input(request):
     return render(request, 'cogs/welcome.html')
 
 @login_required()
