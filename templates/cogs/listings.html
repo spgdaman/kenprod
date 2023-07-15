@@ -13,7 +13,7 @@
                     Finished Goods Listing
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'finished_good_input' %}">Finished Goods Cost Input</a></li>
+                    <li class="list-group-item"><a href="{% url 'fg_listing' %}">Finished Goods Cost Input</a></li>
                 </ul>
             </div>
         </div>
@@ -25,7 +25,7 @@
                     Semi-Finished Goods Listing
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'semi_finished_good_input' %}">Semi-Finished Goods Cost Input</a></li>
+                    <li class="list-group-item"><a href="{% url 'sfg_listing' %}">Semi-Finished Goods Cost Input</a></li>
                 </ul>
             </div>           
         </div>
@@ -37,8 +37,8 @@
                     Packing Cost Listing
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'packing_input_fg' %}">Packing Cost Input Finished Goods</a></li>
-                    <li class="list-group-item"><a href="{% url 'packing_input_sfg' %}">Packing Cost Input Semi-Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'packing_fg_listing' %}">Packing Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'packing_sfg_listing' %}">Packing Cost Input Semi-Finished Goods</a></li>
                 </ul>
             </div>           
         </div>
@@ -52,8 +52,8 @@
                     Labour Cost Listing
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'labour_input_fg' %}">Labour Cost Input Finished Goods</a></li>
-                    <li class="list-group-item"><a href="{% url 'labour_input_sfg' %}">Labour Cost Input Semi-Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'labour_fg_listing' %}">Labour Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'labour_sfg_listing' %}">Labour Cost Input Semi-Finished Goods</a></li>
                 </ul>
             </div>
         </div>
@@ -64,8 +64,8 @@
                     Power Cost Listing
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'power_input_fg' %}">Power Cost Input Finished Goods</a></li>
-                    <li class="list-group-item"><a href="{% url 'power_input_sfg' %}">Power Cost Input Semi-Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'power_fg_listing' %}">Power Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'power_sfg_listing' %}">Power Cost Input Semi-Finished Goods</a></li>
                 </ul>
             </div>
         </div>
@@ -76,8 +76,8 @@
                     Labeling Cost Listing
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'label_input_fg' %}">Labeling Cost Input Finished Goods</a></li>
-                    <li class="list-group-item"><a href="{% url 'label_input_sfg' %}">Labeling Cost Input Semi-Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'label_fg_listing' %}">Labeling Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'label_sfg_listing' %}">Labeling Cost Input Semi-Finished Goods</a></li>
                 </ul>
             </div>         
         </div>
@@ -93,8 +93,8 @@
                     Foiling Cost Listing
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'foiling_input_fg' %}">Foiling Cost Input Finished Goods</a></li>
-                    <li class="list-group-item"><a href="{% url 'foiling_input_sfg' %}">Foiling Cost Input Semi-Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'foiling_fg_listing' %}">Foiling Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'foiling_sfg_listing' %}">Foiling Cost Input Semi-Finished Goods</a></li>
                 </ul>
             </div>
         </div>
@@ -106,10 +106,10 @@
                     Raw Material Cost Listing
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'raw_material_category_input' %}">Raw Material Name Input</a></li>
-                    <li class="list-group-item"><a href="{% url 'raw_material_category_line_item_input' %}">Raw Material Line Item Input</a></li>
-                    <li class="list-group-item"><a href="{% url 'raw_material_finished_goods_input' %}">Raw Material Cost Input Finished Goods</a></li>
-                    <li class="list-group-item"><a href="{% url 'raw_material_semi_finished_goods_input' %}">Raw Material Cost Input Semi-Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url ' ' %}">Raw Material Name Input</a></li>
+                    <li class="list-group-item"><a href="{% url ' ' %}">Raw Material Line Item Input</a></li>
+                    <li class="list-group-item"><a href="{% url 'rm_fg_listing' %}">Raw Material Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'rm_sfg_listing' %}">Raw Material Cost Input Semi-Finished Goods</a></li>
                 </ul>
             </div> 
         </div>
@@ -121,10 +121,10 @@
                     External Component Cost Listing
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'external_component_name_input' %}">External Component Name Input</a></li>
-                    <li class="list-group-item"><a href="{% url 'external_component_line_item_input' %}">External Component Line Item Input</a></li>
-                    <li class="list-group-item"><a href="{% url 'external_component_finished_goods_input' %}">External Component Cost Input Finished Goods</a></li>
-                    <li class="list-group-item"><a href="{% url 'external_component_semi_finished_goods_input' %}">External Component Cost Input Semi-Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url ' ' %}">External Component Name Input</a></li>
+                    <li class="list-group-item"><a href="{% url ' ' %}">External Component Line Item Input</a></li>
+                    <li class="list-group-item"><a href="{% url 'ec_fg_listing' %}">External Component Cost Input Finished Goods</a></li>
+                    <li class="list-group-item"><a href="{% url 'ec_sfg_listing' %}">External Component Cost Input Semi-Finished Goods</a></li>
                 </ul>
             </div>  
         </div>
