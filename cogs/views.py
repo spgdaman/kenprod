@@ -36,8 +36,8 @@ def welcome(request):
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")
-def listing(request):
-    return render(request, 'cogs/listing.html')
+def listings(request):
+    return render(request, 'cogs/listings.html')
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")
