@@ -146,7 +146,7 @@ class Power(models.Model):
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
     unit = models.IntegerField(null=True, blank=True)
     cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
-    machine = models.ForeignKey(Machine, models.DO_NOTHING, blank=False, null=False)
+    machine = models.ForeignKey(Machine, models.DO_NOTHING, blank=False, null=True)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
