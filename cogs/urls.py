@@ -30,11 +30,15 @@ urlpatterns = [
     path("label_input_semifinished_goods/", views.label_input_sfg, name='label_input_sfg'),
     path("label_cost_finished_goods_listing/", views.label_fg_listing, name='label_fg_listing'),
     path("label_cost_semi_finished_goods_listing/", views.label_sfg_listing, name='label_sfg_listing'),
+    path("label_cost_finished_goods_update/<int:id>/change/", views.label_fg_update, name="label_fg_update"),
+    path("label_cost_semi_finished_goods_update/<int:id>/change/", views.label_sfg_update, name="label_sfg_update"),
 
     path("foiling_input_finished_goods/", views.foiling_input_fg, name='foiling_input_fg'),
     path("foiling_input_semifinished_goods/", views.foiling_input_sfg, name='foiling_input_sfg'),
     path("foiling_cost_finished_goods_listing/", views.foiling_fg_listing, name='foiling_fg_listing'),
     path("foiling_cost_semi_finished_goods_listing/", views.foiling_sfg_listing, name='foiling_sfg_listing'),
+    path("foiling_cost_finished_goods_update/<int:id>/change/", views.foiling_fg_update, name="foiling_fg_update"),
+    path("foiling_cost_semi_finished_goods_update/<int:id>/change/", views.foiling_sfg_update, name="foiling_sfg_update"),
 
     path("finished_goods_input/", views.finished_good_input, name="finished_good_input"),
     path("finished_goods_listing/", views.fg_listing, name='fg_listing'),

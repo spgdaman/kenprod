@@ -399,6 +399,44 @@ def label_sfg_listing(request):
     return render(request, "cogs/labellisting.html", {"labels": labels, "header": page_view})
 
 @login_required()
+@validate_user_in_group("Finance", "Admin") 
+def label_fg_update(request, id):
+    header = "Label Cost Finished Goods Update"
+    label = get_object_or_404(Labeling, id=id)
+
+    if request.method == "POST":
+        form = forms.LabelFormFinishedGood(request.POST, instance=label)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('label_fg_listing')
+    else:
+        form = forms.LabelFormFinishedGood(instance = label)
+    return render(request, "cogs/labelform.html", {'form':form, "header":header})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def label_sfg_update(request, id):
+    header = "Label Cost Semi Finished Goods Update"
+    label = get_object_or_404(Labeling, id=id)
+
+    if request.method == "POST":
+        form = forms.LabelFormSemiFinishedGood(request.POST, instance=label)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('label_sfg_listing')
+    else:
+        form = forms.LabelFormSemiFinishedGood(instance = label)
+    return render(request, "cogs/labelform.html", {'form':form, "header":header})
+
+@login_required()
 @validate_user_in_group("Finance", "Admin")   
 def foiling_input_fg(request):
     page_view = "Foiling Cost Input Form (Finished Goods)"
@@ -455,6 +493,44 @@ def foiling_sfg_listing(request):
     foilings = Foiling.objects.filter(sfg_name__isnull=False)
 
     return render(request, "cogs/foilinglisting.html", {"foilings": foilings, "header": page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def foiling_fg_update(request, id):
+    header = "Foiling Cost Finished Goods Update"
+    foiling = get_object_or_404(Foiling, id=id)
+
+    if request.method == "POST":
+        form = forms.FoilingFormFinishedGood(request.POST, instance=foiling)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('foiling_fg_listing')
+    else:
+        form = forms.FoilingFormFinishedGood(instance = foiling)
+    return render(request, "cogs/foilingform.html", {'form':form, "header":header})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def foiling_sfg_update(request, id):
+    header = "Foiling Cost Semi Finished Goods Update"
+    foiling = get_object_or_404(Foiling, id=id)
+
+    if request.method == "POST":
+        form = forms.FoilingFormSemiFinishedGood(request.POST, instance=foiling)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('foiling_sfg_listing')
+    else:
+        form = forms.FoilingFormSemiFinishedGood(instance = foiling)
+    return render(request, "cogs/foilingform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")   
