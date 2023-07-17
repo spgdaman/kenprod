@@ -73,4 +73,6 @@ urlpatterns = [
 
     path("external_component_name_update/<int:id>/change/", views.ec_name_update, name="ec_name_update"),
     path("external_component_line_item_update/<int:id>/change/", views.ec_line_item_update, name="ec_line_item_update"),
+    path("external_component_finished_goods_update/<int:id>/change/", views.ec_fg_update, name="ec_fg_update"),
+    path("external_component_semi_finished_goods_update/<int:id>/change/", views.ec_sfg_update, name="ec_sfg_update"),
 ]

@@ -22,6 +22,22 @@
                 <a class="btn btn-primary" href="{% url url externalcomponent.id %}">Edit</a>
             </div>
         {% endfor %}
+    {% elif name == "ec_finished_goods" %}
+        {% for externalcomponent in externalcomponents %}
+            <div class="row">
+                <p>{{externalcomponent.fg_name}}</p>
+                <p>{{externalcomponent.component}}</p>
+                <a class="btn btn-primary" href="{% url url externalcomponent.id %}">Edit</a>
+            </div>
+        {% endfor %}
+    {% elif name == "ec_semi_finished_goods" %}
+        {% for externalcomponent in externalcomponents %}
+            <div class="row">
+                <p>{{externalcomponent.sfg_name}}</p>
+                <p>{{externalcomponent.component}}</p>
+                <a class="btn btn-primary" href="{% url url externalcomponent.id %}">Edit</a>
+            </div>
+        {% endfor %}
     {% endif %}
 </div>
 {% endblock %}

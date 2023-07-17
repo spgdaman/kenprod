@@ -953,9 +953,30 @@ def external_component_finished_goods_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def ec_fg_listing(request):
     page_view = "External Component Cost Finished Goods Listing"
+    url = "ec_fg_update"
+    name = "ec_finished_goods"
     externalcomponents = ExternalComponent.objects.filter(fg_name__isnull=False)
 
-    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view})
+    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view, "url": url, "name": name})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def ec_fg_update(request, id):
+    header = "External Component Finished Goods Update"
+    ec_finished_goods = get_object_or_404(ExternalComponent, id=id)
+
+    if request.method == "POST":
+        form = forms.ExternalComponentFormFinishedGood(request.POST, instance=ec_finished_goods)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('ec_fg_listing')
+    else:
+        form = forms.ExternalComponentFormFinishedGood(instance = ec_finished_goods)
+    return render(request, "cogs/externalcomponentform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
@@ -982,6 +1003,27 @@ def external_component_semi_finished_goods_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def ec_sfg_listing(request):
     page_view = "External Component Cost Semi Finished Goods Listing"
+    url = "ec_sfg_update"
+    name = "ec_semi_finished_goods"
     externalcomponents = ExternalComponent.objects.filter(sfg_name__isnull=False)
 
-    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view})
+    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view, "url": url, "name": name})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def ec_sfg_update(request, id):
+    header = "External Component Semi Finished Goods Update"
+    ec_finished_goods = get_object_or_404(ExternalComponent, id=id)
+
+    if request.method == "POST":
+        form = forms.ExternalComponentFormSemiFinishedGood(request.POST, instance=ec_finished_goods)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('ec_sfg_listing')
+    else:
+        form = forms.ExternalComponentFormSemiFinishedGood(instance = ec_finished_goods)
+    return render(request, "cogs/externalcomponentform.html", {'form':form, "header":header})
