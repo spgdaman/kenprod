@@ -82,14 +82,10 @@ def labour_fg_update(request, id):
     labour = get_object_or_404(Labour, id=id)
 
     if request.method == "POST":
-        form = forms.LabourFormFinishedGood(request.POST)
+        form = forms.LabourFormFinishedGood(request.POST, instance=labour)
 
         if form.is_valid():
-            labour.description = form.cleaned_data['description']
-            labour.fg_name = form.cleaned_data['fg_name']
-            labour.unit = form.cleaned_data['unit']
-            labour.cost_per_unit = form.cleaned_data['cost_per_unit']
-            labour.save()
+            form.save()
             messages.success(request,'Data has been submitted')
 
             # redirect to the detail page of the data we just updated
@@ -105,14 +101,10 @@ def labour_sfg_update(request, id):
     labour = get_object_or_404(Labour, id=id)
 
     if request.method == "POST":
-        form = forms.LabourFormSemiFinishedGood(request.POST)
+        form = forms.LabourFormSemiFinishedGood(request.POST, instance=labour)
 
         if form.is_valid():
-            labour.description = form.cleaned_data['description']
-            labour.sfg_name = form.cleaned_data['sfg_name']
-            labour.unit = form.cleaned_data['unit']
-            labour.cost_per_unit = form.cleaned_data['cost_per_unit']
-            labour.save()
+            form.save()
             messages.success(request,'Data has been submitted')
 
             # redirect to the detail page of the data we just updated
