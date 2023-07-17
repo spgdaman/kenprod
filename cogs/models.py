@@ -6,6 +6,19 @@ class ExchangeRate(models.Model):
     
     def __str__(self):
         return f"{self.rate}"
+    
+class Mould(models.Model):
+    name = models.CharField(max_length=50, blank=False)
+
+    def __str__(self):
+        return self.name
+
+class Machine(models.Model):
+    name = models.CharField(max_length=50, blank=False)
+    mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=False, null=False)
+
+    def __str__(self):
+        return self.name
 
 class FinishedGood(models.Model):
     name = models.CharField(max_length=50, blank=True)
@@ -125,6 +138,7 @@ class Power(models.Model):
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
     unit = models.IntegerField(null=True, blank=True)
     cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    machine = models.ForeignKey(Machine, models.DO_NOTHING, blank=False, null=False)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
@@ -142,6 +156,7 @@ class Labour(models.Model):
 
     def __str__(self):
         return self.description
+    
 
 # class Attribute(models.Model):
 #     attribute_name = models.CharField(max_length=30, blank=True)
