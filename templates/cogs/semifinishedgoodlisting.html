@@ -7,7 +7,13 @@
     <h1>{{ header }}</h1>
 
     {% for semifinishedgood in semifinishedgoods %}
-        <p>{{semifinishedgood}}</p>
+    <div class="row">
+        <p>{{semifinishedgood.name}}</p>
+        <p>{{semifinishedgood.fg_name}}</p>
+        <p>{{semifinishedgood.unit}}</p>
+        <p>{{semifinishedgood.cost_per_unit}}</p>
+        <a class="btn btn-primary" href="{% url 'sfg_update' semifinishedgood.id %}">Edit</a>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

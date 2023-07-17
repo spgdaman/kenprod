@@ -610,6 +610,25 @@ def sfg_listing(request):
     return render(request, "cogs/semifinishedgoodlisting.html", {"semifinishedgoods": semifinishedgoods, "header": page_view})
 
 @login_required()
+@validate_user_in_group("Finance", "Admin") 
+def sfg_update(request, id):
+    header = "Semi Finished Goods Update"
+    semi_finished_good = get_object_or_404(SemiFinishedGood, id=id)
+
+    if request.method == "POST":
+        form = forms.SemiFinishedGoodForm(request.POST, instance=semi_finished_good)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('sfg_listing')
+    else:
+        form = forms.SemiFinishedGoodForm(instance = semi_finished_good)
+    return render(request, "cogs/semifinishedgoodform.html", {'form':form, "header":header})
+
+@login_required()
 @validate_user_in_group("Finance", "Admin")   
 def raw_material_category_input(request):
     page_view = "Raw Material Name Input Form"

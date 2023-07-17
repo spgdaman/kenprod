@@ -46,6 +46,7 @@ urlpatterns = [
 
     path("semi_finished_goods_input/", views.semi_finished_good_input, name="semi_finished_good_input"),
     path("semi_finished_goods_listing/", views.sfg_listing, name='sfg_listing'),
+    path("semi_finished_goods_update/<int:id>/change/", views.sfg_update, name="sfg_update"),
 
     path("raw_material_category_input/", views.raw_material_category_input, name="raw_material_category_input"),
     path("raw_material_line_item_input/", views.raw_material_line_item_input, name="raw_material_category_line_item_input"),
