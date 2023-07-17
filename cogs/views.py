@@ -753,9 +753,30 @@ def raw_material_finished_goods_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def rm_fg_listing(request):
     page_view = "Raw Materials Cost Finished Goods Listing"
+    url = "rm_fg_update"
+    name = "rm_finished_goods"
     rawmaterials = RawMaterial.objects.filter(fg_name__isnull=False)
 
-    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view})
+    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view, "url":url, "name":name})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def rm_fg_update(request, id):
+    header = "Raw Material Cost Finished Goods Update"
+    rm_name = get_object_or_404(RawMaterial, id=id)
+
+    if request.method == "POST":
+        form = forms.RawMaterialFormFinishedGood(request.POST, instance=rm_name)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('rm_fg_listing')
+    else:
+        form = forms.RawMaterialFormFinishedGood(instance = rm_name)
+    return render(request, "cogs/rawmaterialform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
@@ -782,9 +803,30 @@ def raw_material_semi_finished_goods_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def rm_sfg_listing(request):
     page_view = "Raw Materials Cost Semi Finished Goods Listing"
+    url = "rm_sfg_update"
+    name = "rm_semi_finished_goods"
     rawmaterials = RawMaterial.objects.filter(sfg_name__isnull=False)
 
-    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view})
+    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view, "url":url, "name":name})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def rm_sfg_update(request, id):
+    header = "Raw Material Cost Semi Finished Goods Update"
+    rm_name = get_object_or_404(RawMaterial, id=id)
+
+    if request.method == "POST":
+        form = forms.RawMaterialFormSemiFinishedGood(request.POST, instance=rm_name)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('rm_sfg_listing')
+    else:
+        form = forms.RawMaterialFormSemiFinishedGood(instance = rm_name)
+    return render(request, "cogs/rawmaterialform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    

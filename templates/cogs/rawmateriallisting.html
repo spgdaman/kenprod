@@ -22,6 +22,22 @@
                 <a class="btn btn-primary" href="{% url url rawmaterial.id %}">Edit</a>
             </div>
         {% endfor %}
+    {% elif name == "rm_finished_goods" %}
+        {% for rawmaterial in rawmaterials %}
+            <div class="row">
+                <p>{{rawmaterial.fg_name}}</p>
+                <p>{{rawmaterial.raw_material}}</p>
+                <a class="btn btn-primary" href="{% url url rawmaterial.id %}">Edit</a>
+            </div>
+        {% endfor %}
+    {% elif name == "rm_semi_finished_goods" %}
+        {% for rawmaterial in rawmaterials %}
+            <div class="row">
+                <p>{{rawmaterial.sfg_name}}</p>
+                <p>{{rawmaterial.raw_material}}</p>
+                <a class="btn btn-primary" href="{% url url rawmaterial.id %}">Edit</a>
+            </div>
+        {% endfor %}
     {% endif %}
 </div>
 {% endblock %}
