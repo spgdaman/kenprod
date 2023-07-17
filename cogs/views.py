@@ -648,14 +648,35 @@ def raw_material_category_input(request):
     else:
         form = forms.RawMaterialCategoryForm()
         return render(request, "cogs/rawmaterialform.html", {"form":form, "header":page_view})
+    
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def rm_name_update(request, id):
+    header = "Raw Material Name Update"
+    rm_name = get_object_or_404(RawMaterialCategory, id=id)
+
+    if request.method == "POST":
+        form = forms.RawMaterialCategoryForm(request.POST, instance=rm_name)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('rm_name_listing')
+    else:
+        form = forms.RawMaterialCategoryForm(instance = rm_name)
+    return render(request, "cogs/rawmaterialform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
 def rm_name_listing(request):
     page_view = "Raw Materials Name Listing"
+    url = "rm_name_update"
+    name = "name"
     rawmaterials = RawMaterialCategory.objects.filter(category__isnull=False)
 
-    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view})
+    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view, "url":url, "name":name})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
@@ -682,9 +703,30 @@ def raw_material_line_item_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def rm_line_item_listing(request):
     page_view = "Raw Materials Line Item Listing"
+    url = "rm_line_item_update"
+    name = "line_item"
     rawmaterials = RawMaterialLineItem.objects.filter(name__isnull=False)
 
-    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view})
+    return render(request, "cogs/rawmateriallisting.html", {"rawmaterials": rawmaterials, "header": page_view, "url":url, "name":name})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def rm_line_item_update(request, id):
+    header = "Raw Material Line Item Update"
+    rm_name = get_object_or_404(RawMaterialLineItem, id=id)
+
+    if request.method == "POST":
+        form = forms.RawMaterialLineItemForm(request.POST, instance=rm_name)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('rm_line_item_listing')
+    else:
+        form = forms.RawMaterialLineItemForm(instance = rm_name)
+    return render(request, "cogs/rawmaterialform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")   

@@ -6,8 +6,22 @@
 <div class="container">
     <h1>{{ header }}</h1>
 
-    {% for rawmaterial in rawmaterials %}
-        <p>{{rawmaterial}}</p>
-    {% endfor %}
+    {% if name == "name" %}
+        {% for rawmaterial in rawmaterials %}
+            <div class="row">
+                <p>{{rawmaterial.category}}</p>
+                <a class="btn btn-primary" href="{% url url rawmaterial.id %}">Edit</a>
+            </div>
+        {% endfor %}
+    {% elif name == "line_item" %}
+        {% for rawmaterial in rawmaterials %}
+            <div class="row">
+                <p>{{rawmaterial.name}}</p>
+                <p>{{rawmaterial.unit}}</p>
+                <p>{{rawmaterial.cost_per_unit}}</p>
+                <a class="btn btn-primary" href="{% url url rawmaterial.id %}">Edit</a>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}

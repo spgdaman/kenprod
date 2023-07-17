@@ -57,6 +57,9 @@ urlpatterns = [
     path("raw_materials_name_listing/", views.rm_name_listing, name='rm_name_listing'),
     path("raw_materials_line_item_listing/", views.rm_line_item_listing, name='rm_line_item_listing'),
 
+    path("raw_materials_name_update/<int:id>/change/", views.rm_name_update, name="rm_name_update"),
+    path("raw_materials_line_item_update/<int:id>/change/", views.rm_line_item_update, name="rm_line_item_update"),
+
     path("external_component_name_input/", views.external_component_name_input, name="external_component_name_input"),
     path("external_component_line_item_input/", views.external_component_line_item_input, name="external_component_line_item_input"),
     path("external_component_finished_goods_input/", views.external_component_finished_goods_input, name="external_component_finished_goods_input"),
