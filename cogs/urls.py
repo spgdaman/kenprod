@@ -23,6 +23,8 @@ urlpatterns = [
     path("packing_input_semifinished_goods/", views.packing_input_sfg, name='packing_input_sfg'),
     path("packing_cost_finished_goods_listing/", views.packing_fg_listing, name="packing_fg_listing"),
     path("packing_cost_semi_finished_goods_listing/", views.packing_sfg_listing, name="packing_sfg_listing"),
+    path("packing_cost_finished_goods_update/<int:id>/change/", views.packing_fg_update, name="packing_fg_update"),
+    path("packing_cost_semi_finished_goods_update/<int:id>/change/", views.packing_sfg_update, name="packing_sfg_update"),
     
     path("label_input_finished_goods/", views.label_input_fg, name='label_input_fg'),
     path("label_input_semifinished_goods/", views.label_input_sfg, name='label_input_sfg'),

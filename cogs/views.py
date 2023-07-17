@@ -302,6 +302,44 @@ def packing_sfg_listing(request):
     return render(request, "cogs/packinglisting.html", {"packings": packings, "header": page_view})
 
 @login_required()
+@validate_user_in_group("Finance", "Admin") 
+def packing_fg_update(request, id):
+    header = "Packing Cost Finished Goods Update"
+    packing = get_object_or_404(Packing, id=id)
+
+    if request.method == "POST":
+        form = forms.PackingFormFinishedGood(request.POST, instance=packing)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('packing_fg_listing')
+    else:
+        form = forms.PackingFormFinishedGood(instance = packing)
+    return render(request, "cogs/packingform.html", {'form':form, "header":header})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def packing_sfg_update(request, id):
+    header = "Packing Cost Semi Finished Goods Update"
+    packing = get_object_or_404(Packing, id=id)
+
+    if request.method == "POST":
+        form = forms.PackingFormSemiFinishedGood(request.POST, instance=packing)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('packing_sfg_listing')
+    else:
+        form = forms.PackingFormSemiFinishedGood(instance = packing)
+    return render(request, "cogs/packingform.html", {'form':form, "header":header})
+
+@login_required()
 @validate_user_in_group("Finance", "Admin")    
 def label_input_fg(request):
     page_view = "Label Cost Input Form (Finished Goods)"
