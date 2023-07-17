@@ -42,6 +42,7 @@ urlpatterns = [
 
     path("finished_goods_input/", views.finished_good_input, name="finished_good_input"),
     path("finished_goods_listing/", views.fg_listing, name='fg_listing'),
+    path("finished_goods_update/<int:id>/change/", views.fg_update, name="fg_update"),
 
     path("semi_finished_goods_input/", views.semi_finished_good_input, name="semi_finished_good_input"),
     path("semi_finished_goods_listing/", views.sfg_listing, name='sfg_listing'),

@@ -7,7 +7,12 @@
     <h1>{{ header }}</h1>
 
     {% for finishedgood in finishedgoods %}
-        <p>{{finishedgood}}</p>
+        <div class="row">
+            <p>{{finishedgood.name}}</p>
+            <p>{{finishedgood.unit}}</p>
+            <p>{{finishedgood.cost_per_unit}}</p>
+            <a class="btn btn-primary" href="{% url 'fg_update' finishedgood.id %}">Edit</a>
+        </div>
     {% endfor %}
 </div>
 {% endblock %}

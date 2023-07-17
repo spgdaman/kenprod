@@ -562,6 +562,25 @@ def fg_listing(request):
     return render(request, "cogs/finishedgoodlisting.html", {"finishedgoods": finishedgoods, "header": page_view})
 
 @login_required()
+@validate_user_in_group("Finance", "Admin") 
+def fg_update(request, id):
+    header = "Finished Goods Update"
+    finished_good = get_object_or_404(FinishedGood, id=id)
+
+    if request.method == "POST":
+        form = forms.FinishedGoodForm(request.POST, instance=finished_good)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('fg_listing')
+    else:
+        form = forms.FinishedGoodForm(instance = finished_good)
+    return render(request, "cogs/finishedgoodform.html", {'form':form, "header":header})
+
+@login_required()
 @validate_user_in_group("Finance", "Admin")    
 def semi_finished_good_input(request):
     page_view = "Semi Finished Goods Input Form"
