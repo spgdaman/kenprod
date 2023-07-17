@@ -40,6 +40,14 @@ class SemiFinishedGood(models.Model):
     def __str__(self):
         return self.name
     
+class SalesPrice(models.Model):
+    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=False, null=False)
+    price = models.DecimalField(blank=False, max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.fg_name
+    
 class RawMaterialCategory(models.Model):
     category = models.CharField(max_length=50, blank=True)
     created_at = models.DateTimeField(auto_now=True)
@@ -156,13 +164,6 @@ class Labour(models.Model):
 
     def __str__(self):
         return self.description
-
-class SalesPrice(models.Model):
-    fg_name = models.Model(FinishedGood, models.DO_NOTHING, blank=False, null=False)
-    price = models.DecimalField(blank=False, max_digits=10, decimal_places=2)
-    
-    def __str__(self):
-        return self.fg_name
 
 # class Attribute(models.Model):
 #     attribute_name = models.CharField(max_length=30, blank=True)
