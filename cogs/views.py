@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import ExchangeRate, FinishedGood, SemiFinishedGood, RawMaterialCategory, RawMaterialLineItem, RawMaterial, ExternalComponentName, ExternalComponentLineItem, ExternalComponent, Labeling, Foiling, Packing, Power, Labour
 from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib import messages
 from django.views import View
+from django.views.generic.edit import UpdateView
 
 from . import forms
 from .check_groups_decorator import validate_user_in_group
@@ -74,6 +75,51 @@ def labour_fg_listing(request):
 
     return render(request, "cogs/labourlisting.html", {"labours": labours, "header": page_view})
 
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def labour_fg_update(request, id):
+    page_view = "Labour Cost Finished Goods Update"
+    labour = get_object_or_404(Labour, id=id)
+
+    if request.method == "POST":
+        form = forms.LabourFormFinishedGood(request.POST)
+
+        if form.is_valid():
+            labour.description = form.cleaned_data['description']
+            labour.fg_name = form.cleaned_data['fg_name']
+            labour.unit = form.cleaned_data['unit']
+            labour.cost_per_unit = form.cleaned_data['cost_per_unit']
+            labour.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('labour_fg_listing')
+    else:
+        form = forms.LabourFormFinishedGood(instance = labour)
+    return render(request, "cogs/labourform.html", {'form':form, "page_view":page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def labour_sfg_update(request, id):
+    page_view = "Labour Cost Semi Finished Goods Update"
+    labour = get_object_or_404(Labour, id=id)
+
+    if request.method == "POST":
+        form = forms.LabourFormSemiFinishedGood(request.POST)
+
+        if form.is_valid():
+            labour.description = form.cleaned_data['description']
+            labour.sfg_name = form.cleaned_data['sfg_name']
+            labour.unit = form.cleaned_data['unit']
+            labour.cost_per_unit = form.cleaned_data['cost_per_unit']
+            labour.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('labour_sfg_listing')
+    else:
+        form = forms.LabourFormSemiFinishedGood(instance = labour)
+    return render(request, "cogs/labourform.html", {'form':form, "page_view":page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")

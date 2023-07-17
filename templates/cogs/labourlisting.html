@@ -7,7 +7,20 @@
     <h1>{{ header }}</h1>
 
     {% for labour in labours %}
-        <p>{{labour}}</p>
-    {% endfor %}
+        <div class="row">
+            <p>{{labour.description}}</p>
+            {% if labour.fg_name != None %}
+                <p>{{labour.fg_name}}</p>
+                <p>{{labour.unit}}</p>
+                <p>{{labour.cost_per_unit}}</p>
+                <a class="btn btn-primary" href="{% url 'labour_fg_update' labour.id %}">Edit</a>
+            {% elif labour.sfg_name != None %}
+                <p>{{labour.sfg_name}}</p>
+                <p>{{labour.unit}}</p>
+                <p>{{labour.cost_per_unit}}</p>
+                <a class="btn btn-primary" href="{% url 'labour_sfg_update' labour.id %}">Edit</a>
+            {% endif %}
+        </div>
+    {% endfor %}    
 </div>
 {% endblock %}

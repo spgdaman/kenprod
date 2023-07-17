@@ -7,7 +7,20 @@
     <h1>{{ header }}</h1>
 
     {% for label in labels %}
-        <p>{{label}}</p>
+    <div class="row">
+        <p>{{label.description}}</p>
+        {% if label.fg_name != None %}
+            <p>{{label.fg_name}}</p>
+            <p>{{label.unit}}</p>
+            <p>{{label.cost_per_unit}}</p>
+            <a class="btn btn-primary" href="{% url 'label_fg_update' label.id %}">Edit</a>
+        {% elif label.sfg_name != None %}
+            <p>{{label.sfg_name}}</p>
+            <p>{{label.unit}}</p>
+            <p>{{label.cost_per_unit}}</p>
+            <a class="btn btn-primary" href="{% url 'label_sfg_update' label.id %}">Edit</a>
+        {% endif %}
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

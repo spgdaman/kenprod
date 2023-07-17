@@ -7,7 +7,20 @@
     <h1>{{ header }}</h1>
 
     {% for power in powers %}
-        <p>{{power}}</p>
+    <div class="row">
+        <p>{{power.description}}</p>
+        {% if power.fg_name != None %}
+            <p>{{power.fg_name}}</p>
+            <p>{{power.unit}}</p>
+            <p>{{power.cost_per_unit}}</p>
+            <a class="btn btn-primary" href="{% url 'power_fg_update' power.id %}">Edit</a>
+        {% elif power.sfg_name != None %}
+            <p>{{power.sfg_name}}</p>
+            <p>{{power.unit}}</p>
+            <p>{{power.cost_per_unit}}</p>
+            <a class="btn btn-primary" href="{% url 'power_sfg_update' power.id %}">Edit</a>
+        {% endif %}
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

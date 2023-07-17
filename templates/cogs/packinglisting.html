@@ -7,7 +7,20 @@
     <h1>{{ header }}</h1>
 
     {% for packing in packings %}
-        <p>{{packing}}</p>
+    <div class="row">
+        <p>{{packing.description}}</p>
+        {% if packing.fg_name != None %}
+            <p>{{packing.fg_name}}</p>
+            <p>{{packing.unit}}</p>
+            <p>{{packing.cost_per_unit}}</p>
+            <a class="btn btn-primary" href="{% url 'packing_fg_update' packing.id %}">Edit</a>
+        {% elif packing.sfg_name != None %}
+            <p>{{packing.sfg_name}}</p>
+            <p>{{packing.unit}}</p>
+            <p>{{packing.cost_per_unit}}</p>
+            <a class="btn btn-primary" href="{% url 'packing_sfg_update' packing.id %}">Edit</a>
+        {% endif %}
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

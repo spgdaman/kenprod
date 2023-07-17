@@ -9,6 +9,8 @@ urlpatterns = [
     path("labour_input_semifinsihed_goods/", views.labour_input_sfg, name='labour_input_sfg'),
     path("labour_cost_finished_goods_listing/", views.labour_fg_listing, name="labour_fg_listing"),
     path("labour_cost_semi_finished_goods_listing/", views.labour_sfg_listing, name="labour_sfg_listing"),
+    path("labour_cost_finished_goods_update/<int:id>/change/", views.labour_fg_update, name="labour_fg_update"),
+    path("labour_cost_semi_finished_goods_update/<int:id>/change/", views.labour_sfg_update, name="labour_sfg_update"),
 
     path("power_input_finished_goods/", views.power_input_fg, name='power_input_fg'),
     path("power_input_semifinished_goods/", views.power_input_sfg, name='power_input_sfg'),

@@ -7,7 +7,20 @@
     <h1>{{ header }}</h1>
 
     {% for foiling in foilings %}
-        <p>{{foiling}}</p>
+    <div class="row">
+        <p>{{foiling.description}}</p>
+        {% if foiling.fg_name != None %}
+            <p>{{foiling.fg_name}}</p>
+            <p>{{foiling.unit}}</p>
+            <p>{{foiling.cost_per_unit}}</p>
+            <a class="btn btn-primary" href="{% url 'foiling_fg_update' foiling.id %}">Edit</a>
+        {% elif foiling.sfg_name != None %}
+            <p>{{foiling.sfg_name}}</p>
+            <p>{{foiling.unit}}</p>
+            <p>{{foiling.cost_per_unit}}</p>
+            <a class="btn btn-primary" href="{% url 'foiling_sfg_update' foiling.id %}">Edit</a>
+        {% endif %}
+    </div>
     {% endfor %}
 </div>
 {% endblock %}
