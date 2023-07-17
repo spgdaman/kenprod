@@ -207,7 +207,7 @@ def power_sfg_listing(request):
 @login_required()
 @validate_user_in_group("Finance", "Admin") 
 def power_fg_update(request, id):
-    page_view = "Power Cost Finished Goods Update"
+    header = "Power Cost Finished Goods Update"
     power = get_object_or_404(Power, id=id)
 
     if request.method == "POST":
@@ -221,12 +221,12 @@ def power_fg_update(request, id):
             return redirect('power_fg_listing')
     else:
         form = forms.PowerFormFinishedGood(instance = power)
-    return render(request, "cogs/powerform.html", {'form':form, "page_view":page_view})
+    return render(request, "cogs/powerform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin") 
 def power_sfg_update(request, id):
-    page_view = "Power Cost Semi Finished Goods Update"
+    header = "Power Cost Semi Finished Goods Update"
     power = get_object_or_404(Power, id=id)
 
     if request.method == "POST":
@@ -239,8 +239,8 @@ def power_sfg_update(request, id):
             # redirect to the detail page of the data we just updated
             return redirect('power_sfg_listing')
     else:
-        form = forms.PowerFormSemiFinishedGood(instance = Power)
-    return render(request, "cogs/powerform.html", {'form':form, "page_view":page_view})
+        form = forms.PowerFormSemiFinishedGood(instance = power)
+    return render(request, "cogs/powerform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin") 
