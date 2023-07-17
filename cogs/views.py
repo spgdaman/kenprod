@@ -853,9 +853,30 @@ def external_component_name_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def ec_name_listing(request):
     page_view = "External Component Listing"
+    url = "ec_name_update"
+    name = "name"
     externalcomponents = ExternalComponentName.objects.filter(name__isnull=False)
 
-    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view})
+    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view, "url": url, "name": name})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def ec_name_update(request, id):
+    header = "External Component Name Update"
+    ec_name = get_object_or_404(ExternalComponentName, id=id)
+
+    if request.method == "POST":
+        form = forms.ExternalComponentNameForm(request.POST, instance=ec_name)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('ec_name_listing')
+    else:
+        form = forms.ExternalComponentNameForm(instance = ec_name)
+    return render(request, "cogs/externalcomponentform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    
@@ -882,9 +903,30 @@ def external_component_line_item_input(request):
 @validate_user_in_group("Finance", "Admin")    
 def ec_line_item_listing(request):
     page_view = "External Component Line Item Listing"
+    url = "ec_line_item_update"
+    name = "line_item"
     externalcomponents = ExternalComponentLineItem.objects.filter(name__isnull=False)
 
-    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view})
+    return render(request, "cogs/externalcomponentlisting.html", {"externalcomponents": externalcomponents, "header": page_view, "url": url, "name":name})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def ec_line_item_update(request, id):
+    header = "External Component Line Item Update"
+    ec_line_item = get_object_or_404(ExternalComponentLineItem, id=id)
+
+    if request.method == "POST":
+        form = forms.ExternalComponentLineItemForm(request.POST, instance=ec_line_item)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('ec_line_item_listing')
+    else:
+        form = forms.ExternalComponentLineItemForm(instance = ec_line_item)
+    return render(request, "cogs/externalcomponentform.html", {'form':form, "header":header})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin")    

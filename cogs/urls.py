@@ -70,4 +70,7 @@ urlpatterns = [
     path("external_component_semi_finished_goods_listing/", views.ec_sfg_listing, name='ec_sfg_listing'),
     path("external_component_name_listing/", views.ec_name_listing, name='ec_name_listing'),
     path("external_component_line_item_listing/", views.ec_line_item_listing, name='ec_line_item_listing'),
+
+    path("external_component_name_update/<int:id>/change/", views.ec_name_update, name="ec_name_update"),
+    path("external_component_line_item_update/<int:id>/change/", views.ec_line_item_update, name="ec_line_item_update"),
 ]

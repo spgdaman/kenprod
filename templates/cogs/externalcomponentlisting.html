@@ -6,8 +6,22 @@
 <div class="container">
     <h1>{{ header }}</h1>
 
-    {% for externalcomponent in externalcomponents %}
-        <p>{{externalcomponent}}</p>
-    {% endfor %}
+    {% if name == "name" %}
+        {% for externalcomponent in externalcomponents %}
+            <div class="row">
+                <p>{{externalcomponent.name}}</p>
+                <a class="btn btn-primary" href="{% url url externalcomponent.id %}">Edit</a>
+            </div>
+        {% endfor %}
+    {% elif name == "line_item" %}
+        {% for externalcomponent in externalcomponents %}
+            <div class="row">
+                <p>{{externalcomponent.name}}</p>
+                <p>{{externalcomponent.unit}}</p>
+                <p>{{externalcomponent.cost_per_unit}}</p>
+                <a class="btn btn-primary" href="{% url url externalcomponent.id %}">Edit</a>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
