@@ -41,12 +41,15 @@ class SemiFinishedGood(models.Model):
         return self.name
     
 class SalesPrice(models.Model):
-    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=False, null=False)
+    product_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=False, null=False)
     price = models.DecimalField(blank=False, max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = "Sales Prices"
+
     def __str__(self):
-        return self.fg_name
+        return self.product_name
     
 class RawMaterialCategory(models.Model):
     category = models.CharField(max_length=50, blank=True)
