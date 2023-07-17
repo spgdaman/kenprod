@@ -16,6 +16,8 @@ urlpatterns = [
     path("power_input_semifinished_goods/", views.power_input_sfg, name='power_input_sfg'),
     path("power_cost_finished_goods_listing/", views.power_fg_listing, name="power_fg_listing"),
     path("power_cost_semi_finished_goods_listing/", views.power_sfg_listing, name="power_sfg_listing"),
+    path("power_cost_finished_goods_update/<int:id>/change/", views.power_fg_update, name="power_fg_update"),
+    path("power_cost_semi_finished_goods_update/<int:id>/change/", views.power_sfg_update, name="power_sfg_update"),
 
     path("packing_input_finished_goods/", views.packing_input_fg, name='packing_input_fg'),
     path("packing_input_semifinished_goods/", views.packing_input_sfg, name='packing_input_sfg'),

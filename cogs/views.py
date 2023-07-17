@@ -85,6 +85,7 @@ def labour_fg_update(request, id):
         form = forms.LabourFormFinishedGood(request.POST, instance=labour)
 
         if form.is_valid():
+
             form.save()
             messages.success(request,'Data has been submitted')
 
@@ -202,6 +203,44 @@ def power_sfg_listing(request):
     powers = Power.objects.filter(sfg_name__isnull=False)
 
     return render(request, "cogs/powerlisting.html", {"powers": powers, "header": page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def power_fg_update(request, id):
+    page_view = "Power Cost Finished Goods Update"
+    power = get_object_or_404(Power, id=id)
+
+    if request.method == "POST":
+        form = forms.PowerFormFinishedGood(request.POST, instance=power)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('power_fg_listing')
+    else:
+        form = forms.PowerFormFinishedGood(instance = power)
+    return render(request, "cogs/powerform.html", {'form':form, "page_view":page_view})
+
+@login_required()
+@validate_user_in_group("Finance", "Admin") 
+def power_sfg_update(request, id):
+    page_view = "Power Cost Semi Finished Goods Update"
+    power = get_object_or_404(Power, id=id)
+
+    if request.method == "POST":
+        form = forms.PowerFormSemiFinishedGood(request.POST, instance=power)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Data has been submitted')
+
+            # redirect to the detail page of the data we just updated
+            return redirect('power_sfg_listing')
+    else:
+        form = forms.PowerFormSemiFinishedGood(instance = Power)
+    return render(request, "cogs/powerform.html", {'form':form, "page_view":page_view})
 
 @login_required()
 @validate_user_in_group("Finance", "Admin") 
