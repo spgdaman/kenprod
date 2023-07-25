@@ -59,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = 'intel.urls'
@@ -165,3 +166,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+
+SESSION_EXPIRE_SECONDS = 1800
+SESSION_TIMEOUT_REDIRECT = 'login'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
