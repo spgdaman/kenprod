@@ -63,7 +63,7 @@ class SalesPrice(models.Model):
         return self.fg_name
     
 class RawMaterialCategory(models.Model):
-    category = models.CharField(max_length=50, blank=True)
+    material_name = models.CharField(max_length=50, blank=True)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -179,6 +179,14 @@ class Labour(models.Model):
 
     def __str__(self):
         return self.description
+    
+class Composition(models.Model):
+    composition = models.CharField(max_length=50, blank=True)
+    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
+    sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
+    ratio = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    price_per_kg = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    pass
 
 # class Attribute(models.Model):
 #     attribute_name = models.CharField(max_length=30, blank=True)

@@ -107,7 +107,7 @@ class SemiFinishedGoodForm(forms.ModelForm):
 class RawMaterialCategoryForm(forms.ModelForm):
     class Meta:
         model = models.RawMaterialCategory
-        fields = ['category']
+        fields = ['material_name']
 
 class RawMaterialLineItemForm(forms.ModelForm):
     class Meta:
