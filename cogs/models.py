@@ -14,9 +14,17 @@ class Mould(models.Model):
     maximum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     optimum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     cycle_time = models.IntegerField(null=True)
+    u_h = models.IntegerField(null=True)
 
     def __str__(self):
         return self.name
+    
+    def get_computed(self):
+        result = (self.cavity_number * 60 * 60) / self.cycle_time
+
+    def save(self, *args, **kwargs):
+        self.u_h = self.get_computed()
+        super(Mould, self).save(*args, **kwargs)
 
 # class Machine(models.Model):
 #     name = models.CharField(max_length=50, blank=False)
@@ -185,7 +193,7 @@ class Power(models.Model):
     description = models.CharField(max_length=50, blank=True)
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
-    unit = models.IntegerField(null=True, blank=True)
+    component = models.IntegerField(null=True, blank=True)
     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=False, null=True)
     cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     # machine = models.ForeignKey(Machine, models.DO_NOTHING, blank=False, null=True)
