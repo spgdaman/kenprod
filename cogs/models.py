@@ -5,10 +5,7 @@ class ExchangeRate(models.Model):
     effective_from = models.DateField()
     effective_to = models.DateField()
     rate = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
-    
-    def __str__(self):
-        return f"{self.rate}"
-    
+       
 class Mould(models.Model):
     name = models.CharField(max_length=50, blank=False)
     group = models.CharField(max_length=50, blank=True)
@@ -76,6 +73,7 @@ class RawMaterialLineItem(models.Model):
     raw_material_cost = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     landing_cost = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
     landed_cost_per_kg = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    cost_per_kg = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     # unit = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
     # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
@@ -87,9 +85,25 @@ class RawMaterialLineItem(models.Model):
     def get_computed(self):
         result = self.raw_material_cost * (1 + self.landing_cost)
         return result
+    
+    # def get_computed_kes(self):
+    #     rate = ExchangeRate()
+    #     print(rate)
+    #     for i in rate:
+    #         print(f"The rate is this --> {i['rate']}")
+        #     # print(i[0]["effective_from"])
+        #     if self.created_at <= i["effective_to"] and self.created_at >= i["effective_from"]:
+        #         result = float(i.rate * self.landed_cost_per_kg)
+        # return result
+        # if self.created_at <= rate.effective_to and self.created_at >= rate.effective_from:
+        #     result = float(rate.rate * self.landed_cost_per_kg)
+        # result = float(rate.rate * self.landed_cost_per_kg)
+        # return result
 
     def save(self, *args, **kwargs):
         self.landed_cost_per_kg = self.get_computed()
+        # self.cost_per_kg = self.get_computed_kes()
+        # self.get_computed_kes()
         super(RawMaterialLineItem, self).save(*args, **kwargs)
 
 class RawMaterial(models.Model):
@@ -199,7 +213,7 @@ class Composition(models.Model):
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
     ratio = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
     price_per_kg = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
-    pass
+    
 
 # class Attribute(models.Model):
 #     attribute_name = models.CharField(max_length=30, blank=True)
