@@ -67,17 +67,28 @@ class RawMaterialCategory(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.category
+        return self.material_name
 
 class RawMaterialLineItem(models.Model):
     name = models.ForeignKey(RawMaterialCategory, models.DO_NOTHING, blank=True, null=True)
-    unit = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
-    cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    raw_material_cost = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    landing_cost = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    landed_cost_per_kg = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    # unit = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
+    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name.category
+        return self.name.material_name
+    
+    def get_computed(self):
+        result = self.raw_material_cost * (1 + self.landing_cost)
+        return result
+
+    def save(self, *args, **kwargs):
+        self.landed_cost_per_kg = self.get_computed()
+        super(RawMaterialLineItem, self).save(*args, **kwargs)
 
 class RawMaterial(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
