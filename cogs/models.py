@@ -9,6 +9,12 @@ class ExchangeRate(models.Model):
     
 class Mould(models.Model):
     name = models.CharField(max_length=50, blank=False)
+    group = models.CharField(max_length=50, blank=True)
+    work_center = models.CharField(max_length=50, blank=True)
+    cavity_number = models.IntegerField(null=True)
+    maximum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    optimum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    cycle_time = models.IntegerField(null=True)
 
     def __str__(self):
         return self.name
@@ -46,7 +52,7 @@ class SalesPrice(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "Sales Pricep"
+        verbose_name = "Sales Price"
 
     def __str__(self):
         return self.fg_name
