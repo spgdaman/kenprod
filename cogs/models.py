@@ -19,17 +19,19 @@ class Mould(models.Model):
     def __str__(self):
         return self.name
 
-class Machine(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=False, null=False)
+# class Machine(models.Model):
+#     name = models.CharField(max_length=50, blank=False)
+#     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=False, null=False)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 class FinishedGood(models.Model):
     name = models.CharField(max_length=50, blank=True)
-    unit = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
-    cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
+    primary_sales_channel = models.CharField(max_length=20, blank=True)
+    weight = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=4)
+    # unit = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
+    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
@@ -39,8 +41,9 @@ class FinishedGood(models.Model):
 class SemiFinishedGood(models.Model):
     name = models.CharField(max_length=50, blank=True)
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
-    unit = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
-    cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
+    weight = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=4)
+    # unit = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
+    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -48,7 +51,9 @@ class SemiFinishedGood(models.Model):
     
 class SalesPrice(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=False, null=False)
-    price = models.DecimalField(blank=False, max_digits=10, decimal_places=2)
+    psc_price = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    ws_price = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    markup = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -154,8 +159,9 @@ class Power(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
     unit = models.IntegerField(null=True, blank=True)
+    mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=False, null=True)
     cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
-    machine = models.ForeignKey(Machine, models.DO_NOTHING, blank=False, null=True)
+    # machine = models.ForeignKey(Machine, models.DO_NOTHING, blank=False, null=True)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 

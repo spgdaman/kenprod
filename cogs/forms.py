@@ -97,12 +97,12 @@ class FoilingFormSemiFinishedGood(forms.ModelForm):
 class FinishedGoodForm(forms.ModelForm):
     class Meta:
         model = models.FinishedGood
-        fields = ['name', 'unit', 'cost_per_unit']
+        fields = ['name', 'weight']
 
 class SemiFinishedGoodForm(forms.ModelForm):
     class Meta:
         model = models.SemiFinishedGood
-        fields = ['name', 'fg_name', 'unit', 'cost_per_unit']
+        fields = ['name', 'weight']
 
 class RawMaterialCategoryForm(forms.ModelForm):
     class Meta:
