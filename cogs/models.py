@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 
 class ExchangeRate(models.Model):
+    effective_from = models.DateField()
+    effective_to = models.DateField()
     rate = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
     
     def __str__(self):
