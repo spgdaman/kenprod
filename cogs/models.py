@@ -231,6 +231,19 @@ class Composition(models.Model):
     ratio = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
     price_per_kg = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
 
+class ChangeOver(models.Model):
+    component = models.IntegerField(null=True, blank=True)
+    mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=True, null=True)
+    target = models.CharField(max_length=50, blank=True)
+    changes = models.CharField(max_length=50, blank=True)
+    hrs = models.DecimalField(blank=True, max_digits=5, decimal_places=1)
+    oc_hr = models.IntegerField(null=True, blank=True)
+
+class ChangeOverTime(models.Model):
+    co_time = models.IntegerField(null=True, blank=True)
+    hrs = models.DecimalField(blank=True, max_digits=5, decimal_places=5)
+
+
 # class Test(models.Model):
 #     name = models.CharField(max_length=50, blank=True)
 #     attribute = models.CharField(max_length=30, blank=True)
