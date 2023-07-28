@@ -52,7 +52,7 @@ class Mould(models.Model):
     maximum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     optimum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     cycle_time = models.IntegerField(null=True)
-    u_h = models.IntegerField(null=True)
+    # u_h = models.IntegerField(null=True)
 
     def __str__(self):
         if type(self.sfg_name) == None:
@@ -60,12 +60,12 @@ class Mould(models.Model):
         elif type(self.fg_name) != None:
             return f"{self.name} for {self.fg_name} Finished Goods"
     
-    def get_computed(self):
-        result = (self.cavity_number * 60 * 60) / self.cycle_time
+    # def get_computed(self):
+    #     result = (self.cavity_number * 60 * 60) / self.cycle_time
 
-    def save(self, *args, **kwargs):
-        self.u_h = self.get_computed()
-        super(Mould, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.u_h = self.get_computed()
+    #     super(Mould, self).save(*args, **kwargs)
     
 class SalesPrice(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=False, null=False)
@@ -207,22 +207,54 @@ class Packing(models.Model):
     def __str__(self):
         return self.description
 
-class Power(models.Model):
-    description = models.CharField(max_length=50, blank=True)
+class Power(ComputedFieldsModel):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
     component = models.IntegerField(null=True, blank=True)
     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=False, null=True)
-    cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     # machine = models.ForeignKey(Machine, models.DO_NOTHING, blank=False, null=True)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.description
+        return f"{self.fg_name} {self.sfg_name}"
     
-class Labour(models.Model):
-    description = models.CharField(max_length=50, blank=True)
+    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['work_center'])])
+    def mmts(self):
+        return self.mould.work_center
+    
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('mould', ['work_center'])])
+    def kwh(self):
+        return int(self.mould.work_center) * 0.0536842105263158
+    
+    kes_kw = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+
+    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=2), depends=[('mould', ['work_center'])])
+    def kes_hr(self):
+        return int(self.mould.work_center) * 0.0536842105263158 * float(self.kes_kw)
+    
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('mould', ['cycle_time'])])
+    def ct(self):
+        return self.mould.cycle_time
+
+    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['cavity_number'])])
+    def cavity(self):
+        return self.mould.cavity_number
+    
+    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['cavity_number', 'cycle_time'])])
+    def u_h(self):
+        return (60 * 60 * self.mould.cavity_number) / self.mould.cycle_time
+    
+    @computed(models.DecimalField(null=True, blank=True, max_digits=15, decimal_places=6))
+    def kes_u(self):
+        return self.kes_hr / self.u_h
+    
+    @computed(models.DecimalField(null=True, blank=True, max_digits=15, decimal_places=6))
+    def kes_sfg(self):
+        return float( self.component * self.kes_u )
+    
+class Labour(ComputedFieldsModel):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
     component = models.IntegerField(null=True, blank=True)
@@ -233,7 +265,11 @@ class Labour(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.description
+        return f"{self.fg_name} {self.sfg_name}"
+    
+    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['work_center'])])
+    def mmts(self):
+        return self.mould.work_center
     
 class Composition(models.Model):
     composition = models.CharField(max_length=50, blank=True)
