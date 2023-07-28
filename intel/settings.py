@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'crispy_bootstrap4',
+    'computedfields',
 ]
 
 MIDDLEWARE = [
@@ -171,3 +172,6 @@ SESSION_EXPIRE_SECONDS = 1800
 SESSION_TIMEOUT_REDIRECT = 'login'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+COMPUTEDFIELDS_ADMIN = True
+COMPUTEDFIELDS_FASTUPDATE = True

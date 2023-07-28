@@ -1,30 +1,15 @@
 from django.db import models
 from django.conf import settings
+from computedfields.models import ComputedFieldsModel, computed, compute
 
 class ExchangeRate(models.Model):
     effective_from = models.DateField()
     effective_to = models.DateField()
     rate = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
-       
-class Mould(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    group = models.CharField(max_length=50, blank=True)
-    work_center = models.CharField(max_length=50, blank=True)
-    cavity_number = models.IntegerField(null=True)
-    maximum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    optimum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    cycle_time = models.IntegerField(null=True)
-    u_h = models.IntegerField(null=True)
 
-    def __str__(self):
-        return self.name
-    
-    def get_computed(self):
-        result = (self.cavity_number * 60 * 60) / self.cycle_time
-
-    def save(self, *args, **kwargs):
-        self.u_h = self.get_computed()
-        super(Mould, self).save(*args, **kwargs)
+class ChangeOverTime(models.Model):
+    co_time = models.IntegerField(null=True, blank=True)
+    hrs = models.DecimalField(blank=True, max_digits=10, decimal_places=5)
 
 # class Machine(models.Model):
 #     name = models.CharField(max_length=50, blank=False)
@@ -55,6 +40,32 @@ class SemiFinishedGood(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Mould(models.Model):
+    co_time = models.ForeignKey(ChangeOverTime, models.DO_NOTHING, blank=True, null=True)
+    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
+    sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
+    name = models.CharField(max_length=50, blank=False)
+    group = models.CharField(max_length=50, blank=True)
+    work_center = models.CharField(max_length=50, blank=True)
+    cavity_number = models.IntegerField(null=True)
+    maximum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    optimum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    cycle_time = models.IntegerField(null=True)
+    u_h = models.IntegerField(null=True)
+
+    def __str__(self):
+        if type(self.sfg_name) == None:
+            return f"{self.name} for {self.sfg_name.name} Semi Finished Goods"
+        elif type(self.fg_name) != None:
+            return f"{self.name} for {self.fg_name} Finished Goods"
+    
+    def get_computed(self):
+        result = (self.cavity_number * 60 * 60) / self.cycle_time
+
+    def save(self, *args, **kwargs):
+        self.u_h = self.get_computed()
+        super(Mould, self).save(*args, **kwargs)
     
 class SalesPrice(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=False, null=False)
@@ -231,17 +242,47 @@ class Composition(models.Model):
     ratio = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
     price_per_kg = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
 
-class ChangeOver(models.Model):
+class ChangeOver(ComputedFieldsModel):
+    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
+    sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
     component = models.IntegerField(null=True, blank=True)
     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=True, null=True)
     target = models.CharField(max_length=50, blank=True)
     changes = models.CharField(max_length=50, blank=True)
-    hrs = models.DecimalField(blank=True, max_digits=5, decimal_places=1)
-    oc_hr = models.IntegerField(null=True, blank=True)
+    # hrs = models.DecimalField(blank=True, max_digits=5, decimal_places=1)
+    # oc_hr = models.IntegerField(null=True, blank=True)
 
-class ChangeOverTime(models.Model):
-    co_time = models.IntegerField(null=True, blank=True)
-    hrs = models.DecimalField(blank=True, max_digits=5, decimal_places=5)
+    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['work_center'])])
+    def mmts(self):
+        return self.mould.work_center
+    
+    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['cycle_time'])])
+    def ct(self):
+        return self.mould.cycle_time
+
+    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['cavity_number'])])
+    def cavity(self):
+        return self.mould.cavity_number 
+
+    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=2))
+    def max_u_m(self):
+        return (60 * 60 * 24 * 30.5 * ( self.mould.cavity_number / self.mould.cycle_time))
+    
+    @computed(models.IntegerField(null=True, blank=True))
+    def oc_hr(self):
+        try:
+            result = round( (15000 / 950) * int(self.mould.work_center) )
+            print(result)
+        except:
+            result = int( (15000 / 950) )
+            print(self.mould.work_center)
+        return result
+
+    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=5))
+    def hrs(self):
+        result = self.mould.co_time.hrs
+        return result
+
 
 
 # class Test(models.Model):
