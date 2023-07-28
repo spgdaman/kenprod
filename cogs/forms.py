@@ -112,7 +112,7 @@ class RawMaterialCategoryForm(forms.ModelForm):
 class RawMaterialLineItemForm(forms.ModelForm):
     class Meta:
         model = models.RawMaterialLineItem
-        fields = ['name', 'raw_material_cost', 'landing_cost']
+        fields = ['material_name', 'raw_material_cost', 'landing_cost']
 
 class RawMaterialFormFinishedGood(forms.ModelForm):
     class Meta:

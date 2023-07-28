@@ -88,7 +88,7 @@ class RawMaterialCategory(models.Model):
         return self.material_name
 
 class RawMaterialLineItem(models.Model):
-    name = models.ForeignKey(RawMaterialCategory, models.DO_NOTHING, blank=True, null=True)
+    material_name = models.ForeignKey(RawMaterialCategory, models.DO_NOTHING, blank=True, null=True)
     raw_material_cost = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     landing_cost = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
     landed_cost_per_kg = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
