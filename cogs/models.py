@@ -251,12 +251,18 @@ class Labour(ComputedFieldsModel):
     def mmts(self):
         return self.mould.work_center
     
-class Composition(models.Model):
+class Composition(ComputedFieldsModel):
     composition = models.CharField(max_length=50, blank=True)
-    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
-    sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
+    material_name = models.ForeignKey(RawMaterialLineItem, models.DO_NOTHING, blank=True, null=True)
     ratio = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
-    price_per_kg = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+
+    @computed(models.DecimalField(blank=True, max_digits=5, decimal_places=2), depends=[('material_name', ['cost_per_kg'])])
+    def price_per_kg(self):
+        return self.material_name.cost_per_kg
+    
+    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=2))
+    def price_for_ratio(self):
+        return self.ratio * self.price_per_kg / 100
 
 class ChangeOver(ComputedFieldsModel):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
