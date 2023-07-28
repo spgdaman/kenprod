@@ -145,23 +145,26 @@ class ExternalComponentName(models.Model):
     def __str__(self):
         return self.name
     
-class ExternalComponentLineItem(models.Model):
+class ExternalComponentLineItem(ComputedFieldsModel):
     name = models.ForeignKey(ExternalComponentName, models.DO_NOTHING, blank=True, null=True)
     unit = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
-    price_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
-    cost = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    price_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2) 
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name.name
     
-    def get_computed(self):
-        result = self.unit * self.price_per_unit
+    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=2))
+    def cost(self):
+        return self.unit * self.price_per_unit
+    
+    # def get_computed(self):
+    #     result = self.unit * self.price_per_unit
 
-    def save(self, *args, **kwargs):
-        self.cost = self.get_computed()
-        super(Mould, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.cost = self.get_computed()
+    #     super(Mould, self).save(*args, **kwargs)
     
 class ExternalComponent(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
