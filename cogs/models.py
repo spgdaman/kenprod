@@ -322,4 +322,21 @@ class ChangeOver(ComputedFieldsModel):
             return f"Change over for {self.fg_name} Finished Goods"
         else:
             print(type(self.fg_name))
-            return f"Change over for {self.sfg_name} Semi Finished Goods" 
+            return f"Change over for {self.sfg_name} Semi Finished Goods"
+        
+class Print(ComputedFieldsModel):
+    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
+    embossing = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    printing = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    labeling = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    foil = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    glue = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    shrink_wrap = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    woven_polybag = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    inner_bag = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    carton = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    strapping = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    
+    @computed(models.DecimalField(blank=True, max_digits=5, decimal_places=2))
+    def kes_u(self):
+        return sum(self.embossing, self.printing, self.labeling, self.foil, self.glue, self.shrink_wrap, self.woven_polybag, self.inner_bag, self.carton, self.strapping)
