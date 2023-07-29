@@ -34,7 +34,7 @@ class SemiFinishedGood(models.Model):
     name = models.CharField(max_length=50, blank=True)
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     weight = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=4)
-    # unit = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
+    component_quantity = models.IntegerField(blank=True, null=True)
     # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
     created_at = models.DateTimeField(auto_now=True)
 
@@ -78,7 +78,7 @@ class SalesPrice(models.Model):
         verbose_name = "Sales Price"
 
     def __str__(self):
-        return self.fg_name
+        return f"Selling Price for {self.fg_name}"
     
 class RawMaterialCategory(models.Model):
     material_name = models.CharField(max_length=50, blank=True)
@@ -269,11 +269,8 @@ class ChangeOver(ComputedFieldsModel):
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
     component = models.IntegerField(null=True, blank=True)
     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=True, null=True)
-    target = models.CharField(max_length=50, blank=True)
-    changes = models.CharField(max_length=50, blank=True)
-    # hrs = models.DecimalField(blank=True, max_digits=5, decimal_places=1)
-    # oc_hr = models.IntegerField(null=True, blank=True)
-
+    target = models.IntegerField(null=True, blank=True, default=1)
+    
     @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['work_center'])])
     def mmts(self):
         return self.mould.work_center
@@ -299,19 +296,30 @@ class ChangeOver(ComputedFieldsModel):
             result = int( (15000 / 950) )
             print(self.mould.work_center)
         return result
+    
+    @computed(models.DecimalField(max_digits=15, blank=True, decimal_places=2), depends=[('self', ['max_u_m', 'target'])])
+    def changes(self):
+        try:
+            return self.max_u_m / self.target
+        except:
+            return 0
 
     @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=5))
     def hrs(self):
         result = self.mould.co_time.hrs
         return result
 
-
-
-# class Test(models.Model):
-#     name = models.CharField(max_length=50, blank=True)
-#     attribute = models.CharField(max_length=30, blank=True)
-#     weight = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
-#     recipe = models.CharField(max_length=50, blank=True)
-#     selling_price = models.DecimalField(blank=True, max_digits=50, decimal_places=2)
-#     created_at = models.DateTimeField(auto_now=True)
-#     updated_at = models.DateTimeField(blank = True)
+    @computed(models.IntegerField(null=True, blank=True), depends=[('self', ['oc_hr', 'hrs', 'changes', 'target'])])
+    def kes_u(self):
+        try:
+            return ( self.oc_hr * self.hrs * self.changes ) / self.target
+        except:
+            return 0
+        
+    def __str__(self):
+        if isinstance(self.fg_name, FinishedGood) == True:
+            print(type(self.fg_name))
+            return f"Change over for {self.fg_name} Finished Goods"
+        else:
+            print(type(self.fg_name))
+            return f"Change over for {self.sfg_name} Semi Finished Goods" 
