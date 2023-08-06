@@ -42,13 +42,13 @@ from . import models
 class LabourFormFinishedGood(forms.ModelForm):
     class Meta:
         model = models.Labour
-        fields = ['fg_name', 'component', 'mould', 'cost_per_unit']
+        fields = ['fg_name', 'component', 'mould', ]
         # widgets = {'FinishedGood': FinishedGoodSelect}
 
 class LabourFormSemiFinishedGood(forms.ModelForm):
     class Meta:
         model = models.Labour
-        fields = ['sfg_name', 'component', 'mould', 'cost_per_unit']
+        fields = ['sfg_name', 'component', 'mould', ]
 
 class PowerFormFinishedGood(forms.ModelForm):
     class Meta:

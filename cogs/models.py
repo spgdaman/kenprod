@@ -15,74 +15,8 @@ class ChangeOverTime(models.Model):
 #     name = models.CharField(max_length=50, blank=False)
 #     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=False, null=False)
 
-#     def __str__(self):
-#         return self.name
-
-class FinishedGood(models.Model):
-    name = models.CharField(max_length=50, blank=True)
-    primary_sales_channel = models.CharField(max_length=20, blank=True)
-    weight = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=4)
-    # unit = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
-    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
-    # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now=True)
-
     def __str__(self):
-        return self.name
-    
-class SemiFinishedGood(models.Model):
-    name = models.CharField(max_length=50, blank=True)
-    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
-    weight = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=4)
-    component_quantity = models.IntegerField(blank=True, null=True)
-    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
-    created_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-    
-class MouldName(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    group = models.CharField(max_length=50, blank=False)
-    
-class Mould(models.Model):
-    co_time = models.ForeignKey(ChangeOverTime, models.DO_NOTHING, blank=True, null=True)
-    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
-    sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
-    name = models.ForeignKey(MouldName, models.DO_NOTHING, blank=True, null=True)
-    group = models.CharField(max_length=50, blank=True)
-    work_center = models.CharField(max_length=50, blank=True)
-    cavity_number = models.IntegerField(null=True)
-    maximum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    optimum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    cycle_time = models.IntegerField(null=True)
-    # u_h = models.IntegerField(null=True)
-
-    def __str__(self):
-        if type(self.sfg_name) == None:
-            return f"{self.name} for {self.sfg_name.name} Semi Finished Goods"
-        elif type(self.fg_name) != None:
-            return f"{self.name} for {self.fg_name} Finished Goods"
-    
-    # def get_computed(self):
-    #     result = (self.cavity_number * 60 * 60) / self.cycle_time
-
-    # def save(self, *args, **kwargs):
-    #     self.u_h = self.get_computed()
-    #     super(Mould, self).save(*args, **kwargs)
-    
-class SalesPrice(models.Model):
-    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=False, null=False)
-    psc_price = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    ws_price = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    markup = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    created_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = "Sales Price"
-
-    def __str__(self):
-        return f"Selling Price for {self.fg_name}"
+        return f"{self.co_time} mmts for {self.hrs} hrs"
     
 class RawMaterialCategory(models.Model):
     material_name = models.CharField(max_length=50, blank=True)
@@ -105,6 +39,94 @@ class RawMaterialLineItem(ComputedFieldsModel):
 
     def __str__(self):
         return self.material_name.material_name
+    
+class CompositionName(models.Model):
+    composition_name = models.CharField(max_length=50, blank=True)
+        
+class Composition(ComputedFieldsModel):
+    composition = models.ForeignKey(CompositionName, models.DO_NOTHING, blank=True, null=True)
+    material_name = models.ForeignKey(RawMaterialLineItem, models.DO_NOTHING, blank=True, null=True)
+    ratio = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+
+    @computed(models.DecimalField(blank=True, max_digits=5, decimal_places=2), depends=[('material_name', ['cost_per_kg'])])
+    def price_per_kg(self):
+        return self.material_name.cost_per_kg
+    
+    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=2))
+    def price_for_ratio(self):
+        return self.ratio * self.price_per_kg / 100
+    
+    def __str__(self):
+        return f"Composition --> {self.composition.composition_name} for --> {self.material_name.material_name}"
+
+class FinishedGood(models.Model):
+    name = models.CharField(max_length=50, blank=True)
+    primary_sales_channel = models.CharField(max_length=20, blank=True)
+    weight = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=4)
+    # unit = models.DecimalField(blank=True, max_digits=50, decimal_places=4)
+    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
+    # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+    
+class MouldName(models.Model):
+    name = models.CharField(max_length=50, blank=False)
+    group = models.CharField(max_length=50, blank=False)
+    
+class SalesPrice(models.Model):
+    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=False, null=False)
+    psc_price = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    ws_price = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    markup = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Sales Price"
+
+    def __str__(self):
+        return f"Selling Price for {self.fg_name}"
+
+class SemiFinishedGood(ComputedFieldsModel):
+    name = models.CharField(max_length=50, blank=True)
+    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
+    weight = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=4)
+    component_quantity = models.IntegerField(blank=True, null=True)
+    composition = models.ForeignKey(Composition, models.DO_NOTHING, blank=True, null=True)
+    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
+    created_at = models.DateTimeField(auto_now=True)
+
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('composition', ['price_for_ratio'])])
+    def price_for_composition_per_kg(self):
+        return self.composition.price_for_ratio
+    
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['weight', 'component_quantity', 'price_for_composition_per_kg'])])
+    def material_cost_per_unit(self):
+        result = self.weight * self.component_quantity * self.price_for_composition_per_kg
+        return result
+
+    def __str__(self):
+        return self.name
+    
+class Mould(models.Model):
+    # co_time = models.ForeignKey(ChangeOverTime, models.DO_NOTHING, blank=True, null=True)
+    fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
+    sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
+    name = models.ForeignKey(MouldName, models.DO_NOTHING, blank=True, null=True)
+    group = models.CharField(max_length=50, blank=True)
+    work_center = models.CharField(max_length=50, blank=True)
+    cavity_number = models.IntegerField(null=True)
+    maximum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    optimum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    cycle_time = models.IntegerField(null=True)
+    # u_h = models.IntegerField(null=True)
+
+    def __str__(self):
+        if type(self.sfg_name) == None:
+            return f"{self.name} for {self.sfg_name.name} Semi Finished Goods"
+        elif type(self.fg_name) != None:
+            return f"{self.name} for {self.fg_name} Finished Goods"
 
 class RawMaterial(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
@@ -204,7 +226,7 @@ class Power(ComputedFieldsModel):
     def __str__(self):
         return f"{self.fg_name} {self.sfg_name}"
     
-    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['work_center'])])
+    @computed(models.CharField(max_length=50, null=True, blank=True), depends=[('mould', ['work_center'])])
     def mmts(self):
         return self.mould.work_center
     
@@ -212,9 +234,9 @@ class Power(ComputedFieldsModel):
     def kwh(self):
         return int(self.mould.work_center) * 0.0536842105263158
     
-    kes_kw = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    kes_kw = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
 
-    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=2), depends=[('mould', ['work_center'])])
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('mould', ['work_center'])])
     def kes_hr(self):
         return int(self.mould.work_center) * 0.0536842105263158 * float(self.kes_kw)
     
@@ -244,44 +266,27 @@ class Labour(ComputedFieldsModel):
     component = models.IntegerField(null=True, blank=True)
     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=True, null=True)
     mac_fte = models.IntegerField(null=True, blank=True)
-    cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.fg_name} {self.sfg_name}"
     
-    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['work_center'])])
+    @computed(models.CharField(max_length=50, blank=True, null=True), depends=[('mould', ['work_center'])])
     def mmts(self):
         return self.mould.work_center
     
-class CompositionName(models.Model):
-    composition_name = models.CharField(max_length=50, blank=True)
-        
-class Composition(ComputedFieldsModel):
-    composition = models.ForeignKey(CompositionName, models.DO_NOTHING, blank=True, null=True)
-    material_name = models.ForeignKey(RawMaterialLineItem, models.DO_NOTHING, blank=True, null=True)
-    ratio = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
-
-    @computed(models.DecimalField(blank=True, max_digits=5, decimal_places=2), depends=[('material_name', ['cost_per_kg'])])
-    def price_per_kg(self):
-        return self.material_name.cost_per_kg
-    
-    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=2))
-    def price_for_ratio(self):
-        return self.ratio * self.price_per_kg / 100
-    
-    def __str__(self):
-        return f"Composition --> {self.composition.composition_name} for --> {self.material_name.material_name}"
 
 class ChangeOver(ComputedFieldsModel):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
+    change_over_time = models.ForeignKey(ChangeOverTime, models.DO_NOTHING, blank=True, null=True)
     component = models.IntegerField(null=True, blank=True)
     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=True, null=True)
     target = models.IntegerField(null=True, blank=True, default=1)
     
-    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['work_center'])])
+    @computed(models.CharField(max_length=50, blank=True, null=True), depends=[('mould', ['work_center'])])
     def mmts(self):
         return self.mould.work_center
     
@@ -293,7 +298,7 @@ class ChangeOver(ComputedFieldsModel):
     def cavity(self):
         return self.mould.cavity_number 
 
-    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=2))
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2))
     def max_u_m(self):
         return (60 * 60 * 24 * 30.5 * ( self.mould.cavity_number / self.mould.cycle_time))
     
@@ -307,16 +312,16 @@ class ChangeOver(ComputedFieldsModel):
             print(self.mould.work_center)
         return result
     
-    @computed(models.DecimalField(max_digits=15, blank=True, decimal_places=2), depends=[('self', ['max_u_m', 'target'])])
+    @computed(models.DecimalField(max_digits=15, null=True, blank=True, decimal_places=2), depends=[('self', ['max_u_m', 'target'])])
     def changes(self):
         try:
             return self.max_u_m / self.target
         except:
             return 0
 
-    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=5))
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=5), depends=[('change_over_time', ['hrs'])])
     def hrs(self):
-        result = self.mould.co_time.hrs
+        result = self.change_over_time.hrs
         return result
 
     @computed(models.IntegerField(null=True, blank=True), depends=[('self', ['oc_hr', 'hrs', 'changes', 'target'])])
