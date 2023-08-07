@@ -74,6 +74,9 @@ class FinishedGood(models.Model):
 class MouldName(models.Model):
     name = models.CharField(max_length=50, blank=False)
     group = models.CharField(max_length=50, blank=False)
+
+    def __str__(self):
+        return self.name
     
 class SalesPrice(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=False, null=False)
@@ -122,11 +125,22 @@ class Mould(models.Model):
     cycle_time = models.IntegerField(null=True)
     # u_h = models.IntegerField(null=True)
 
+    # def namer(self):
+    #     result = f"{self.fg_name} {self.sfg_name}"
+        
+    #     if result[:4] == "None":
+    #         return f"{self.name.name} for {result[4:]} Semi Finished Good"
+    #     elif result[-4:] == "None":
+    #         print(result[-4:])
+    #         return f"{self.name.name} for {result.replace('None','')} Finished Good"
+
     def __str__(self):
-        if type(self.sfg_name) == None:
-            return f"{self.name} for {self.sfg_name.name} Semi Finished Goods"
-        elif type(self.fg_name) != None:
-            return f"{self.name} for {self.fg_name} Finished Goods"
+        result = f"{self.fg_name} {self.sfg_name}"
+        
+        if result[:4] == "None":
+            return f"{self.name.name} for {result[4:]} Semi Finished Good"
+        elif result[-4:] == "None":
+            return f"{self.name.name} for {result.replace('None','')} Finished Good"
 
 class RawMaterial(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
@@ -136,10 +150,12 @@ class RawMaterial(models.Model):
     updated_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        if self.fg_name == None:
-            return f"{self.raw_material} material used for --> product {self.sfg_name}"
-        else:
-            return f"{self.raw_material} material used for --> product {self.fg_name}"
+        result = f"{self.fg_name} {self.sfg_name}"
+        
+        if result[:4] == "None":
+            return f"{self.raw_material.material_name} for {result[4:]} Semi Finished Good"
+        elif result[-4:] == "None":
+            return f"{self.raw_material.material_name} for {result.replace('None','')} Finished Good"
     
 class ExternalComponentName(models.Model):
     name = models.CharField(max_length=50, blank=True)
@@ -175,7 +191,7 @@ class ExternalComponent(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.component.name}"
+        return f"Component -->{self.component.name} for Finished Good -->{self.fg_name.name}"
 
 class Labeling(models.Model):
     description = models.CharField(max_length=50, blank=True)
@@ -201,7 +217,7 @@ class Foiling(models.Model):
     def __str__(self):
         return self.description
     
-class Packing(models.Model):
+class Packing(ComputedFieldsModel):
     # description = models.CharField(max_length=50, blank=True)
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     sa_label = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
@@ -212,14 +228,18 @@ class Packing(models.Model):
     inner_bag = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     woven_tubing = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     strapping = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    kes_u = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    unit = models.IntegerField(null=True, blank=True)
-    cost_per_unit = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+
+    @computed( models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['sa_label', 'paper_label', 'woven_bag', 'carton', 'foils', 'inner_bag', 'woven_tubing', 'strapping'])])
+    def kes_u(self):
+        return self.sa_label + self.paper_label + self.woven_bag + self.carton + self.foils + self.inner_bag + self.woven_tubing + self.strapping
+    
+    # unit = models.IntegerField(null=True, blank=True)
+    # cost_per_unit = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.description
+        return f"Packing cost for {self.fg_name}"
 
 class Power(ComputedFieldsModel):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
@@ -232,7 +252,12 @@ class Power(ComputedFieldsModel):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.fg_name} {self.sfg_name}"
+        result = f"{self.fg_name} {self.sfg_name}"
+        
+        if result[:4] == "None":
+            return f"Power Cost for {result[4:]} Semi Finished Good"
+        elif result[-4:] == "None":
+            return f"Power Cost for {result.replace('None','')} Finished Good"
     
     @computed(models.CharField(max_length=50, null=True, blank=True), depends=[('mould', ['work_center'])])
     def mmts(self):
@@ -279,7 +304,12 @@ class Labour(ComputedFieldsModel):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.fg_name} {self.sfg_name}"
+        result = f"{self.fg_name} {self.sfg_name}"
+        
+        if result[:4] == "None":
+            return f"Labour Cost for {result[4:]} Semi Finished Good"
+        elif result[-4:] == "None":
+            return f"Labour Cost for {result.replace('None','')} Finished Good"
     
     @computed(models.CharField(max_length=50, blank=True, null=True), depends=[('mould', ['work_center'])])
     def mmts(self):
@@ -342,10 +372,10 @@ class ChangeOver(ComputedFieldsModel):
     def __str__(self):
         if isinstance(self.fg_name, FinishedGood) == True:
             print(type(self.fg_name))
-            return f"Change over for {self.fg_name} Finished Goods"
+            return f"Change Over Cost for {self.fg_name} Finished Goods"
         else:
             print(type(self.fg_name))
-            return f"Change over for {self.sfg_name} Semi Finished Goods"
+            return f"Change Over Cost for {self.sfg_name} Semi Finished Goods"
         
 class Print(ComputedFieldsModel):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
@@ -363,3 +393,6 @@ class Print(ComputedFieldsModel):
     @computed(models.DecimalField(blank=True, max_digits=5, decimal_places=2))
     def kes_u(self):
         return sum(self.embossing, self.printing, self.labeling, self.foil, self.glue, self.shrink_wrap, self.woven_polybag, self.inner_bag, self.carton, self.strapping)
+
+    def __str__(self):
+        return f"Printing cost for {self.fg_name} Finished Goods"
