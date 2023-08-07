@@ -202,11 +202,19 @@ class Foiling(models.Model):
         return self.description
     
 class Packing(models.Model):
-    description = models.CharField(max_length=50, blank=True)
+    # description = models.CharField(max_length=50, blank=True)
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
-    sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
+    sa_label = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    paper_label = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    woven_bag = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    carton = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    foils = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    inner_bag = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    woven_tubing = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    strapping = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    kes_u = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     unit = models.IntegerField(null=True, blank=True)
-    cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    cost_per_unit = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 

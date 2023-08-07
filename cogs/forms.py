@@ -64,13 +64,13 @@ class PowerFormSemiFinishedGood(forms.ModelForm):
 class PackingFormFinishedGood(forms.ModelForm):
     class Meta:
         model = models.Packing
-        fields = ['description', 'fg_name', 'unit', 'cost_per_unit']
+        fields = ['fg_name', ]
         # widgets = {'FinishedGood': FinishedGoodSelect}
 
-class PackingFormSemiFinishedGood(forms.ModelForm):
-    class Meta:
-        model = models.Packing
-        fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
+# class PackingFormSemiFinishedGood(forms.ModelForm):
+#     class Meta:
+#         model = models.Packing
+#         fields = ['description', 'sfg_name', 'unit', 'cost_per_unit']
 
 class LabelFormFinishedGood(forms.ModelForm):
     class Meta:
