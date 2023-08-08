@@ -307,7 +307,7 @@ class Labour(ComputedFieldsModel):
     kes_hr = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     u_h = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     kes_u = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    # created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         result = f"{self.fg_name} {self.sfg_name}"
