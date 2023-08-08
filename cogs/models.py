@@ -307,7 +307,7 @@ class Labour(ComputedFieldsModel):
     kes_hr = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     u_h = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     kes_u = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    created_at = models.DateTimeField(auto_now=True)
+    # created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         result = f"{self.fg_name} {self.sfg_name}"
@@ -403,6 +403,6 @@ class Print(ComputedFieldsModel):
         return sum(self.embossing, self.printing, self.labeling, self.foil, self.glue, self.shrink_wrap, self.woven_polybag, self.inner_bag, self.carton, self.strapping)
 
     created_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return f"Printing cost for {self.fg_name} Finished Goods"
