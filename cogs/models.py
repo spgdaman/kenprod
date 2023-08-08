@@ -362,7 +362,7 @@ class ChangeOver(ComputedFieldsModel):
         result = self.change_over_time.hrs
         return result
 
-    @computed(models.IntegerField(null=True, blank=True), depends=[('self', ['oc_hr', 'hrs', 'changes', 'target'])])
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['oc_hr', 'hrs', 'changes', 'target'])])
     def kes_u(self):
         try:
             return ( self.oc_hr * self.hrs * self.changes ) / self.target
