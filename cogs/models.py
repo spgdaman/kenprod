@@ -123,6 +123,7 @@ class Mould(models.Model):
     maximum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     optimum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     cycle_time = models.IntegerField(null=True)
+    created_at = models.DateTimeField(auto_now=True)
     # u_h = models.IntegerField(null=True)
 
     # def namer(self):
@@ -147,7 +148,7 @@ class RawMaterial(models.Model):
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
     raw_material = models.ForeignKey(RawMaterialLineItem, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(null=True, blank=True)
+    # updated_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         result = f"{self.fg_name} {self.sfg_name}"
@@ -299,8 +300,13 @@ class Labour(ComputedFieldsModel):
     component = models.IntegerField(null=True, blank=True)
     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=True, null=True)
     mac_fte = models.IntegerField(null=True, blank=True)
-    # cost_per_unit = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
-    # rate = models.ForeignKey(ExchangeRate, models.DO_NOTHING, blank=True, null=True)
+    print = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    other = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    other_2 = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    total = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    kes_hr = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    u_h = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    kes_u = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -369,6 +375,8 @@ class ChangeOver(ComputedFieldsModel):
         except:
             return 0
         
+    created_at = models.DateTimeField(auto_now=True)
+        
     def __str__(self):
         if isinstance(self.fg_name, FinishedGood) == True:
             print(type(self.fg_name))
@@ -394,5 +402,7 @@ class Print(ComputedFieldsModel):
     def kes_u(self):
         return sum(self.embossing, self.printing, self.labeling, self.foil, self.glue, self.shrink_wrap, self.woven_polybag, self.inner_bag, self.carton, self.strapping)
 
+    created_at = models.DateTimeField(auto_now=True)
+    
     def __str__(self):
         return f"Printing cost for {self.fg_name} Finished Goods"
