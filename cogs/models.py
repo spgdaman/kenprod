@@ -179,13 +179,6 @@ class ExternalComponentLineItem(ComputedFieldsModel):
     def cost(self):
         return self.unit * self.price_per_unit
     
-    # def get_computed(self):
-    #     result = self.unit * self.price_per_unit
-
-    # def save(self, *args, **kwargs):
-    #     self.cost = self.get_computed()
-    #     super(Mould, self).save(*args, **kwargs)
-    
 class ExternalComponent(models.Model):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     component = models.ForeignKey(ExternalComponentLineItem, models.DO_NOTHING, blank=True, null=True)

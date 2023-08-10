@@ -38,12 +38,26 @@ from . import models
 #         if value:
 #             option['attrs']['fg-name'] = value.instance.price
 #         return option
+
+class MouldNameForm(forms.ModelForm):
+    class Meta:
+        model = models.MouldName
+        fields = ['name', 'group']
+
+class MouldFormFinishedGood(forms.ModelForm):
+    class Meta:
+        model = models.Mould
+        fields = ['fg_name', 'name', 'group', 'work_center', 'cavity_number', 'maximum_capacity', 'optimum_capacity', 'cycle_time']
+
+class MouldFormSemiFinishedGood(forms.ModelForm):
+    class Meta:
+        model = models.Mould
+        fields = ['sfg_name', 'name', 'group', 'work_center', 'cavity_number', 'maximum_capacity', 'optimum_capacity', 'cycle_time']
     
 class LabourFormFinishedGood(forms.ModelForm):
     class Meta:
         model = models.Labour
         fields = ['fg_name', 'component', 'mould', ]
-        # widgets = {'FinishedGood': FinishedGoodSelect}
 
 class LabourFormSemiFinishedGood(forms.ModelForm):
     class Meta:
