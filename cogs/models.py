@@ -123,7 +123,7 @@ class Mould(models.Model):
     maximum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     optimum_capacity = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     cycle_time = models.IntegerField(null=True)
-    created_at = models.DateTimeField(auto_now=True)
+    # created_at = models.DateTimeField(auto_now=True)
     # u_h = models.IntegerField(null=True)
 
     # def namer(self):
