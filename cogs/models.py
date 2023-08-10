@@ -402,7 +402,7 @@ class Print(ComputedFieldsModel):
     def kes_u(self):
         return sum(self.embossing, self.printing, self.labeling, self.foil, self.glue, self.shrink_wrap, self.woven_polybag, self.inner_bag, self.carton, self.strapping)
 
-    created_at = models.DateTimeField(auto_now=True)
+    # created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"Printing cost for {self.fg_name} Finished Goods"
