@@ -375,7 +375,7 @@ class ChangeOver(ComputedFieldsModel):
         except:
             return 0
         
-    created_at = models.DateTimeField(auto_now=True)
+    # created_at = models.DateTimeField(auto_now=True)
         
     def __str__(self):
         if isinstance(self.fg_name, FinishedGood) == True:
