@@ -67,13 +67,13 @@ class LabourFormSemiFinishedGood(forms.ModelForm):
 class PowerFormFinishedGood(forms.ModelForm):
     class Meta:
         model = models.Power
-        fields = ['fg_name', 'component', ]
+        fields = ['fg_name', 'component', 'mould' ]
         # widgets = {'FinishedGood': FinishedGoodSelect}
 
 class PowerFormSemiFinishedGood(forms.ModelForm):
     class Meta:
         model = models.Power
-        fields = ['sfg_name', 'component', ]
+        fields = ['sfg_name', 'component', 'mould' ]
 
 class PackingFormFinishedGood(forms.ModelForm):
     class Meta:
