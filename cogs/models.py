@@ -42,6 +42,9 @@ class RawMaterialLineItem(ComputedFieldsModel):
     
 class CompositionName(models.Model):
     composition_name = models.CharField(max_length=50, blank=True)
+
+    def __str__(self):
+        return self.composition_name
         
 class Composition(ComputedFieldsModel):
     composition = models.ForeignKey(CompositionName, models.DO_NOTHING, blank=True, null=True)
