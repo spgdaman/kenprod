@@ -320,7 +320,6 @@ class Labour(ComputedFieldsModel):
     @computed(models.CharField(max_length=50, blank=True, null=True), depends=[('mould', ['work_center'])])
     def mmts(self):
         return self.mould.work_center
-    
 
 class ChangeOver(ComputedFieldsModel):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
