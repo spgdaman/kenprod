@@ -3,15 +3,24 @@ from . import models
 
 admin.site.register(models.ExchangeRate)
 admin.site.register(models.Labeling)
-admin.site.register(models.RawMaterial)
-admin.site.register(models.RawMaterialLineItem)
 admin.site.register(models.FinishedGood)
 admin.site.register(models.SemiFinishedGood)
 admin.site.register(models.Foiling)
 admin.site.register(models.Packing)
 admin.site.register(models.Power)
 admin.site.register(models.Labour)
-admin.site.register(models.RawMaterialCategory)
+
+class RawMaterialCategoryAdmin(admin.ModelAdmin):
+    list_display = ['material_name', 'created_at']
+admin.site.register(models.RawMaterialCategory, RawMaterialCategoryAdmin)
+
+class RawMaterialLineItemAdmin(admin.ModelAdmin):
+    list_display = ['material_name', 'raw_material_cost', 'landing_cost_percentage', 'landed_cost_per_kg', 'cost_per_kg', 'created_at' ]
+admin.site.register(models.RawMaterialLineItem, RawMaterialLineItemAdmin)
+
+class RawMaterialAdmin(admin.ModelAdmin):
+    list_display = ['fg_name', 'sfg_name', 'raw_material', 'created_at']
+admin.site.register(models.RawMaterial)
 
 class ExternalComponentNameAdmin(admin.ModelAdmin):
     list_display = ['name']
