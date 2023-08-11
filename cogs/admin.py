@@ -12,11 +12,18 @@ admin.site.register(models.Packing)
 admin.site.register(models.Power)
 admin.site.register(models.Labour)
 admin.site.register(models.RawMaterialCategory)
-admin.site.register(models.ExternalComponentName)
-admin.site.register(models.ExternalComponentLineItem)
-admin.site.register(models.ExternalComponent)
 
+class ExternalComponentNameAdmin(admin.ModelAdmin):
+    list_display = ['name']
+admin.site.register(models.ExternalComponentName, ExternalComponentNameAdmin)
 
+class ExternalComponentLineItemAdmin(admin.ModelAdmin):
+    list_display = ['name', 'unit', 'price_per_unit', 'cost']
+admin.site.register(models.ExternalComponentLineItem, ExternalComponentLineItemAdmin)
+
+class ExternalComponentAdmin(admin.ModelAdmin):
+    list_display = ['fg_name', 'component', 'created_at']
+admin.site.register(models.ExternalComponent, ExternalComponentAdmin)
 
 class MouldNameAdmin(admin.ModelAdmin):
     list_display = ['name', 'group']
