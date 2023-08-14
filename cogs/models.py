@@ -60,7 +60,7 @@ class Composition(ComputedFieldsModel):
         return self.ratio * self.price_per_kg / 100
     
     def __str__(self):
-        return f"Composition --> {self.composition.composition_name} for --> {self.material_name.material_name}"
+        return f"{self.composition.composition_name} for --> {self.material_name.material_name}"
 
 class FinishedGood(models.Model):
     name = models.CharField(max_length=50, blank=True)

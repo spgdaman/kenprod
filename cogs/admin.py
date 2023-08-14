@@ -3,11 +3,27 @@ from . import models
 
 admin.site.register(models.ExchangeRate)
 admin.site.register(models.Labeling)
-admin.site.register(models.FinishedGood)
-admin.site.register(models.SemiFinishedGood)
+
+class FinishedGoodAdmin(admin.ModelAdmin):
+    list_display = ['name', 'primary_sales_channel', 'weight', 'created_at']
+admin.site.register(models.FinishedGood, FinishedGoodAdmin)
+
+class SemiFinishedGoodAdmin(admin.ModelAdmin):
+    list_display = ['name', 'fg_name', 'weight', 'component_quantity', 'composition', 'price_for_composition_per_kg', 'material_cost_per_unit','created_at']
+admin.site.register(models.SemiFinishedGood, SemiFinishedGoodAdmin)
+
 admin.site.register(models.Foiling)
-admin.site.register(models.Packing)
-admin.site.register(models.Power)
+
+class PackingAdmin(admin.ModelAdmin):
+    list_display = ['fg_name', 'sa_label', 'paper_label', 'woven_bag', 'carton', 'foils', 'inner_bag', 'woven_tubing', 'strapping', 'kes_u', 'created_at']
+admin.site.register(models.Packing, PackingAdmin)
+
+class PowerAdmin(admin.ModelAdmin):
+    list_display = ['fg_name', 'sfg_name', 'component', 'mould', 'mmts', 'kwh', 'kes_kw', 'kes_hr', 'ct', 'cavity', 'u_h', 'kes_u', 'kes_sfg', 'created_at']
+admin.site.register(models.Power, PowerAdmin)
+
+class LabourAdmin(admin.ModelAdmin):
+    list_display = ['fg_name', 'sfg_name', 'component', 'mould', 'mac_fte']
 admin.site.register(models.Labour)
 
 class RawMaterialCategoryAdmin(admin.ModelAdmin):
