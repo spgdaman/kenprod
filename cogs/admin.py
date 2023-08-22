@@ -27,6 +27,10 @@ class PowerAdmin(admin.ModelAdmin):
     list_filter = ("fg_name", )
 admin.site.register(models.Power, PowerAdmin)
 
+class LabourCostAdmin(admin.ModelAdmin):
+    list_display = ['effective_from', 'effective_to', 'cost']
+admin.site.register(models.LabourCost)
+
 class LabourAdmin(admin.ModelAdmin):
     list_display = ['fg_name', 'sfg_name', 'component', 'mould', 'mac_fte']
 admin.site.register(models.Labour)

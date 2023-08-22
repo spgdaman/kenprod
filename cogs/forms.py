@@ -53,7 +53,7 @@ class MouldFormSemiFinishedGood(forms.ModelForm):
     class Meta:
         model = models.Mould
         fields = ['sfg_name', 'name', 'group', 'work_center', 'cavity_number', 'maximum_capacity', 'optimum_capacity', 'cycle_time']
-    
+
 class LabourFormFinishedGood(forms.ModelForm):
     class Meta:
         model = models.Labour
@@ -126,7 +126,7 @@ class RawMaterialCategoryForm(forms.ModelForm):
 class RawMaterialLineItemForm(forms.ModelForm):
     class Meta:
         model = models.RawMaterialLineItem
-        fields = ['material_name', 'raw_material_cost', 'landing_cost_percentage',]
+        fields = ['material_name', 'raw_material_cost', 'landing_cost_percentage']
 
 class RawMaterialFormFinishedGood(forms.ModelForm):
     class Meta:

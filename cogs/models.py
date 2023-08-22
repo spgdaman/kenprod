@@ -295,12 +295,23 @@ class Power(ComputedFieldsModel):
     
     @computed(models.DecimalField(null=True, blank=True, max_digits=15, decimal_places=6))
     def kes_u(self):
-        return self.kes_hr / self.u_h
+        try:
+            return self.kes_hr / self.u_h
+        except:
+            return 0
     
     @computed(models.DecimalField(null=True, blank=True, max_digits=15, decimal_places=6))
     def kes_sfg(self):
         return float( self.component * self.kes_u )
     
+class LabourCost(models.Model):
+    effective_from = models.DateField()
+    effective_to = models.DateField()
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    def __str__(self):
+        return str(self.cost)
+
 class Labour(ComputedFieldsModel):
     fg_name = models.ForeignKey(FinishedGood, models.DO_NOTHING, blank=True, null=True)
     sfg_name = models.ForeignKey(SemiFinishedGood, models.DO_NOTHING, blank=True, null=True)
@@ -310,10 +321,41 @@ class Labour(ComputedFieldsModel):
     print = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     other = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
     other_2 = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    total = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    kes_hr = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    u_h = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    kes_u = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['print','other', 'other_2', 'mac_fte'])])
+    def total(self):
+        return self.print + self.other  + self.other_2 + self.mac_fte
+
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['total'])])        
+    def kes_hr(self):
+        now = datetime.datetime.now()
+        cost = LabourCost.objects.filter(effective_from__lte=now, effective_to__gte=now).values('cost')[0]['cost']
+        numerator = cost * self.total * 2
+        denominator = 30.5 * 24
+        return float(numerator) / float(denominator)
+    
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['fg_name', 'sfg_name'])])
+    def u_h(self):
+        try:
+            if self.fg_name is None:
+                sfg_id = self.sfg_name.id
+                power_cost = Power.objects.filter(sfg_name=sfg_id).order_by('-created_at').values('u_h')[0]['u_h']
+                return power_cost
+        except:
+            if self.sfg_name is None:
+                fg_id = self.fg_name.id
+                power_cost = Power.objects.filter(fg_name=fg_id).order_by('-created_at').values('u_h')[0]['u_h']
+                return power_cost
+
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['kes_hr', 'u_h'])])
+    def kes_u(self):
+        try:
+            if self.kes_hr is not None and self.u_h is not None:
+                return self.kes_hr / self.u_h
+        except:
+            if self.u_h is None:
+                return 0
+
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
