@@ -273,13 +273,15 @@ class Power(ComputedFieldsModel):
     
     @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('mould', ['work_center'])])
     def kwh(self):
+        print(int(self.mould.work_center))
         return int(self.mould.work_center) * 0.0536842105263158
     
     kes_kw = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
 
-    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('mould', ['work_center'])])
+    @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['kwh', 'kes_kw'])])
     def kes_hr(self):
-        return int(self.mould.work_center) * 0.0536842105263158 * float(self.kes_kw)
+        # return int(self.mould.work_center) * 0.0536842105263158 * float(self.kes_kw)
+        return self.kwh * float(self.kes_kw)
     
     @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('mould', ['cycle_time'])])
     def ct(self):
@@ -289,20 +291,20 @@ class Power(ComputedFieldsModel):
     def cavity(self):
         return self.mould.cavity_number
     
-    @computed(models.IntegerField(null=True, blank=True), depends=[('mould', ['cavity_number', 'cycle_time'])])
+    @computed(models.IntegerField(null=True, blank=True), depends=[('self', ['cavity', 'ct'])])
     def u_h(self):
-        return (60 * 60 * self.mould.cavity_number) / self.mould.cycle_time
+        return (60 * 60 * self.cavity) / self.ct
     
     @computed(models.DecimalField(null=True, blank=True, max_digits=15, decimal_places=6))
     def kes_u(self):
         try:
-            return self.kes_hr / self.u_h
+            return round( self.kes_hr / self.u_h, 2 )
         except:
             return 0
     
     @computed(models.DecimalField(null=True, blank=True, max_digits=15, decimal_places=6))
     def kes_sfg(self):
-        return float( self.component * self.kes_u )
+        return round( float( self.component * self.kes_u ), 2 )
     
 class LabourCost(models.Model):
     effective_from = models.DateField()

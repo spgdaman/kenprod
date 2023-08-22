@@ -24,7 +24,7 @@ admin.site.register(models.Packing, PackingAdmin)
 
 class PowerAdmin(admin.ModelAdmin):
     list_display = ['fg_name', 'sfg_name', 'component', 'mould', 'mmts', 'kwh', 'kes_kw', 'kes_hr', 'ct', 'cavity', 'u_h', 'kes_u', 'kes_sfg', 'created_at']
-    list_filter = ("fg_name", )
+    list_filter = ("fg_name", 'sfg_name')
 admin.site.register(models.Power, PowerAdmin)
 
 class LabourCostAdmin(admin.ModelAdmin):
