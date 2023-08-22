@@ -318,13 +318,25 @@ class Labour(ComputedFieldsModel):
     component = models.IntegerField(null=True, blank=True)
     mould = models.ForeignKey(Mould, models.DO_NOTHING, blank=True, null=True)
     mac_fte = models.IntegerField(null=True, blank=True)
-    print = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    other = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
-    other_2 = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    print = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, default=0)
+    other = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, default=0)
+    other_2 = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, default=0)
     
     @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['print','other', 'other_2', 'mac_fte'])])
     def total(self):
-        return self.print + self.other  + self.other_2 + self.mac_fte
+        try:
+            return self.print + self.other  + self.other_2 + self.mac_fte
+        except:
+            if self.print is None and self.other is not None and self.other_2 is not None and self.mac_fte is not None:
+                return 0 + self.other  + self.other_2 + self.mac_fte
+            elif self.other is None and self.print is not None and self.other_2 is not None and self.mac_fte is not None:
+                return self.print + 0 + self.other_2 + self.mac_fte
+            elif self.other_2 is None and self.other is not None and self.print is not None and self.mac_fte is not None:
+                return self.print + self.other + 0 + self.mac_fte
+            elif self.mac_fte is None and  self.other_2 is not None and self.other is not None and self.print is not None:
+                return self.print + self.other + self.other_2 + 0
+            else:
+                return self.mac_fte
 
     @computed(models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2), depends=[('self', ['total'])])        
     def kes_hr(self):
