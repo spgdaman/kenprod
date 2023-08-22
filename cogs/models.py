@@ -1,11 +1,15 @@
 from django.db import models
 from django.conf import settings
 from computedfields.models import ComputedFieldsModel, computed, compute
+import datetime
 
 class ExchangeRate(models.Model):
     effective_from = models.DateField()
     effective_to = models.DateField()
     rate = models.DecimalField(blank=True, max_digits=10, decimal_places=4)
+
+    def __str__(self):
+        return str(self.rate)
 
 class ChangeOverTime(models.Model):
     co_time = models.IntegerField(null=True, blank=True)
@@ -33,7 +37,14 @@ class RawMaterialLineItem(ComputedFieldsModel):
     @computed(models.DecimalField(blank=True, max_digits=5, decimal_places=2))
     def landed_cost_per_kg(self):
         return (1 + self.landing_cost_percentage) * self.raw_material_cost
-    cost_per_kg = models.DecimalField(blank=True, max_digits=10, decimal_places=2)
+    
+    @computed(models.DecimalField(blank=True, max_digits=10, decimal_places=2), depends=[('self', ['landed_cost_per_kg'])])
+    def cost_per_kg(self):
+        now = datetime.datetime.now()
+        # rate = [ ExchangeRate.objects.filter(effective_from__lte=now, effective_to__gte=now).values('rate').values_list('rate', flat = True) ][0]
+        rate = ExchangeRate.objects.filter(effective_from__lte=now, effective_to__gte=now).values('rate')[0]['rate']
+        print(rate)
+        return rate * self.landed_cost_per_kg
 
     created_at = models.DateTimeField(auto_now=True)
 
