@@ -19,39 +19,39 @@ from django.contrib.auth.models import (
 #         return self.description
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, username, password=None):
         """
         Creates and saves a User with the given email and password
         """
-        if not email:
-            raise ValueError('Users must have an email address')
+        if not username:
+            raise ValueError('Users must have a username')
         
         user = self.model(
-            email=self.normalize_email(email),
+            username=self.username,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
     
-    def create_staffuser(self, email, password):
+    def create_staffuser(self, username, password):
         """
         Creates and saves a staff user with the given email and password
         """
         user = self.create_user(
-            email,
+            username,
             password=password,
         )
         user.staff = True
         user.save(using=self._db)
         return user
     
-    def create_superuser(self, email, password):
+    def create_superuser(self, username, password):
         """
         Creates and saves a superuser with the given email and password
         """
         user = self.create_user(
-            email,
+            username,
             password=password,
         )
         user.staff = True
@@ -63,9 +63,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='email_address',
         max_length=255,
-        unique=True,
+        unique=False,
+        blank=True
     )
-    username= models.CharField(max_length=30, null=True,blank=True, unique=True)
+    username= models.CharField(max_length=30, null=False, blank=False, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -74,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(default=False)
     # groups = models.ManyToManyField(GroupPermissions, null=True, verbose_name=('Group Permissions'), blank=True, help_text=('The groups this user belongs to. A user will get all permissions granted to each of their groups.'))
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = [] # Email & Password are required by default
 
     def get_full_name(self):
@@ -83,10 +84,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def get_short_name(self):
         # The user is identifed by their email address
-        return self.email
+        return self.username
     
     def __str__(self):
-        return self.email
+        return self.username
     
     # def has_perm(self, perm, obj=None):
     #     "Does the user have a specific permission?"
