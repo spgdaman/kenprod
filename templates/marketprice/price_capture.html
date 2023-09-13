@@ -228,7 +228,7 @@
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="customer_name">Customer Name:</label>
             <!-- <input name="customer_name" type="text" class="form-control col-md-4" placeholder="Customer Name"> -->
-            <select class="form-control select-search" name="customer_name" id="typeSel" size="1">
+            <select class="form-control col-md-5 select-search" name="customer_name" id="typeSel" size="1">
                 <option selected="selected">Select type</option>
             </select>
         </div>
@@ -236,7 +236,7 @@
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="customer_branch">Customer Branch:</label>
             <!-- <input name="customer_branch" type="text" class="form-control col-md-4" placeholder="Customer Branch"> -->
-            <select class="form-control col-md-4 select-search" name="customer_branch" id="fieldSel">
+            <select class="form-control col-md-5 select-search" name="customer_branch" id="fieldSel">
                 <option selected="selected">Select field</option>
             </select> 
         </div>
@@ -244,7 +244,7 @@
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="kenpoly_product_name">Kenpoly Product Name:</label>
             <!-- <input name="kenpoly_product_name" type="text" class="form-control col-md-4" placeholder="Kenpoly Product Name"> -->
-            <select class="form-control select-search" name="kenpoly_product_name" id="product_name">
+            <select class="form-control col-md-5 select-search" name="kenpoly_product_name" id="product_name">
                 <option selected="selected">Select field</option>
                 {% for product in products %}
                     <option>{{ product }}</option>
