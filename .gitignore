@@ -3,3 +3,5 @@ migrations/
 db.*
 __pycache__/
 .env
+media/
+sent_emails/

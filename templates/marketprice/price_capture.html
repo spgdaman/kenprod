@@ -6,16 +6,19 @@
         // First create a DIV element.
         var txtCompetitorName = document.createElement('div');
         var txtCompetitorProductName = document.createElement('div');
+        var txtCompetitorProductImage = document.createElement('div');
         var txtCompetitorPrice = document.createElement('div');
 
         // Then add the content (a new input box) of the element.
         txtCompetitorName.innerHTML = "<div class='form-group form-inline'> <label class='col-md-4 justify-content-start font-weight-bold' for='customer_name'>Competitor Name:</label> <input name='competitor_name' type='text' id='newInputBox' class='form-control col-md-4' placeholder='Competitor Name'> </div>";
         txtCompetitorProductName.innerHTML = "<div class='form-group form-inline'> <label class='col-md-4 justify-content-start font-weight-bold' for='competitor_product_name'>Competitor Product Name:</label> <input name='competitor_product_name' type='text' id='newInputBox2' class='form-control col-md-4' placeholder='Competitor Product Name'> </div>";
+        txtCompetitorProductImage.innerHTML = "<div class='form-group form-inline'> <label class='col-md-4 justify-content-start font-weight-bold' for='competitor_product_image'>Competitor Product Image:</label> <input name='competitor_product_image' type='file' class='col-md-4' placeholder='Competitor Product Image'> </div>"
         txtCompetitorPrice.innerHTML = "<div class='form-group form-inline'> <label class='col-md-4 justify-content-start font-weight-bold' for='competitor_price'>Competitor Price:</label> <input name='competitor_price' type='text' id='newInputBox3' class='form-control col-md-4' placeholder='Competitor Price'> </div>"
 
         // Finally put it where it is supposed to appear.
         document.getElementById("newElementId").appendChild(txtCompetitorName);
         document.getElementById("newElementId").appendChild(txtCompetitorProductName);
+        document.getElementById("newElementId").appendChild(txtCompetitorProductImage);
         document.getElementById("newElementId").appendChild(txtCompetitorPrice);
         console.log("Hello")
     }  
@@ -219,7 +222,7 @@
 </script>
 
 <div class="container">
-    <form class="needs-validation" method="POST">
+    <form class="needs-validation" method="POST" enctype="multipart/form-data">
 
         {% csrf_token %}
         <div class="form-group form-inline">
@@ -252,22 +255,27 @@
 
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="kenpoly_price">Kenpoly Price:</label>
-            <input name="kenpoly_price" type="text" class="form-control col-md-4" placeholder="Kenpoly Price">
+            <input name="kenpoly_price" type="text" class="form-control col-md-4" placeholder="Kenpoly Price" required>
         </div>
 
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="customer_name">Competitor Name:</label>
-            <input name="competitor_name" type="text" class="form-control col-md-4" placeholder="Competitor Name">
+            <input name="competitor_name" type="text" class="form-control col-md-4" placeholder="Competitor Name" required>
         </div>
 
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="competitor_product_name">Competitor Product Name:</label>
-            <input name="competitor_product_name" type="text" class="form-control col-md-4" placeholder="Competitor Product Name">
+            <input name="competitor_product_name" type="text" class="form-control col-md-4" placeholder="Competitor Product Name" required>
+        </div>
+
+        <div class="form-group form-inline">
+            <label class="col-md-4 justify-content-start font-weight-bold" for="competitor_price">Competitor Product Image:</label>
+            <input name="competitor_product_image" type="file" class="col-md-4" placeholder="Competitor Product Image">
         </div>
 
         <div class="form-group form-inline">
             <label class="col-md-4 justify-content-start font-weight-bold" for="competitor_price">Competitor Price:</label>
-            <input name="competitor_price" type="text" class="form-control col-md-4" placeholder="Competitor Price">
+            <input name="competitor_price" type="text" class="form-control col-md-4" placeholder="Competitor Price" required>
         </div>
 
         <div class="form-group" id="newElementId"></div>

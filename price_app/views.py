@@ -15,13 +15,13 @@ from cogs.check_groups_decorator import validate_user_in_group
 
 class CustomerUploadView(View):
     @login_required()
-    @validate_user_in_group("Sales", "Admin")
+    # @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
     @login_required()
-    @validate_user_in_group("Sales", "Admin")
+    # @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # print(request.FILES['data'].file)
         paramFile = io.TextIOWrapper(request.FILES['data'].file)
@@ -35,13 +35,13 @@ class CustomerUploadView(View):
 
 class CustomerBranchesUploadView(View):
     @login_required()
-    @validate_user_in_group("Sales", "Admin")
+    # @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
     @login_required()
-    @validate_user_in_group("Sales", "Admin")
+    # @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # print(request.FILES['data'].file)
         paramFile = io.TextIOWrapper(request.FILES['data'].file)
@@ -58,20 +58,20 @@ class CustomerBranchesUploadView(View):
         return JsonResponse({"status_code":200})
 
 class ProductsUploadView(View):
-    @login_required()
-    @validate_user_in_group("Sales", "Admin")
+    # @login_required()
+    # @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
-    @login_required()
-    @validate_user_in_group("Sales", "Admin")
+    # @login_required()
+    # @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # paramFile = io.TextIOWrapper(request.FILES['productsfile'].file)
         paramFile = io.TextIOWrapper(request.FILES['data'].file)
         portfolio = csv.DictReader(paramFile)
         list_of_dict = list(portfolio)
-        objs = [row['ï»¿description'] for row in list_of_dict]
+        objs = [row['description'] for row in list_of_dict]
         for i in objs:
             print(i)
             Products.objects.create(description=i)
@@ -119,10 +119,12 @@ def get_market_price(request):
                 .to_dict())
     except:
         total = branches
+
+    user_name = request.user
     
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
-        form = MarketPriceForm(request.POST)
+        form = MarketPriceForm(request.POST, request.FILES)
         # check whether it's valid:
         if form.is_valid():
             # data = form.save(commit=False)
@@ -131,10 +133,12 @@ def get_market_price(request):
 
             # sales_person = User.objects.get()
             info = dict(request.POST)
+            image_info = dict(request.FILES)
+            # print(image_info)
             if len(info["competitor_name"]) >= 2:
                 counter = len(info["competitor_name"])
 
-                user_name = f"{request.user.first_name} {request.user.last_name}"
+                # user_name = f"{request.user.first_name} {request.user.last_name}"
                 print(user_name)
                 customer_name = info["customer_name"][0]
                 customer_branch = info["customer_branch"][0]
@@ -143,6 +147,19 @@ def get_market_price(request):
                 
                 competitor_name = info["competitor_name"]
                 competitor_product_name = info["competitor_product_name"]
+                # if info.get('competitor_product_image') == False:
+                #     # competitor_product_image = False
+                #     print(info.get('competitor_product_image'))
+                # else:
+                #     competitor_product_image = info.get('competitor_product_image')
+                # competitor_product_image = info["competitor_product_image"]
+                # competitor_product_image = request.FILES.get('competitor_product_image')
+                if image_info.get('competitor_product_image', False) == False:
+                    competitor_product_image = None
+                else:
+                    competitor_product_image = image_info['competitor_product_image']
+                    # competitor_product_image = image_info.values()
+                print(competitor_product_image)
                 competitor_price = info["competitor_price"]
 
                 market_agg = list()
@@ -153,14 +170,39 @@ def get_market_price(request):
                 #             temp_list = [customer_name, customer_branch, kenpoly_product_name, kenpoly_price, i, j, k]
                 #             print(temp_list)
                             # market_agg.append(temp_list)
+                # competitor_product_image[count],
+
 
                 count = 0
+                # for item in competitor_name:
+                #     temp_list = [customer_name, customer_branch, kenpoly_product_name, kenpoly_price, competitor_name[count], competitor_product_name[count], competitor_product_image[count], competitor_price[count]]
+                #     market_agg.append(temp_list)
+                #     count = count + 1
+
                 for item in competitor_name:
-                    temp_list = [customer_name, customer_branch, kenpoly_product_name, kenpoly_price, competitor_name[count], competitor_product_name[count], competitor_price[count]]
-                    market_agg.append(temp_list)
+                    if competitor_product_image == None:
+                        temp_list = [customer_name, customer_branch, kenpoly_product_name, kenpoly_price, competitor_name[count], competitor_product_name[count], False, competitor_price[count]]
+                        market_agg.append(temp_list)
+                    elif competitor_product_image != None:
+                        # if len(competitor_product_image) >= count + 1:
+                        #     print(True)
+                        #     print(len(competitor_product_image))
+                        # else:
+                        #     print(False)
+                        if len(competitor_product_image) >= count + 1:
+                            temp_list = [customer_name, customer_branch, kenpoly_product_name, kenpoly_price, competitor_name[count], competitor_product_name[count], competitor_product_image[count], competitor_price[count]]
+                            market_agg.append(temp_list)
+                        else:
+                            temp_list = [customer_name, customer_branch, kenpoly_product_name, kenpoly_price, competitor_name[count], competitor_product_name[count], False, competitor_price[count]]
+                            market_agg.append(temp_list)
+
+                    # elif competitor_product_image == bool:
+                    #     temp_list = [customer_name, customer_branch, kenpoly_product_name, kenpoly_price, competitor_name[count], competitor_product_name[count], False, competitor_price[count]]
+                    #     market_agg.append(temp_list)
+
                     count = count + 1
 
-                # print(market_agg)
+                print(market_agg) 
 
                 for i in market_agg:
                     market_data = MarketPrice.objects.create(
@@ -171,23 +213,34 @@ def get_market_price(request):
                     kenpoly_price = i[3],
                     competitor_name = i[4],
                     competitor_product_name = i[5],
-                    competitor_price = i[6]
-                )
+                    competitor_product_image = i[6],
+                    competitor_price = i[7]
+                    )
+                    # market_data.image.save()
+                    
                 print(f"{request.user.first_name} {request.user.first_name}")
 
                 # print(info["competitor_name"])
                 # print(counter)
                 # print("More than one competitor")
             
-                print(market_agg)
-            
+                # print(market_agg)
+                messages.success(request,'Data has been submitted')
+
             else:
+                # print(request.POST)
                 customer_name = request.POST['customer_name']
                 customer_branch = request.POST['customer_branch']
                 kenpoly_product_name = request.POST['kenpoly_product_name']
                 kenpoly_price = request.POST['kenpoly_price']
                 competitor_name = request.POST['competitor_name']
                 competitor_product_name = request.POST['competitor_product_name']
+                if request.POST.get('competitor_product_image') == False:
+                    competitor_product_image = False
+                elif request.FILES.get('competitor_product_image') == '' or request.FILES.get('competitor_product_image', False) == False:
+                    competitor_product_image = False
+                else:
+                    competitor_product_image = request.FILES.get('competitor_product_image')
                 competitor_price = request.POST['competitor_price']
 
                 market_data = MarketPrice.objects.create(
@@ -198,10 +251,12 @@ def get_market_price(request):
                     kenpoly_price = kenpoly_price,
                     competitor_name = competitor_name,
                     competitor_product_name = competitor_product_name,
+                    competitor_product_image = competitor_product_image,
                     competitor_price = competitor_price
                 )
-                print(request.POST['customer_branch'])
-                print(f"{request.user.first_name} {request.user.last_name}")
+                # print(request.POST['customer_branch'])
+                # print(f"{request.user.first_name} {request.user.last_name}")
+                
                 messages.success(request,'Data has been submitted')
                 return render(request, "marketprice/price_capture.html", {"form":form,"products":products,"total":total})
     
