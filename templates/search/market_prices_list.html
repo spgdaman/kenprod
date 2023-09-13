@@ -62,6 +62,7 @@
                 <th>Competitor Name</th>
                 <th>Competitor Product Name</th>
                 <th>Competitor Price</th>
+                <th>Product Image</th>
                 <th>Created at</th>
             </tr>
             </thead>
@@ -76,6 +77,7 @@
                         <td>{{ result.competitor_name }}</td>
                         <td>{{ result.competitor_product_name }}</td>
                         <td>{{ result.competitor_price }}</td>
+                        <td><img src="{{ result.competitor_product_image.url }}" width="150px"></td>
                         <td>{{ result.created_at|date:"d-m-Y" }}</td>
                     </tr>
                 {% endfor %}
