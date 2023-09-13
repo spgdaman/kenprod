@@ -14,13 +14,13 @@ from .filters import MarketPriceFilter
 from cogs.check_groups_decorator import validate_user_in_group
 
 class CustomerUploadView(View):
-    @login_required()
+    # @login_required()
     # @validate_user_in_group("Sales", "Admin")
     def get(self, request):
         template_name = 'bulkupload/import.html'
         return render(request, template_name)
     
-    @login_required()
+    # @login_required()
     # @validate_user_in_group("Sales", "Admin")
     def post(self, request):
         # print(request.FILES['data'].file)
@@ -292,6 +292,14 @@ def export_csv(request):
 @login_required()
 @validate_user_in_group("Sales", "Admin")
 def search(request):
+    market_prices = MarketPrice.objects.all().order_by('-created_at').filter(sales_person=request.user)
+    market_prices_filter = MarketPriceFilter(request.GET, queryset=market_prices)
+    print(request.GET)
+    return render(request, 'search/market_prices_list.html', {'filter': market_prices_filter})
+
+@login_required()
+@validate_user_in_group("Sales Admin", "Admin")
+def global_search(request):
     market_prices = MarketPrice.objects.all().order_by('-created_at')
     market_prices_filter = MarketPriceFilter(request.GET, queryset=market_prices)
     return render(request, 'search/market_prices_list.html', {'filter': market_prices_filter})

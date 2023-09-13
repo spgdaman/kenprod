@@ -76,7 +76,7 @@
                         <td>{{ result.competitor_name }}</td>
                         <td>{{ result.competitor_product_name }}</td>
                         <td>{{ result.competitor_price }}</td>
-                        <td>{{ result.created_at }}</td>
+                        <td>{{ result.created_at|date:"d-m-Y" }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
