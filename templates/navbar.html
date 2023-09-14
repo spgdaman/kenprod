@@ -49,11 +49,12 @@
                     {{ user.first_name }}
                 </a>
                 <div class="dropdown-menu">
+                    <!-- <a class="dropdown-item" href="{% url 'index' %}">Welcome page</a> -->
+                    <a class="dropdown-item" href="{% url 'home' %}">Price Capture</a>
+                    <a class="dropdown-item" href="{% url 'search' %}">Reports</a>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
                     <a class="dropdown-item" href="{% url 'password_reset' %}">Reset Password</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'index' %}">Welcome page</a>
-                    <a class="dropdown-item" href="{% url 'search' %}">Reports</a>
                 </div>
             </div>
 

@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 <div class="container">
     <form method="get">
         <div class="row">
@@ -33,10 +44,24 @@
                 {{ filter.form.competitor_name }}
             </div>
 
-            <div class="col-md-3 mb-3">
+            <div class="col-md-5 mb-3">
                 <label class="font-weight-bold" for="customer_name">Created at:</label>
-                {{ filter.form.created_at }}
+                <div class="form-inline">
+                    {{ filter.form.created_at }}
+                </div>
             </div>
+
+            <script>
+                $( function() {
+                    $( "#id_created_at_0" ).datepicker({ showWeek: true, firstDay: 1, changeMonth: true, changeYear: true });
+                } );
+
+                $( function() {
+                    $( "#id_created_at_1" ).datepicker({ showWeek: true, firstDay: 1, changeMonth: true, changeYear: true });
+                } );
+                
+            </script>
+
         </div>
     
         <div class="form-row">
