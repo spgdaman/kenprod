@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load humanizelib %}
 {% block content %}
 
 <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -98,10 +98,10 @@
                         <td>{{ result.customer_name }}</td>
                         <td>{{ result.customer_branch }}</td>
                         <td>{{ result.kenpoly_product_name }}</td>
-                        <td>{{ result.kenpoly_price }}</td>
+                        <td>{{ result.kenpoly_price | intcomma }}</td>
                         <td>{{ result.competitor_name }}</td>
                         <td>{{ result.competitor_product_name }}</td>
-                        <td>{{ result.competitor_price }}</td>
+                        <td>{{ result.competitor_price | intcomma }}</td>
                         <td><img src="{{ result.competitor_product_image.url }}" width="150px"></td>
                         <td>{{ result.created_at|date:"d-m-Y" }}</td>
                     </tr>

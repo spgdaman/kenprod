@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'computedfields',
     'django_filters',
+    'django_humanize',
 ]
 
 MIDDLEWARE = [
