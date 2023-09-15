@@ -64,7 +64,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name='email_address',
         max_length=255,
         unique=False,
-        blank=True
+        blank=True,
+        null=True
     )
     username= models.CharField(max_length=30, null=False, blank=False, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
@@ -73,6 +74,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    mobile_number = models.CharField(max_length=25, null=True, blank=True)
     # groups = models.ManyToManyField(GroupPermissions, null=True, verbose_name=('Group Permissions'), blank=True, help_text=('The groups this user belongs to. A user will get all permissions granted to each of their groups.'))
 
     USERNAME_FIELD = 'username'
